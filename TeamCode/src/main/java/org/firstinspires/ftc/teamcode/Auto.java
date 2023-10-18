@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SummerCodingClass;
+package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -15,6 +15,12 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous (name = "AutoX")
 public class Auto extends LinearOpMode {
 
+    //Config Variables
+    // RF = "CM0"
+    // RB = "CM1"
+    // LF = "CM2"
+    // LB = "CM3"
+
     private ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -25,7 +31,7 @@ public class Auto extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, true);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 

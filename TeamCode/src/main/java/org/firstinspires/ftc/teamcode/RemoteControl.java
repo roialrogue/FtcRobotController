@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SummerCodingClass;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,12 +7,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp (name = "TeleOp")
 public class RemoteControl extends LinearOpMode {
 
+    //Config Variables
+    // RF = "CM0"
+    // RB = "CM1"
+    // LF = "CM2"
+    // LB = "CM3"
+
     Hardware robot = Hardware.getInstance();
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
-        telemetry.addData("Status", "(Metal Pipe Noise)");
+        robot.init(hardwareMap, false);
+        telemetry.addData("Status", "Please wo- ope, it worked ");
         telemetry.update();
 
         if (robot.rightForwardWheel != null) {
@@ -38,9 +44,9 @@ public class RemoteControl extends LinearOpMode {
             double strafing;
             double turning;
 
-            forward = gamepad1.right_stick_x;
-            strafing = gamepad1.left_stick_y;
-            turning = -gamepad1.left_stick_x;
+            forward = gamepad1.left_stick_y;
+            strafing = gamepad1.left_stick_x;
+            turning = -gamepad1.right_stick_x;
 
             double max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward - strafing + turning))));
             if (max < robot.maxSpeed) {

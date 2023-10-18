@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SummerCodingClass;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,7 +10,7 @@ public class ServoTest extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, false);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 

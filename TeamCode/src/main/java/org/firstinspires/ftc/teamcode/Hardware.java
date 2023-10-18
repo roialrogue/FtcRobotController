@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SummerCodingClass;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -11,13 +11,13 @@ import com.qualcomm.robotcore.util.Range;
 public class Hardware {
 
     public DcMotor rightForwardWheel;
-
+    //"CM3"
     public DcMotor leftForwardWheel;
-
+    //"CM1"
     public DcMotor rightRearWheel;
-
+    //"CM2"
     public DcMotor leftRearWheel;
-
+    //"CM0"
     public DcMotor demoMotor;
 
     public Servo servo1;
@@ -37,20 +37,20 @@ public class Hardware {
         return myInstance;
     }
 
-    public void init(HardwareMap hwMap) {
+    public void init(HardwareMap hwMap, boolean useEncoders ) {
 
         try{
-            rightForwardWheel = hwMap.get(DcMotor.class, "rightForwardWheel");
+            rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightForwardWheel.setPower(0);
+            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         } catch (Exception p_exception) {
             rightForwardWheel = null;
         }
 
         try{
-            leftForwardWheel = hwMap.get(DcMotor.class, "leftForwardWheel");
+            leftForwardWheel = hwMap.get(DcMotor.class, "CM1");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -60,7 +60,7 @@ public class Hardware {
         }
 
         try{
-            rightRearWheel = hwMap.get(DcMotor.class, "rightRearWheel");
+            rightRearWheel = hwMap.get(DcMotor.class, "CM2");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -70,7 +70,7 @@ public class Hardware {
         }
 
         try{
-            leftRearWheel = hwMap.get(DcMotor.class, "leftRearWheel");
+            leftRearWheel = hwMap.get(DcMotor.class, "CM0");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
