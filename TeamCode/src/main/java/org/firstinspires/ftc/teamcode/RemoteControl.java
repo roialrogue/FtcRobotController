@@ -7,12 +7,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp (name = "TeleOp")
 public class RemoteControl extends LinearOpMode {
 
+    //Config Variables
+    // RF = "CM0"
+    // RB = "CM1"
+    // LF = "CM2"
+    // LB = "CM3"
+
     Hardware robot = Hardware.getInstance();
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
-        telemetry.addData("Status", "Please work this time");
+        robot.init(hardwareMap, false);
+        telemetry.addData("Status", "Please wo- ope, it worked ");
         telemetry.update();
 
         if (robot.rightForwardWheel != null) {
@@ -38,27 +44,24 @@ public class RemoteControl extends LinearOpMode {
             double strafing;
             double turning;
 
-            forward = -gamepad1.left_stick_y;
+            forward = gamepad1.left_stick_y;
             strafing = gamepad1.left_stick_x;
-            turning = gamepad1.right_stick_y;
+            turning = -gamepad1.right_stick_x;
 
-            double rfm = forward - strafing - turning;
-            double rbm = forward + strafing - turning;
-            double lfm = forward + strafing + turning;
-            double lbm = forward - strafing + turning;
-            double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
+            double max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward - strafing + turning))));
             if (max < robot.maxSpeed) {
-                robot.setPower(rfm, lfm, rbm, lbm);
+                robot.setPower(forward - strafing - turning, forward + strafing - turning, forward + strafing + turning, forward - strafing + turning);
             } else {
                 double scaleFactor = max / robot.maxSpeed;
-                robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
+                robot.setPower((forward - strafing - turning) * scaleFactor, (forward + strafing - turning) * scaleFactor, (forward + strafing + turning) * scaleFactor, (forward - strafing + turning) * scaleFactor);
             }
-
-
 
             //To start !GAMEPAD1! press "A + Start" at the same time
             //To start !GAMEPAD2! press "B + Start" at the same time
 
+            if (gamepad2.a) {
+                //Intake turns on (blah blah blah), after pressing stops turns off (blah blah blah)
+            }
 
             boolean pressingB = false;
             boolean pressedB = false;

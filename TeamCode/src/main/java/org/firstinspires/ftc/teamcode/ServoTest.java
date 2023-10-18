@@ -10,7 +10,7 @@ public class ServoTest extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, false);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 

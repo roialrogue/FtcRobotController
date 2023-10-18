@@ -15,6 +15,12 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous (name = "AutoX")
 public class Auto extends LinearOpMode {
 
+    //Config Variables
+    // RF = "CM0"
+    // RB = "CM1"
+    // LF = "CM2"
+    // LB = "CM3"
+
     private ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -25,7 +31,7 @@ public class Auto extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, true);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 
@@ -53,13 +59,8 @@ public class Auto extends LinearOpMode {
         waitForStart();
 
 
-        move(28, 0.4);
+        move(10, 0.6);
 
-
-        move(20, 0.4)
-        processFrame(
-
-        /*
         if (position.equals("Location 1")) {
             turning(90);
             move(5,0.6);
@@ -69,7 +70,7 @@ public class Auto extends LinearOpMode {
             turning(-90);
             move(5,0.6);
         }
-        */
+
 
 
         /*
