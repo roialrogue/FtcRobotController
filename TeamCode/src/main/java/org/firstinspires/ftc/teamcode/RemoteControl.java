@@ -40,20 +40,25 @@ public class RemoteControl extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+
             double forward;
             double strafing;
             double turning;
 
-            forward = gamepad1.left_stick_y;
-            strafing = gamepad1.left_stick_x;
-            turning = -gamepad1.right_stick_x;
+            forward = -gamepad1.left_stick_x;
+            strafing = gamepad1.left_stick_y;
+            turning = gamepad1.right_stick_x;
+            double rfm = forward - strafing - turning;
+            double lfm = forward + strafing + turning;
+            double rbm = forward + strafing - turning;
+            double lbm = forward - strafing + turning;
 
-            double max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward - strafing + turning))));
+            double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
             if (max < robot.maxSpeed) {
-                robot.setPower(forward - strafing - turning, forward + strafing - turning, forward + strafing + turning, forward - strafing + turning);
+                robot.setPower(rfm, lfm, rbm, lbm);
             } else {
-                double scaleFactor = max / robot.maxSpeed;
-                robot.setPower((forward - strafing - turning) * scaleFactor, (forward + strafing - turning) * scaleFactor, (forward + strafing + turning) * scaleFactor, (forward - strafing + turning) * scaleFactor);
+                double scaleFactor = robot.maxSpeed /max;
+                robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
             }
 
             //To start !GAMEPAD1! press "A + Start" at the same time
