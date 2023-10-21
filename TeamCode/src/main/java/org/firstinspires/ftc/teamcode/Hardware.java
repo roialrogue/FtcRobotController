@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -26,7 +27,7 @@ public class Hardware {
 
     public RevColorSensorV3 color;
 
-    public static double maxSpeed = 1;
+    public static double maxSpeed = .1;
 
     private static Hardware myInstance = null;
 
@@ -43,6 +44,7 @@ public class Hardware {
             rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             rightForwardWheel.setPower(0);
+            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         } catch (Exception p_exception) {
@@ -62,6 +64,7 @@ public class Hardware {
         try{
             rightRearWheel = hwMap.get(DcMotor.class, "CM2");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightRearWheel.setPower(0);
