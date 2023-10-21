@@ -54,8 +54,8 @@ public class RemoteControl extends LinearOpMode {
 
             double arm;
 
-            forward = -gamepad1.left_stick_x;
-            strafing = gamepad1.left_stick_y;
+            forward = -gamepad1.left_stick_y;
+            strafing = gamepad1.left_stick_x;
             turning = gamepad1.right_stick_x;
 
             arm = -gamepad2.left_stick_y;
@@ -108,33 +108,35 @@ public class RemoteControl extends LinearOpMode {
             */
 
 
-            boolean pressingRT = false;
-            boolean pressedRT = false;
-            boolean pressingLT = false;
-            boolean pressedLT = false;
+            boolean pressingRB = false;
+            boolean pressedRB = false;
+            boolean pressingLB = false;
+            boolean pressedLB = false;
 
-            if ((gamepad2.right_trigger > 0.1) && !pressingRT && !pressedRT) {
-                robot.AServoR.setPosition(0.3);
-                pressingRT = true;
-                pressedRT = true;
-            } else if ((gamepad2.right_trigger > 0.1) && !pressingRT && pressedRT) {
-                robot.AServoR.setPosition(0.425);
-                pressingRT = true;
-                pressedRT = false;
-            } else if (!(gamepad2.right_trigger < 0.1)) {
-                pressingRT = false;
+            if (gamepad2.right_bumper && !pressingRB && !pressedRB) {
+                robot.AServoR.setPosition(-0.3);
+                pressingRB = true;
+                pressedRB = true;
+            } else if ((gamepad2.right_bumper) && !pressingRB && pressedRB) {
+                robot.AServoR.setPosition(-0.425);
+                pressingRB = true;
+                pressedRB = false;
+            } else if (!(gamepad2.right_bumper)) {
+                pressingRB = false;
             }
 
-            if ((gamepad2.left_trigger > 0.1) && !pressingLT && !pressedLT) {
-                robot.AServoL.setPosition(0.7);
-                pressingLT = true;
-                pressedLT = true;
-            } else if ((gamepad2.left_trigger > 0.1) && !pressingLT && pressedLT) {
-                robot.AServoL.setPosition(0.675);
-                pressingLT = true;
-                pressedLT = false;
-            } else if (!(gamepad2.left_trigger < 0.1)) {
-                pressingLT = false;
+            if ((gamepad2.left_bumper) && !pressingLB && !pressedLB) {
+                robot.AServoL.setPosition(0.35);
+                pressingLB = true;
+                pressedLB = true;
+            } else if ((gamepad2.left_bumper) && !pressingLB && pressedLB) {
+                robot.AServoL.setPosition(0.6);
+                pressingLB = true;
+                pressedLB = false;
+            }
+
+            if (!(gamepad2.left_bumper)) {
+                pressingLB = false;
             }
 
 

@@ -11,16 +11,19 @@ public class ServoTest extends LinearOpMode {
     public void runOpMode() {
 
         robot.init(hardwareMap);
-        telemetry.addData("Status", "(Metal Pipe Noise)");
+        telemetry.addData("Status", "stuff");
         telemetry.update();
 
         waitForStart();
 
-        int position = 0;
+        double position = 0;
         boolean pressingA = false;
         boolean pressingB = false;
 
         while (opModeIsActive()) {
+            telemetry.addData("Position", position);
+            telemetry.addData("ActualMotorPosition", robot.AServoL.getPosition());
+            telemetry.update();
 
             robot.AServoL.setPosition(position);
 
@@ -37,9 +40,7 @@ public class ServoTest extends LinearOpMode {
                 pressingB = false;
             }
 
-            telemetry.addData("Position", position);
-            telemetry.addData("ActualMotorPosition", robot.AServoL.getPosition());
-            telemetry.update();
+
 
 
         }

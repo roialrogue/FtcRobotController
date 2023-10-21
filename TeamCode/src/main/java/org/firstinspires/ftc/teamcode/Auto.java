@@ -12,7 +12,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous (name = "AutoX")
+@Autonomous (name = "AutonomousP")
 public class Auto extends LinearOpMode {
 
     //Config Variables
@@ -29,12 +29,13 @@ public class Auto extends LinearOpMode {
     private String position = "Level 1";
     private Pipeline detector;
 
+
     public void runOpMode() {
 
         robot.init(hardwareMap);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
-
+        /*
         int cameraMonitorViewID = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewID", "id", hardwareMap.appContext.getPackageName());
         detector = new Pipeline();
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Camera"), cameraMonitorViewID);
@@ -42,9 +43,9 @@ public class Auto extends LinearOpMode {
         FtcDashboard.getInstance().startCameraStream(webCam, 0);
         webCam.startStreaming(640,480, OpenCvCameraRotation.UPSIDE_DOWN);
         webCam.setPipeline(detector);
-
-        while (!isStarted() && !isStopRequested()) {
-
+        */
+        //while (!isStarted() && !isStopRequested()) {
+            /*
             position = detector.position;
             telemetry.addData("Position", position);
             telemetry.addData("totalA", detector.totalA);
@@ -53,14 +54,25 @@ public class Auto extends LinearOpMode {
             dashboardTelemetry.addData("position", position);
             dashboardTelemetry.addData("totalA", detector.totalA);
             telemetry.update();
-
-        }
+            */
+        //}
 
         waitForStart();
 
+            /*
+            move(5, 0.6);
+            turning(90);
+            move(12, 0.4);
+             */
 
-        move(10, 0.6);
 
+            move(5, 0.6);
+            strafe(20, 0.6);
+
+
+
+
+        /*
         if (position.equals("Location 1")) {
             turning(90);
             move(5,0.6);
@@ -70,6 +82,7 @@ public class Auto extends LinearOpMode {
             turning(-90);
             move(5,0.6);
         }
+        */
 
 
 
@@ -86,8 +99,8 @@ public class Auto extends LinearOpMode {
 
     public void move(double distanceMoving, double speedMoving) {
 
-        double wheelCircumference = 4 * Math.PI;
-        double gearRatio = 560;
+        double wheelCircumference = 3.78 * Math.PI;
+        double gearRatio = 312;
         double ticks = (distanceMoving * (gearRatio / wheelCircumference));
 
         robot.setPower(0, 0, 0, 0);
@@ -109,7 +122,7 @@ public class Auto extends LinearOpMode {
 
         robot.setPower(speedMoving, speedMoving, speedMoving, speedMoving);
 
-        while (opModeIsActive() && robot.rightForwardWheel.getCurrentPosition() + 10 < ticks || robot.rightForwardWheel.getCurrentPosition() - 10 > ticks) {
+        while (opModeIsActive() && (robot.rightForwardWheel.getCurrentPosition() + 10 < ticks || robot.rightForwardWheel.getCurrentPosition() - 10 > ticks)) {
 
         }
 
@@ -170,8 +183,45 @@ public class Auto extends LinearOpMode {
 
         }
 
+
         robot.setPower(0, 0, 0, 0);
 
+    }
+
+    public void strafe(double distance, double speed) {
+        double wheelCircumference = 3.78 * Math.PI;
+        double gearRatio = 312;
+        double ticks = (distance * (gearRatio / wheelCircumference));
+
+        robot.setPower(0, 0, 0, 0);
+
+        robot.rightForwardWheel.setTargetPosition((int) Math.round(ticks));
+        robot.leftForwardWheel.setTargetPosition((int) Math.round(ticks));
+        robot.rightRearWheel.setTargetPosition((int) Math.round(ticks));
+        robot.leftRearWheel.setTargetPosition((int) Math.round(ticks));
+
+        robot.rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        robot.setPower(speed, speed, speed, speed);
+
+        while (opModeIsActive() && (robot.rightForwardWheel.getCurrentPosition() + 10 < ticks || robot.rightForwardWheel.getCurrentPosition() - 10 > ticks)) {
+
+        }
+
+        robot.setPower(0, 0, 0, 0);
+
+        robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
