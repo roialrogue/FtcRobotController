@@ -10,7 +10,7 @@ public class ServoTest extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap, false);
+        robot.init(hardwareMap);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 
@@ -22,7 +22,7 @@ public class ServoTest extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            robot.servo1.setPosition(position);
+            robot.AServoL.setPosition(position);
 
             if (gamepad1.a && !pressingA) {
                 position += 0.01;
@@ -38,7 +38,7 @@ public class ServoTest extends LinearOpMode {
             }
 
             telemetry.addData("Position", position);
-            telemetry.addData("ActualMotorPosition", robot.servo1.getPosition());
+            telemetry.addData("ActualMotorPosition", robot.AServoL.getPosition());
             telemetry.update();
 
 

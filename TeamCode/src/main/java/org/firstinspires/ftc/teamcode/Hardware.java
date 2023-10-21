@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -18,15 +19,18 @@ public class Hardware {
     //"CM2"
     public DcMotor leftRearWheel;
     //"CM0"
-    public DcMotor demoMotor;
+    public DcMotor AMotor1;
+    //"CM5"
+    public Servo AServoL;
 
-    public Servo servo1;
+    public Servo AServoR;
+
 
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
 
-    public static double maxSpeed = 1;
+    public static double maxSpeed = 0.8;
 
     private static Hardware myInstance = null;
 
@@ -37,14 +41,15 @@ public class Hardware {
         return myInstance;
     }
 
-    public void init(HardwareMap hwMap, boolean useEncoders ) {
+    public void init(HardwareMap hwMap) {
 
         try{
             rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightForwardWheel.setPower(0);
-            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         } catch (Exception p_exception) {
             rightForwardWheel = null;
         }
@@ -62,6 +67,7 @@ public class Hardware {
         try{
             rightRearWheel = hwMap.get(DcMotor.class, "CM2");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightRearWheel.setPower(0);
@@ -80,20 +86,27 @@ public class Hardware {
         }
 
         try{
-            demoMotor = hwMap.get(DcMotor.class, "demoMotor");
-            demoMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            demoMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            demoMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            demoMotor.setPower(0);
+            AMotor1 = hwMap.get(DcMotor.class, "CM5");
+            AMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            AMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AMotor1.setPower(0);
         } catch (Exception p_exception) {
-            demoMotor = null;
+            AMotor1 = null;
         }
 
         try {
-            servo1 = hwMap.get(Servo.class, "Servo1");
+            AServoL = hwMap.get(Servo.class, "CS0");
         } catch (Exception p_exception) {
-            servo1 = null;
+            AServoL = null;
         }
+
+        try {
+            AServoR = hwMap.get(Servo.class, "CS1");
+        } catch (Exception p_exception) {
+            AServoR = null;
+        }
+
 
         try {
             gyro = hwMap.get(BNO055IMU.class, "gyro");

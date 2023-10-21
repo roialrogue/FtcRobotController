@@ -31,7 +31,7 @@ public class Auto extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap, true);
+        robot.init(hardwareMap);
         telemetry.addData("Status", "(Metal Pipe Noise)");
         telemetry.update();
 

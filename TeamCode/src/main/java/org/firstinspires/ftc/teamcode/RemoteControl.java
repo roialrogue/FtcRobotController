@@ -17,7 +17,7 @@ public class RemoteControl extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap, false);
+        robot.init(hardwareMap);
         telemetry.addData("Status", "Please wo- ope, it worked ");
         telemetry.update();
 
@@ -38,22 +38,39 @@ public class RemoteControl extends LinearOpMode {
 
         waitForStart();
 
+        int position = 0;
+
+        robot.AMotor1.setTargetPosition(position);
+        robot.AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.AMotor1.setPower(0.2);
+
         while (opModeIsActive()) {
+
 
             double forward;
             double strafing;
             double turning;
 
-            forward = gamepad1.left_stick_y;
-            strafing = gamepad1.left_stick_x;
-            turning = -gamepad1.right_stick_x;
+            double arm;
 
-            double max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward - strafing + turning))));
+            forward = -gamepad1.left_stick_x;
+            strafing = gamepad1.left_stick_y;
+            turning = gamepad1.right_stick_x;
+
+            arm = -gamepad2.left_stick_y;
+
+            double rfm = forward - strafing - turning;
+            double lfm = forward + strafing + turning;
+            double rbm = forward + strafing - turning;
+            double lbm = forward - strafing + turning;
+
+            double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
             if (max < robot.maxSpeed) {
-                robot.setPower(forward - strafing - turning, forward + strafing - turning, forward + strafing + turning, forward - strafing + turning);
+                robot.setPower(rfm, lfm, rbm, lbm);
             } else {
-                double scaleFactor = max / robot.maxSpeed;
-                robot.setPower((forward - strafing - turning) * scaleFactor, (forward + strafing - turning) * scaleFactor, (forward + strafing + turning) * scaleFactor, (forward - strafing + turning) * scaleFactor);
+                double scaleFactor = robot.maxSpeed /max;
+                robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
             }
 
             //To start !GAMEPAD1! press "A + Start" at the same time
@@ -63,9 +80,20 @@ public class RemoteControl extends LinearOpMode {
                 //Intake turns on (blah blah blah), after pressing stops turns off (blah blah blah)
             }
 
+            /*
             boolean pressingB = false;
             boolean pressedB = false;
+            */
 
+            if (arm > 0) {
+                position = 5;
+                robot.AMotor1.setTargetPosition(position);
+            } else if (arm < 0) {
+                position = 95;
+                robot.AMotor1.setTargetPosition(position);
+            }
+
+            /*
             if (gamepad2.b && !pressingB && !pressedB) {
                 //Intake turns on
                 pressingB = true;
@@ -77,20 +105,36 @@ public class RemoteControl extends LinearOpMode {
             } else if (!gamepad2.b) {
                 pressingB = false;
             }
+            */
+
 
             boolean pressingRT = false;
             boolean pressedRT = false;
+            boolean pressingLT = false;
+            boolean pressedLT = false;
 
-            if (gamepad2.right_trigger > 0.1 && !pressingRT && !pressedRT) {
-                //Intake turns on
+            if ((gamepad2.right_trigger > 0.1) && !pressingRT && !pressedRT) {
+                robot.AServoR.setPosition(0.3);
                 pressingRT = true;
                 pressedRT = true;
-            } else if (gamepad2.right_trigger > 0.1 && !pressingRT && pressedRT) {
-                //Intake turns off
+            } else if ((gamepad2.right_trigger > 0.1) && !pressingRT && pressedRT) {
+                robot.AServoR.setPosition(0.425);
                 pressingRT = true;
                 pressedRT = false;
-            } else if (gamepad2.right_trigger < 0.1) {
+            } else if (!(gamepad2.right_trigger < 0.1)) {
                 pressingRT = false;
+            }
+
+            if ((gamepad2.left_trigger > 0.1) && !pressingLT && !pressedLT) {
+                robot.AServoL.setPosition(0.7);
+                pressingLT = true;
+                pressedLT = true;
+            } else if ((gamepad2.left_trigger > 0.1) && !pressingLT && pressedLT) {
+                robot.AServoL.setPosition(0.675);
+                pressingLT = true;
+                pressedLT = false;
+            } else if (!(gamepad2.left_trigger < 0.1)) {
+                pressingLT = false;
             }
 
 
