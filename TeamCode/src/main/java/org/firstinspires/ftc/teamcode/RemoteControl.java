@@ -17,7 +17,7 @@ public class RemoteControl extends LinearOpMode {
 
     public void runOpMode() {
 
-        robot.init(hardwareMap, false);
+        robot.init(hardwareMap);
         telemetry.addData("Status", "Please wo- ope, it worked ");
         telemetry.update();
 
@@ -38,6 +38,13 @@ public class RemoteControl extends LinearOpMode {
 
         waitForStart();
 
+        int position = 0;
+
+        robot.AMotor1.setTargetPosition(position);
+        robot.AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.AMotor1.setPower(0.2);
+
         while (opModeIsActive()) {
 
 
@@ -45,9 +52,14 @@ public class RemoteControl extends LinearOpMode {
             double strafing;
             double turning;
 
-            forward = -gamepad1.left_stick_x;
-            strafing = gamepad1.left_stick_y;
+            double arm;
+
+            forward = -gamepad1.left_stick_y;
+            strafing = gamepad1.left_stick_x;
             turning = gamepad1.right_stick_x;
+
+            arm = -gamepad2.left_stick_y;
+
             double rfm = forward - strafing - turning;
             double lfm = forward + strafing + turning;
             double rbm = forward + strafing - turning;
@@ -68,9 +80,20 @@ public class RemoteControl extends LinearOpMode {
                 //Intake turns on (blah blah blah), after pressing stops turns off (blah blah blah)
             }
 
+            /*
             boolean pressingB = false;
             boolean pressedB = false;
+            */
 
+            if (arm > 0) {
+                position = 5;
+                robot.AMotor1.setTargetPosition(position);
+            } else if (arm < 0) {
+                position = 95;
+                robot.AMotor1.setTargetPosition(position);
+            }
+
+            /*
             if (gamepad2.b && !pressingB && !pressedB) {
                 //Intake turns on
                 pressingB = true;
@@ -82,20 +105,38 @@ public class RemoteControl extends LinearOpMode {
             } else if (!gamepad2.b) {
                 pressingB = false;
             }
+            */
 
-            boolean pressingRT = false;
-            boolean pressedRT = false;
 
-            if (gamepad2.right_trigger > 0.1 && !pressingRT && !pressedRT) {
-                //Intake turns on
-                pressingRT = true;
-                pressedRT = true;
-            } else if (gamepad2.right_trigger > 0.1 && !pressingRT && pressedRT) {
-                //Intake turns off
-                pressingRT = true;
-                pressedRT = false;
-            } else if (gamepad2.right_trigger < 0.1) {
-                pressingRT = false;
+            boolean pressingRB = false;
+            boolean pressedRB = false;
+            boolean pressingLB = false;
+            boolean pressedLB = false;
+
+            if (gamepad2.right_bumper && !pressingRB && !pressedRB) {
+                robot.AServoR.setPosition(-0.3);
+                pressingRB = true;
+                pressedRB = true;
+            } else if ((gamepad2.right_bumper) && !pressingRB && pressedRB) {
+                robot.AServoR.setPosition(-0.425);
+                pressingRB = true;
+                pressedRB = false;
+            } else if (!(gamepad2.right_bumper)) {
+                pressingRB = false;
+            }
+
+            if ((gamepad2.left_bumper) && !pressingLB && !pressedLB) {
+                robot.AServoL.setPosition(0.35);
+                pressingLB = true;
+                pressedLB = true;
+            } else if ((gamepad2.left_bumper) && !pressingLB && pressedLB) {
+                robot.AServoL.setPosition(0.6);
+                pressingLB = true;
+                pressedLB = false;
+            }
+
+            if (!(gamepad2.left_bumper)) {
+                pressingLB = false;
             }
 
 

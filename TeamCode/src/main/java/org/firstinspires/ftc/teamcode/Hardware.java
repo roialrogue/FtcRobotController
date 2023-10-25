@@ -19,15 +19,18 @@ public class Hardware {
     //"CM2"
     public DcMotor leftRearWheel;
     //"CM0"
-    public DcMotor demoMotor;
+    public DcMotor AMotor1;
+    //"CM5"
+    public Servo AServoL;
 
-    public Servo servo1;
+    public Servo AServoR;
+
 
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
 
-    public static double maxSpeed = .8;
+    public static double maxSpeed = 0.8;
 
     private static Hardware myInstance = null;
 
@@ -38,15 +41,15 @@ public class Hardware {
         return myInstance;
     }
 
-    public void init(HardwareMap hwMap, boolean useEncoders ) {
+    public void init(HardwareMap hwMap) {
 
         try{
             rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setPower(0);
             rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
-            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightForwardWheel.setPower(0);
         } catch (Exception p_exception) {
             rightForwardWheel = null;
         }
@@ -83,20 +86,27 @@ public class Hardware {
         }
 
         try{
-            demoMotor = hwMap.get(DcMotor.class, "demoMotor");
-            demoMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            demoMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            demoMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            demoMotor.setPower(0);
+            AMotor1 = hwMap.get(DcMotor.class, "CM5");
+            AMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            AMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AMotor1.setPower(0);
         } catch (Exception p_exception) {
-            demoMotor = null;
+            AMotor1 = null;
         }
 
         try {
-            servo1 = hwMap.get(Servo.class, "Servo1");
+            AServoL = hwMap.get(Servo.class, "CS0");
         } catch (Exception p_exception) {
-            servo1 = null;
+            AServoL = null;
         }
+
+        try {
+            AServoR = hwMap.get(Servo.class, "CS1");
+        } catch (Exception p_exception) {
+            AServoR = null;
+        }
+
 
         try {
             gyro = hwMap.get(BNO055IMU.class, "gyro");
