@@ -27,7 +27,7 @@ public class Hardware {
 
     public RevColorSensorV3 color;
 
-    public static double maxSpeed = .1;
+    public static double maxSpeed = .8;
 
     private static Hardware myInstance = null;
 
