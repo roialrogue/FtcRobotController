@@ -1,4 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-public class BlueAutonomous {
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+@TeleOp(name = "Camera Test")
+public class BlueAutonomous extends LinearOpMode {
+
+    public void runOpMode() {
+        CameraInitialization camera = new CameraInitialization(telemetry);
+    }
 }
