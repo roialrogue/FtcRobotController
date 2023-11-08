@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class BlueAutonomous extends LinearOpMode {
 
     public void runOpMode() {
+        waitForStart();
         CameraInitialization camera = new CameraInitialization(telemetry);
     }
 }
