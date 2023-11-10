@@ -7,12 +7,10 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "Camera Test")
+@TeleOp(name = "Blue Auto")
 public class BlueAutonomous extends LinearOpMode {
 
     public void runOpMode() {
-        waitForStart();
-
         CameraInitialization cameraPipeline = new CameraInitialization(telemetry);
 
         Hardware hw = Hardware.getInstance();
@@ -37,7 +35,10 @@ public class BlueAutonomous extends LinearOpMode {
         });
 
 
+        waitForStart();
+        while(opModeIsActive()){
 
+        }
     }
 
 

@@ -37,10 +37,10 @@ public class CameraInitialization extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
-        Scalar lowHSV = new Scalar(23,50,70);
-        Scalar highHSV = new Scalar(32,225,225);
-        Core.inRange(mat, lowHSV, highHSV, mat);
 
+        Scalar lowHSV = new Scalar(0,100,100);
+        Scalar highHSV = new Scalar(11,255,255);
+        Core.inRange(mat, lowHSV, highHSV, mat);
         Mat left = mat.submat(LEFT_ROI);
         Mat middle = mat.submat(MIDDLE_ROI);
         Mat right = mat.submat(RIGHT_ROI);
@@ -83,8 +83,9 @@ public class CameraInitialization extends OpenCvPipeline {
         }
         telemetry.update();
 
-        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB);
+        //Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB);
         return mat;
+        //return input;
     }
 
 }
