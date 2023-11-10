@@ -9,6 +9,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+
 public class Hardware {
 
     public DcMotor rightForwardWheel;
@@ -32,6 +36,7 @@ public class Hardware {
 
     public static double maxSpeed = 0.8;
 
+    public OpenCvCamera camera;
     private static Hardware myInstance = null;
 
     public static Hardware getInstance() {
@@ -127,6 +132,13 @@ public class Hardware {
             color = null;
         }
 
+        try{
+            int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
+            WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+            camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+        }catch(Exception e){
+            camera = null;
+        }
 
     }
 

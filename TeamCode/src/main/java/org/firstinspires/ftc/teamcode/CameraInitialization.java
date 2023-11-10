@@ -22,14 +22,14 @@ public class CameraInitialization extends OpenCvPipeline {
     }
     private Location location;
     static final Rect LEFT_ROI = new Rect(
-            new Point( 120, 75),
-            new Point( 180, 115));
+            new Point( 0, 0),
+            new Point( 426, 720));
     static final Rect MIDDLE_ROI = new Rect(
-            new Point(140,260),
-            new Point(737,3737));
+            new Point(426,0),
+            new Point(852,720));
     static final Rect RIGHT_ROI = new Rect(
-            new Point(140,260),
-            new Point(737,3737));
+            new Point(852,0),
+            new Point(1278,720));
     static double PERCENT_COLOR_THRESHOLD = 0.4;
 
     public CameraInitialization(Telemetry t) { telemetry = t;}
