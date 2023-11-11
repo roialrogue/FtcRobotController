@@ -94,7 +94,7 @@ public class CameraInitialization extends OpenCvPipeline {
         }
         telemetry.update();
 
-        //Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB);
+        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB);
         return mat;
         //return input;
     }
