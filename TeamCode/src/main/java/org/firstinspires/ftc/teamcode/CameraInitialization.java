@@ -32,15 +32,26 @@ public class CameraInitialization extends OpenCvPipeline {
             new Point(1278,720));
     static double PERCENT_COLOR_THRESHOLD = 0.4;
 
-    public CameraInitialization(Telemetry t) { telemetry = t;}
+    boolean isBlue;
+
+    public CameraInitialization(Telemetry t, boolean isBlue) {
+        telemetry = t;
+        this.isBlue = isBlue;
+    }
 
     @Override
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        Scalar lowHSV = new Scalar(0,100,100);
-        Scalar highHSV = new Scalar(11,255,255);
-        Core.inRange(mat, lowHSV, highHSV, mat);
+        if(isBlue) {
+            Scalar lowHSV = new Scalar(0, 100, 100);
+            Scalar highHSV = new Scalar(11, 255, 255);
+            Core.inRange(mat, lowHSV, highHSV, mat);
+        } else {
+            Scalar lowHSV = new Scalar(0, 100, 100);
+            Scalar highHSV = new Scalar(130, 255, 255);
+            Core.inRange(mat, lowHSV, highHSV, mat);
+        }
         Mat left = mat.submat(LEFT_ROI);
         Mat middle = mat.submat(MIDDLE_ROI);
         Mat right = mat.submat(RIGHT_ROI);

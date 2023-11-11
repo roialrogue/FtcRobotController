@@ -9,10 +9,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @TeleOp(name = "Blue Auto")
 public class BlueAutonomous extends LinearOpMode {
-
+boolean isBlue;
     public void runOpMode() {
-        CameraInitialization cameraPipeline = new CameraInitialization(telemetry);
-
+        CameraInitialization cameraPipeline = new CameraInitialization(telemetry, true);
+        boolean isBlue = true;
         Hardware hw = Hardware.getInstance();
         hw.init(hardwareMap);
 

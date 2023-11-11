@@ -11,7 +11,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class RedAutonomous extends LinearOpMode {
 
     public void runOpMode() {
-        CameraInitialization cameraPipeline = new CameraInitialization(telemetry);
+        CameraInitialization cameraPipeline = new CameraInitialization(telemetry, false);
+        boolean isBlue = false;
 
         Hardware hw = Hardware.getInstance();
         hw.init(hardwareMap);
