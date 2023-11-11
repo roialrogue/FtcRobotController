@@ -99,4 +99,8 @@ public class CameraInitialization extends OpenCvPipeline {
         //return input;
     }
 
+    public Location getLocation(){
+        return location;
+    }
+
 }
