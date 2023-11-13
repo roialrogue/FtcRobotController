@@ -48,7 +48,7 @@ public class CameraInitialization extends OpenCvPipeline {
             Scalar highHSV = new Scalar(11, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
         } else {
-            Scalar lowHSV = new Scalar(0, 100, 100);
+            Scalar lowHSV = new Scalar(100, 100, 100);
             Scalar highHSV = new Scalar(130, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
         }

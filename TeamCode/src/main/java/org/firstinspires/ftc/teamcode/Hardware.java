@@ -25,9 +25,11 @@ public class Hardware {
     //"CM0"
     public DcMotor AMotor1;
     //"CM5"
-    public Servo AServoL;
+    public Servo PServo1;
 
-    public Servo AServoR;
+    public Servo PServo2;
+
+    public Servo AServo;
 
 
     public BNO055IMU gyro;
@@ -101,15 +103,21 @@ public class Hardware {
         }
 
         try {
-            AServoL = hwMap.get(Servo.class, "CS0");
+            PServo1 = hwMap.get(Servo.class, "CS1");
         } catch (Exception p_exception) {
-            AServoL = null;
+            PServo1 = null;
         }
 
         try {
-            AServoR = hwMap.get(Servo.class, "CS1");
+            PServo2 = hwMap.get(Servo.class, "CS2");
         } catch (Exception p_exception) {
-            AServoR = null;
+            PServo2 = null;
+        }
+
+        try {
+            AServo = hwMap.get(Servo.class, "CS0");
+        } catch (Exception p_exception) {
+            AServo = null;
         }
 
 
@@ -132,13 +140,11 @@ public class Hardware {
             color = null;
         }
 
-        try{
+
             int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
             WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
             camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
-        }catch(Exception e){
-            camera = null;
-        }
+
 
     }
 

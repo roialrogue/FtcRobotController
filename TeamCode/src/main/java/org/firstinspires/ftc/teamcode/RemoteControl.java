@@ -35,15 +35,13 @@ public class RemoteControl extends LinearOpMode {
         }
 
 
-
         waitForStart();
 
-        int position = 0;
+        boolean pressingChangeLauncher = false;
+        boolean pressingOpenLauncher = false;
 
-        robot.AMotor1.setTargetPosition(position);
-        robot.AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.AMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.AMotor1.setPower(0.2);
+        boolean pressingOpenClaw = false;
+        boolean pressingUpClaw = false;
 
         while (opModeIsActive()) {
 
@@ -51,101 +49,97 @@ public class RemoteControl extends LinearOpMode {
             double forward;
             double strafing;
             double turning;
-
             double arm;
 
             forward = -gamepad1.left_stick_y;
             strafing = gamepad1.left_stick_x;
             turning = gamepad1.right_stick_x;
+            arm = gamepad2.right_stick_y;
 
-            arm = -gamepad2.left_stick_y;
-
-            double rfm = forward - strafing - turning;
-            double lfm = forward + strafing + turning;
-            double rbm = forward + strafing - turning;
-            double lbm = forward - strafing + turning;
+            double rfm = (forward - strafing - turning);
+            double lfm = (forward + strafing + turning);
+            double rbm = (forward + strafing - turning);
+            double lbm = (forward - strafing + turning);
 
             double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
             if (max < robot.maxSpeed) {
                 robot.setPower(rfm, lfm, rbm, lbm);
             } else {
-                double scaleFactor = robot.maxSpeed /max;
+                double scaleFactor = robot.maxSpeed / max;
                 robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
             }
 
             //To start !GAMEPAD1! press "A + Start" at the same time
             //To start !GAMEPAD2! press "B + Start" at the same time
 
-            if (gamepad2.a) {
-                //Intake turns on (blah blah blah), after pressing stops turns off (blah blah blah)
+            double clawOpen = 0.65;
+            double clawClose = 0.55;
+            if (gamepad2.right_trigger > 0.1) {
+                if (!pressingOpenClaw) {
+                    robot.AServo.setPosition(((int) (robot.AServo.getPosition() * 10) == (int) (clawClose * 10)) ? clawOpen : clawClose);
+                }
+                pressingOpenClaw = true;
+            } else {
+                pressingOpenClaw = false;
             }
 
-            /*
-            boolean pressingB = false;
-            boolean pressedB = false;
-            */
+            double armScale = 0.25;
+            robot.AMotor1.setPower(gamepad2.right_stick_y * armScale);
 
-            if (arm > 0) {
-                position = 5;
-                robot.AMotor1.setTargetPosition(position);
-            } else if (arm < 0) {
-                position = 95;
-                robot.AMotor1.setTargetPosition(position);
-            }
+//            double armUp = 0.25;
+//            double armDown = -0.25;
+//            if (arm > 0.1) {
+//                if (!pressingUpClaw) {
+//                    robot.AMotor1.setPower(armUp);
+//                    pressingUpClaw = true;
+//                }
+//            } else if (arm < 0.1) {
+//                if (!pressingOpenClaw) {
+//                    robot.AMotor1.setPower(armDown);
+//                    pressingUpClaw = false;
+//                }
+//            }
 
-            /*
-            if (gamepad2.b && !pressingB && !pressedB) {
-                //Intake turns on
-                pressingB = true;
-                pressedB = true;
-            } else if (!gamepad2.b && !pressingB && pressedB) {
-                //Intake turns off
-                pressingB = true;
-                pressedB = false;
-            } else if (!gamepad2.b) {
-                pressingB = false;
-            }
-            */
+                double launcherOpen = 0.18;
+                double launcherClose = 0.001;
+                if (gamepad2.b) {
+                    if (!pressingOpenLauncher) {
+                        robot.PServo1.setPosition(((int) (robot.PServo1.getPosition() * 10) == (int) (launcherClose * 10)) ? launcherOpen : launcherClose);
+                    }
+                    pressingOpenLauncher = true;
+                } else {
+                    pressingOpenLauncher = false;
+                }
 
+                double launcherUp = 0.54;
+                double launcherDown = 0.37;
+                if (gamepad2.left_bumper) {
+                    if (!pressingChangeLauncher) {
+                        robot.PServo2.setPosition(((int) (robot.PServo2.getPosition() * 10) == (int) (launcherDown * 10)) ? launcherUp : launcherDown);
+                    }
+                    pressingChangeLauncher = true;
+                } else {
+                    pressingChangeLauncher = false;
+                }
 
-            boolean pressingRB = false;
-            boolean pressedRB = false;
-            boolean pressingLB = false;
-            boolean pressedLB = false;
-
-            if (gamepad2.right_bumper && !pressingRB && !pressedRB) {
-                robot.AServoR.setPosition(-0.3);
-                pressingRB = true;
-                pressedRB = true;
-            } else if ((gamepad2.right_bumper) && !pressingRB && pressedRB) {
-                robot.AServoR.setPosition(-0.425);
-                pressingRB = true;
-                pressedRB = false;
-            } else if (!(gamepad2.right_bumper)) {
-                pressingRB = false;
-            }
-
-            if ((gamepad2.left_bumper) && !pressingLB && !pressedLB) {
-                robot.AServoL.setPosition(0.35);
-                pressingLB = true;
-                pressedLB = true;
-            } else if ((gamepad2.left_bumper) && !pressingLB && pressedLB) {
-                robot.AServoL.setPosition(0.6);
-                pressingLB = true;
-                pressedLB = false;
-            }
-
-            if (!(gamepad2.left_bumper)) {
-                pressingLB = false;
-            }
+//            if ((gamepad2.left_bumper) && !pressingLB && !pressedLB) {
+//                robot.PServo2.setPosition(0.54);
+//                pressingLB = true;
+//                pressedLB = true;
+//            } else if ((gamepad2.left_bumper) && !pressingLB && pressedLB) {
+//                robot.PServo2.setPosition(0.37);
+//                pressingLB = true;
+//                pressedLB = false;
+//            } else if (!(gamepad2.left_bumper)) {
+//                pressingLB = false;
+//            }
 
 
         }
 
 
-
     }
 
 
-
 }
+

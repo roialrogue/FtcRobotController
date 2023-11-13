@@ -40,14 +40,18 @@ boolean isBlue;
 
         waitForStart();
 
+
         if(cameraWorked[0]){
             //runs if camera works
             CameraInitialization.Location location = cameraPipeline.getLocation();
             if(location == CameraInitialization.Location.RIGHT){
                 //thing is on right
+
             }else if(location == CameraInitialization.Location.MIDDLE){
+                //thing is on middle
 
             }else{
+                //thing is on left
 
             }
         }
