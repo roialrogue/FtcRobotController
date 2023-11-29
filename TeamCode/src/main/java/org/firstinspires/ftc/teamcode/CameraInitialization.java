@@ -44,12 +44,12 @@ public class CameraInitialization extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if(isBlue) {
-            Scalar lowHSV = new Scalar(0, 100, 100);
-            Scalar highHSV = new Scalar(11, 255, 255);
-            Core.inRange(mat, lowHSV, highHSV, mat);
-        } else {
             Scalar lowHSV = new Scalar(100, 100, 100);
             Scalar highHSV = new Scalar(130, 255, 255);
+            Core.inRange(mat, lowHSV, highHSV, mat);
+        } else {
+            Scalar lowHSV = new Scalar(0, 100, 100);
+            Scalar highHSV = new Scalar(11, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
         }
         Mat left = mat.submat(LEFT_ROI);
