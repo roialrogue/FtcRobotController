@@ -43,7 +43,7 @@ public class CameraInitialization extends OpenCvPipeline {
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        if(isBlue) {
+        if (isBlue) {
             Scalar lowHSV = new Scalar(100, 100, 100);
             Scalar highHSV = new Scalar(130, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
@@ -68,12 +68,21 @@ public class CameraInitialization extends OpenCvPipeline {
         telemetry.addData("Middle raw value", (int) Core.sumElems(middle).val[0]);
         telemetry.addData("Right raw value", (int) Core.sumElems(right).val[0]);
         telemetry.addData("Left percentage", Math.round(leftValue * 100) + "%");
+        telemetry.addData("Middle percentage", Math.round(middleValue * 100) + "%");
         telemetry.addData("Right percentage", Math.round(rightValue * 100) + "%");
-        telemetry.addData("Right percentage", Math.round(rightValue * 100) + "%");
-
-        boolean stoneLeft = leftValue > PERCENT_COLOR_THRESHOLD;
-        boolean stoneMiddle = middleValue > PERCENT_COLOR_THRESHOLD;
-        boolean stoneRight = rightValue > PERCENT_COLOR_THRESHOLD;
+        boolean stoneLeft = false;
+        boolean stoneMiddle = false;
+        boolean stoneRight = false;
+        if (leftValue > rightValue && leftValue > middleValue) {
+            stoneLeft = true;
+        } else if (middleValue > leftValue && middleValue > rightValue){
+            stoneMiddle = true;
+        } else if (rightValue > leftValue && rightValue > middleValue){
+            stoneRight = true;
+        }
+        //boolean stoneLeft = leftValue > PERCENT_COLOR_THRESHOLD;
+        //boolean stoneMiddle = middleValue > PERCENT_COLOR_THRESHOLD;
+        //boolean stoneRight = rightValue > PERCENT_COLOR_THRESHOLD;
 
         if (stoneLeft && stoneMiddle && stoneRight) {
             location = Location.NOT_FOUND;
@@ -81,15 +90,15 @@ public class CameraInitialization extends OpenCvPipeline {
             //not found
         } else if (stoneLeft) {
             location = location.RIGHT;
-            telemetry.addData("Skystone Location", "right");
+            telemetry.addData("Skystone Location", "Left");
             //right
         } else if (stoneMiddle) {
             location = location.MIDDLE;
-            telemetry.addData("Skystone LOcation", "middle");
+            telemetry.addData("Skystone Location", "middle");
             //middle
         } else if (stoneRight) {
             location = location.LEFT;
-            telemetry.addData("Skystone Location", "left");
+            telemetry.addData("Skystone Location", "Right");
             //left
         }
         telemetry.update();

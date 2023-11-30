@@ -4,12 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "Blue Auto")
-public class BlueAutonomous extends LinearOpMode {
-boolean isBlue;
+@TeleOp(name = "P.2 Blue Auto")
+public class P2BlueAuto extends LinearOpMode {
+    boolean isBlue;
     public void runOpMode() {
         CameraInitialization cameraPipeline = new CameraInitialization(telemetry, true);
         boolean isBlue = true;
