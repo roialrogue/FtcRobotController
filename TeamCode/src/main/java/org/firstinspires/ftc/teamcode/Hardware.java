@@ -23,8 +23,12 @@ public class Hardware {
     //"CM2"
     public DcMotor leftRearWheel;
     //"CM0"
-    public DcMotor AMotor1;
+    public DcMotor AMotorUpDown;
+    //"CM4"
+    public DcMotor AMotorOutIn;
     //"CM5"
+    public DcMotor AMotorIntake;
+    //"CM6"
     public Servo PServo1;
 
     public Servo PServo2;
@@ -93,13 +97,30 @@ public class Hardware {
         }
 
         try{
-            AMotor1 = hwMap.get(DcMotor.class, "CM5");
-            AMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            AMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AMotor1.setPower(0);
+            AMotorUpDown = hwMap.get(DcMotor.class, "CM4");
+            AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AMotorUpDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorUpDown.setPower(0);
         } catch (Exception p_exception) {
-            AMotor1 = null;
+            AMotorUpDown = null;
+        }
+
+        try{
+            AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
+            AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AMotorOutIn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorOutIn.setPower(0);
+        } catch (Exception p_exception) {
+            AMotorOutIn = null;
+        }
+
+        try{
+            AMotorIntake = hwMap.get(DcMotor.class, "CM6");
+            AMotorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AMotorIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorIntake.setPower(0);
+        } catch (Exception p_exception) {
+            AMotorIntake = null;
         }
 
         try {
@@ -164,6 +185,8 @@ public class Hardware {
 
 
     }
+
+
 
 
 }

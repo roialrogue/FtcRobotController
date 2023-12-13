@@ -29,10 +29,10 @@ public class EncoderTest extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            robot.AMotor1.setTargetPosition(position);
+            robot.AMotorUpDown.setTargetPosition(position);
             //robot.AMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            robot.AMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.AMotor1.setPower(1);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.AMotorUpDown.setPower(1);
 
             if (gamepad1.a && !pressingA) {
             position += 3;
@@ -51,7 +51,7 @@ public class EncoderTest extends LinearOpMode {
             }
 
             telemetry.addData("Position", position);
-            telemetry.addData("ActualMotorPosition", robot.AMotor1.getCurrentPosition());
+            telemetry.addData("ActualMotorPosition", robot.AMotorUpDown.getCurrentPosition());
             telemetry.update();
 
 

@@ -11,7 +11,9 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 public class CameraInitialization extends OpenCvPipeline {
-
+    public static boolean stoneLeft = false;
+    public static boolean stoneMiddle = false;
+    public static boolean stoneRight = false;
     Telemetry telemetry;
     Mat mat = new Mat();
     public enum Location {
@@ -30,7 +32,7 @@ public class CameraInitialization extends OpenCvPipeline {
     static final Rect RIGHT_ROI = new Rect(
             new Point(852,0),
             new Point(1278,720));
-    static double PERCENT_COLOR_THRESHOLD = 0.4;
+    //static double PERCENT_COLOR_THRESHOLD = 0.4;
 
     boolean isBlue;
 
@@ -64,20 +66,22 @@ public class CameraInitialization extends OpenCvPipeline {
         middle.release();
         right.release();
 
-        telemetry.addData("Left raw value", (int) Core.sumElems(left).val[0]);
-        telemetry.addData("Middle raw value", (int) Core.sumElems(middle).val[0]);
-        telemetry.addData("Right raw value", (int) Core.sumElems(right).val[0]);
+        telemetry.addData("Left raw value", stoneLeft);
+        telemetry.addData("Middle raw value", stoneMiddle);
+        telemetry.addData("Right raw value", stoneRight);
         telemetry.addData("Left percentage", Math.round(leftValue * 100) + "%");
         telemetry.addData("Middle percentage", Math.round(middleValue * 100) + "%");
         telemetry.addData("Right percentage", Math.round(rightValue * 100) + "%");
-        boolean stoneLeft = false;
-        boolean stoneMiddle = false;
-        boolean stoneRight = false;
-        if (leftValue > rightValue && leftValue > middleValue) {
+
+        double leftper = Math.round(leftValue * 100);
+        double middleper = Math.round(middleValue * 100);
+        double rightper = Math.round(rightValue * 100);
+
+        if (leftper > rightper && leftper > middleper) {
             stoneLeft = true;
-        } else if (middleValue > leftValue && middleValue > rightValue){
+        } else if (middleper > leftper && middleper > rightper){
             stoneMiddle = true;
-        } else if (rightValue > leftValue && rightValue > middleValue){
+        } else if (rightper > leftper && rightper > middleper){
             stoneRight = true;
         }
         //boolean stoneLeft = leftValue > PERCENT_COLOR_THRESHOLD;
@@ -86,19 +90,23 @@ public class CameraInitialization extends OpenCvPipeline {
 
         if (stoneLeft && stoneMiddle && stoneRight) {
             location = Location.NOT_FOUND;
-            telemetry.addData("Skystone Location", "not found");
+            telemetry.addData("Team Prop Location", "not found");
+            telemetry.update();
             //not found
         } else if (stoneLeft) {
             location = location.RIGHT;
-            telemetry.addData("Skystone Location", "Left");
+            telemetry.addData("Team Prop Location", "Left");
+            telemetry.update();
             //right
         } else if (stoneMiddle) {
             location = location.MIDDLE;
-            telemetry.addData("Skystone Location", "middle");
+            telemetry.addData("Team Prop Location", "middle");
+            telemetry.update();
             //middle
         } else if (stoneRight) {
             location = location.LEFT;
-            telemetry.addData("Skystone Location", "Right");
+            telemetry.addData("Team Prop Location", "Right");
+            telemetry.update();
             //left
         }
         telemetry.update();
