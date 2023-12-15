@@ -52,8 +52,6 @@ public class RemoteControl extends LinearOpMode {
             double forward;
             double strafing;
             double turning;
-            double armUpDown;
-            double armExtend;
             boolean clawIntake;
             boolean clawOutake;
 
@@ -63,10 +61,18 @@ public class RemoteControl extends LinearOpMode {
             clawIntake = gamepad2.right_bumper;
             clawOutake = gamepad2.left_bumper;
 
-            double rfm = (forward - strafing - turning);
+            double rfm = (forward + strafing + turning);
             double rbm = (forward + strafing - turning);
-            double lfm = (forward + strafing + turning);
-            double lbm = (forward - strafing + turning);
+            double lfm = (forward - strafing + turning);
+            double lbm = (forward - strafing - turning);
+
+            double speed;
+
+            if (gamepad1.left_trigger > 0.1) {
+                speed = 0.4;
+            } else {
+                speed = 1;
+            }
 
             /*double max = Math.max(Math.abs(forward) + Math.abs(turning) + Math.abs(strafing), robot.maxSpeed);
             double rfmPower = rfm / max;
@@ -79,10 +85,10 @@ public class RemoteControl extends LinearOpMode {
 
             double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
             if (max < robot.maxSpeed) {
-                robot.setPower(rfm, lfm, rbm, lbm);
+                robot.setPower(rfm * speed, lfm * speed, rbm * speed, lbm * speed);
             } else {
                 double scaleFactor = robot.maxSpeed / max;
-                robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
+                robot.setPower((rfm) * scaleFactor * speed, (lfm) * scaleFactor * speed, (rbm) * scaleFactor * speed, (lbm) * scaleFactor * speed);
             }
 
             //To start !GAMEPAD1! press "A + Start" at the same time
@@ -102,11 +108,9 @@ public class RemoteControl extends LinearOpMode {
                     robot.AMotorIntake.setPower(-1);
                     pressingOpenClaw = true;
                 }
-                pressingOpenClaw = true;
             } else {
                 pressingOpenClaw = false;
                 robot.AMotorIntake.setPower(0);
-
             }
 
 
@@ -180,14 +184,21 @@ public class RemoteControl extends LinearOpMode {
 //                pressingLB = false;
 //            }
 
-            telemetry.addData("Right Target Position",robot.rightForwardWheel.getTargetPosition());
-            telemetry.addData("Right Real Position", robot.rightForwardWheel.getCurrentPosition());
-            telemetry.addData("Right Back Target Position",robot.rightRearWheel.getTargetPosition());
-            telemetry.addData("Right Back Real Position", robot.rightRearWheel.getCurrentPosition());
-            telemetry.addData("Left Target Position",robot.leftForwardWheel.getTargetPosition());
-            telemetry.addData("Left Real Position", robot.leftForwardWheel.getCurrentPosition());
-            telemetry.addData("Left Back Target Position",robot.leftRearWheel.getTargetPosition());
-            telemetry.addData("Left Back Real Position", robot.leftRearWheel.getCurrentPosition());
+//            telemetry.addData("Right Target Position",robot.rightForwardWheel.getTargetPosition());
+//            telemetry.addData("Right Real Position", robot.rightForwardWheel.getCurrentPosition());
+//            telemetry.addData("Right Back Target Position",robot.rightRearWheel.getTargetPosition());
+//            telemetry.addData("Right Back Real Position", robot.rightRearWheel.getCurrentPosition());
+//            telemetry.addData("Left Target Position",robot.leftForwardWheel.getTargetPosition());
+//            telemetry.addData("Left Real Position", robot.leftForwardWheel.getCurrentPosition());
+//            telemetry.addData("Left Back Target Position",robot.leftRearWheel.getTargetPosition());
+//            telemetry.addData("Left Back Real Position", robot.leftRearWheel.getCurrentPosition());
+            telemetry.addData("Forward", forward);
+            telemetry.addData("Turning", turning);
+            telemetry.addData("Strafing", strafing);
+            telemetry.addData("Right Front", rfm);
+            telemetry.addData("Right Back", rbm);
+            telemetry.addData("Left Front", lfm);
+            telemetry.addData("Left Back", lbm);
             telemetry.update();
         }
 
