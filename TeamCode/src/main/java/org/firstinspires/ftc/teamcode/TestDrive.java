@@ -28,19 +28,6 @@ public class TestDrive extends LinearOpMode {
             sideways = -gamepad1.left_stick_x;
             turning = -gamepad1.right_stick_x;
 
-            if (gamepad1.dpad_down) {
-                forward = .25;
-            }
-            if (gamepad1.dpad_up) {
-                forward = -.25;
-            }
-            if (gamepad1.dpad_right) {
-                sideways = -.35;
-            }
-            if (gamepad1.dpad_left) {
-                sideways = .35;
-            }
-
             double max = Math.max(Math.abs(forward - sideways - turning), Math.max(Math.abs(forward + sideways - turning), Math.max(Math.abs(forward + sideways + turning), Math.abs(forward + turning - sideways))));
             if (max < robot.maxSpeed) {
                 robot.setPower(forward - sideways - turning, forward + sideways - turning, forward + sideways + turning, forward + turning - sideways);
