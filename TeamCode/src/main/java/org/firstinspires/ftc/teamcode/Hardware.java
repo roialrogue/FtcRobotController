@@ -54,10 +54,10 @@ public class Hardware {
 
     public void init(HardwareMap hwMap) {
 
+
         try{
-            rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
+            rightForwardWheel = hwMap.get(DcMotor.class, "CM1");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightForwardWheel.setPower(0);
@@ -66,8 +66,9 @@ public class Hardware {
         }
 
         try{
-            leftForwardWheel = hwMap.get(DcMotor.class, "CM1");
+            leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftForwardWheel.setPower(0);
@@ -76,9 +77,8 @@ public class Hardware {
         }
 
         try{
-            rightRearWheel = hwMap.get(DcMotor.class, "CM2");
+            rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightRearWheel.setPower(0);
@@ -87,8 +87,9 @@ public class Hardware {
         }
 
         try{
-            leftRearWheel = hwMap.get(DcMotor.class, "CM0");
+            leftRearWheel = hwMap.get(DcMotor.class, "CM2");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftRearWheel.setPower(0);
@@ -168,8 +169,22 @@ public class Hardware {
 
 
     }
+    public void setPower(double fr, double br, double fl, double bl) {
+        if (rightForwardWheel != null) {
+            rightRearWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
+        }
+        if (rightRearWheel != null) {
+            rightRearWheel.setPower(Range.clip(br, -maxSpeed, maxSpeed));
+        }
+        if (leftForwardWheel != null) {
+            leftForwardWheel.setPower(Range.clip(fl, -maxSpeed, maxSpeed));
+        }
+        if (leftRearWheel != null) {
+            leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
+        }
+    }
 
-    public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
+   /* public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
         if (rightForwardWheel != null) {
            rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
         }
@@ -184,7 +199,7 @@ public class Hardware {
         }
 
 
-    }
+    }*/
 
 
 

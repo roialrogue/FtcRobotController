@@ -5,10 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp (name = "TeleOp")
-//5357 top right
-//5395 bottom right
-//5367 top left
-//5388 bottom right
 public class RemoteControl extends LinearOpMode {
 
     //Config Variables
@@ -63,10 +59,17 @@ public class RemoteControl extends LinearOpMode {
             clawIntake = gamepad2.right_bumper;
             clawOutake = gamepad2.left_bumper;
 
-            double rfm = (forward - strafing - turning);
+            double rfm = (forward + strafing - turning); // Updated calculation for right front motor
+            double rbm = (forward - strafing - turning); // Updated calculation for right back motor
+            double lfm = (forward - strafing - turning); // Updated calculation for left front motor
+            double lbm = (forward + strafing - turning); // Updated calculation for left back motor
+
+
+            /*double rfm = (forward - strafing - turning);
             double rbm = (forward + strafing - turning);
             double lfm = (forward + strafing + turning);
-            double lbm = (forward - strafing + turning);
+            double lbm = (forward - strafing + turning);*/
+
 
             /*double max = Math.max(Math.abs(forward) + Math.abs(turning) + Math.abs(strafing), robot.maxSpeed);
             double rfmPower = rfm / max;
