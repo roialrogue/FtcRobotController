@@ -13,7 +13,7 @@ public class TestDrive extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
 
-    public void runOpMode() {    public void runOpMode() {
+    public void runOpMode() {   
         robot.init(hardwareMap);
         telemetry.addData("Status", "Initailized");
         telemetry.update();
