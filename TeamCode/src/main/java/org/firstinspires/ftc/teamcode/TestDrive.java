@@ -18,6 +18,19 @@ public class TestDrive extends LinearOpMode {
         telemetry.addData("Status", "Initailized");
         telemetry.update();
 
+         if (robot.rf != null) {
+            robot.rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.rb != null) {
+            robot.rb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.lf != null) {
+            robot.lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.lb != null) {
+            robot.lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
         waitForStart();
         while (opModeIsActive()) {
 
