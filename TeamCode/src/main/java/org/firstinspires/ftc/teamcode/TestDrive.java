@@ -18,36 +18,24 @@ public class TestDrive extends LinearOpMode {
         telemetry.addData("Status", "Initailized");
         telemetry.update();
 
-         if (robot.rf != null) {
-            robot.rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-        if (robot.rb != null) {
-            robot.rb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-        if (robot.lf != null) {
-            robot.lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-        if (robot.lb != null) {
-            robot.lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
+        double forward;
+        double sideways;
+        double turning;
+        double max;
+        double scaleFactor = 0;
 
-        waitForStart();
-        while (opModeIsActive()) {
-
-            double forward;
-            double sideways;
-            double turning;
-            forward = gamepad1.left_stick_y;
-            sideways = -gamepad1.left_stick_x;
-            turning = -gamepad1.right_stick_x;
-
-            double max = Math.max(Math.abs(forward - sideways - turning), Math.max(Math.abs(forward + sideways - turning), Math.max(Math.abs(forward + sideways + turning), Math.abs(forward + turning - sideways))));
-            if (max < robot.maxSpeed) {
-                robot.setPower(forward - sideways - turning, forward + sideways - turning, forward + sideways + turning, forward + turning - sideways);
-            } else {
-                double scaleFactor = max / robot.maxSpeed;
-                robot.setPower((forward - sideways - turning) * scaleFactor, (forward + sideways - turning) * scaleFactor, (forward + sideways + turning) * scaleFactor, (forward + turning - sideways) * scaleFactor);
-            }
+        forward =  gamepad1.left_stick_y;
+        sideways = gamepad1.left_stick_x;
+        turning =  gamepad1.right_stick_x;
+        max = Math.max(Math.abs(forward - sideways - turning), Math.max(Math.abs(forward + sideways - turning), Math.max(Math.abs(forward + sideways + turning), Math.abs(forward + turning - sideways))));
+        if (max > robot.maxSpeed) {
+            scaleFactor = robot.maxSpeed / max;
+        } else {
+            scaleFactor = robot.maxSpeed;
         }
+        scaleFactor *= Math.max(Math.abs(1 - gamepad1.right_trigger), 0.2);
+        robot.setPower((forward - sideways - turning) * scaleFactor, (forward + sideways - turning) * scaleFactor, (forward + sideways + turning) * scaleFactor, (forward + turning - sideways) * scaleFactor);
+
+
     }
 }
