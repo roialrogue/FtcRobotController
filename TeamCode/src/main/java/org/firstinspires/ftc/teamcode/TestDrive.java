@@ -13,10 +13,31 @@ public class TestDrive extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
 
-    public void runOpMode() {
+    public void runOpMode() {    public void runOpMode() {
         robot.init(hardwareMap);
         telemetry.addData("Status", "Initailized");
         telemetry.update();
+
+        if (robot.rightForwardWheel != null) {
+            robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.rightRearWheel != null) {
+            robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.leftForwardWheel != null) {
+            robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (robot.leftRearWheel != null) {
+            robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
+        
+        robot.init(hardwareMap);
+        telemetry.addData("Status", "Initailized");
+        telemetry.update();
+
+        waitForStart();
+        while (opModeIsActive()) {
 
         double forward;
         double sideways;
@@ -35,7 +56,7 @@ public class TestDrive extends LinearOpMode {
         }
         scaleFactor *= Math.max(Math.abs(1 - gamepad1.right_trigger), 0.2);
         robot.setPower((forward - sideways - turning) * scaleFactor, (forward + sideways - turning) * scaleFactor, (forward + sideways + turning) * scaleFactor, (forward + turning - sideways) * scaleFactor);
-
+        }
 
     }
 }
