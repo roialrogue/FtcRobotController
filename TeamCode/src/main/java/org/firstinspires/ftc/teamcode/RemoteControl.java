@@ -53,16 +53,37 @@ public class RemoteControl extends LinearOpMode {
             boolean clawIntake;
             boolean clawOutake;
 
-            forward = -gamepad1.left_stick_y;
-            strafing = -gamepad1.right_stick_x;
+            forward = gamepad1.left_stick_y;
+            strafing = gamepad1.right_stick_x;
             turning = gamepad1.left_stick_x;
             clawIntake = gamepad2.right_bumper;
             clawOutake = gamepad2.left_bumper;
 
-            double rfm = (forward + strafing - turning); // Updated calculation for right front motor
-            double rbm = (forward - strafing - turning); // Updated calculation for right back motor
-            double lfm = (forward - strafing - turning); // Updated calculation for left front motor
-            double lbm = (forward + strafing - turning); // Updated calculation for left back motor
+
+            double rfm = (forward - strafing - turning); // Updated calculation for right front motor
+            double rbm = (forward + strafing - turning); // Updated calculation for right back motor
+            double lfm = (forward + strafing + turning); // Updated calculation for left front motor
+            double lbm = (forward - strafing + turning); // Updated calculation for left back
+
+
+
+            /*double max;
+            max = Math.max(Math.abs(lfm) , Math.abs(rfm));
+            max = Math.max(max, Math.abs(lbm));
+            max = Math.max(max, Math.abs(rbm));*/
+
+            /*if (max > 1.0) {
+                lfm /= max;
+                rfm /= max;
+                lbm /= max;
+                rbm /= max;
+            }*/
+
+            /*lfm = gamepad1.x ? 1.0 : 0.0;
+            lbm = gamepad1.a ? 1.0 : 0.0;
+            rfm = gamepad1.y ? 1.0 : 0.0;
+            rbm = gamepad1.b ? 1.0 : 0.0;*/
+
 
 
             /*double rfm = (forward - strafing - turning);
@@ -80,18 +101,30 @@ public class RemoteControl extends LinearOpMode {
             robot.setPower(rfmPower, rbmPower, lfmPower, lbmPower);*/
 
 
-            double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
+            /*double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
             if (max < robot.maxSpeed) {
                 robot.setPower(rfm, lfm, rbm, lbm);
             } else {
                 double scaleFactor = robot.maxSpeed / max;
                 robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
+            }*/
+            double max;
+            double scaleFactor;
+            max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward + turning - strafing))));
+            if (max > robot.maxSpeed) {
+                scaleFactor = robot.maxSpeed / max;
+            } else {
+                scaleFactor = robot.maxSpeed;
             }
+            scaleFactor *= Math.max(Math.abs(1 - gamepad1.right_trigger), 0.2);
+            robot.setPower((forward - strafing - turning) * scaleFactor, (forward + strafing - turning) * scaleFactor, (forward + strafing + turning) * scaleFactor, (forward + turning - strafing) * scaleFactor);
+        }
+
 
             //To start !GAMEPAD1! press "A + Start" at the same time
             //To start !GAMEPAD2! press "B + Start" at the same time
 
-            if (clawIntake == true) {
+            /*if (clawIntake == true) {
                 if (!pressingOpenClaw) {
                     robot.AMotorIntake.setPower(1);
                     pressingOpenClaw = true;
@@ -110,24 +143,24 @@ public class RemoteControl extends LinearOpMode {
                 pressingOpenClaw = false;
                 robot.AMotorIntake.setPower(0);
 
-            }
+            }*/
 
 
             //double armScale = 0.5;
             //double power1 = armUpDown * armScale;
             //double power2 = armExtend * armScale;
 
-            if(gamepad2.left_stick_y > 0.1){
+            if (gamepad2.left_stick_y > 0.1) {
                 robot.AMotorUpDown.setPower(0.5);
-            } else if (gamepad2.left_stick_y < -0.1){
+            } else if (gamepad2.left_stick_y < -0.1) {
                 robot.AMotorUpDown.setPower(-0.5);
             } else {
                 robot.AMotorUpDown.setPower(0);
             }
 
-            if(gamepad2.right_stick_y > 0.1){
+            if (gamepad2.right_stick_y > 0.1) {
                 robot.AMotorOutIn.setPower(0.5);
-            } else if (gamepad2.right_stick_y < -0.1){
+            } else if (gamepad2.right_stick_y < -0.1) {
                 robot.AMotorOutIn.setPower(-0.5);
             } else {
                 robot.AMotorOutIn.setPower(0);
@@ -149,27 +182,27 @@ public class RemoteControl extends LinearOpMode {
 //                }
 //            }
 
-                double launcherOpen = 0.18;
-                double launcherClose = 0.001;
-                if (gamepad2.b) {
-                    if (!pressingOpenLauncher) {
-                        robot.PServo1.setPosition(((int) (robot.PServo1.getPosition() * 10) == (int) (launcherClose * 10)) ? launcherOpen : launcherClose);
-                    }
-                    pressingOpenLauncher = true;
-                } else {
-                    pressingOpenLauncher = false;
+            double launcherOpen = 0.18;
+            double launcherClose = 0.001;
+            if (gamepad2.b) {
+                if (!pressingOpenLauncher) {
+                    robot.PServo1.setPosition(((int) (robot.PServo1.getPosition() * 10) == (int) (launcherClose * 10)) ? launcherOpen : launcherClose);
                 }
+                pressingOpenLauncher = true;
+            } else {
+                pressingOpenLauncher = false;
+            }
 
-                double launcherUp = 0.54;
-                double launcherDown = 0.37;
-                if (gamepad2.left_bumper) {
-                    if (!pressingChangeLauncher) {
-                        robot.PServo2.setPosition(((int) (robot.PServo2.getPosition() * 10) == (int) (launcherDown * 10)) ? launcherUp : launcherDown);
-                    }
-                    pressingChangeLauncher = true;
-                } else {
-                    pressingChangeLauncher = false;
+            double launcherUp = 0.54;
+            double launcherDown = 0.37;
+            if (gamepad2.left_bumper) {
+                if (!pressingChangeLauncher) {
+                    robot.PServo2.setPosition(((int) (robot.PServo2.getPosition() * 10) == (int) (launcherDown * 10)) ? launcherUp : launcherDown);
                 }
+                pressingChangeLauncher = true;
+            } else {
+                pressingChangeLauncher = false;
+            }
 
 //            if ((gamepad2.left_bumper) && !pressingLB && !pressedLB) {
 //                robot.PServo2.setPosition(0.54);
@@ -183,20 +216,16 @@ public class RemoteControl extends LinearOpMode {
 //                pressingLB = false;
 //            }
 
-            telemetry.addData("Right Target Position",robot.rightForwardWheel.getTargetPosition());
+            telemetry.addData("Right Target Position", robot.rightForwardWheel.getTargetPosition());
             telemetry.addData("Right Real Position", robot.rightForwardWheel.getCurrentPosition());
-            telemetry.addData("Right Back Target Position",robot.rightRearWheel.getTargetPosition());
+            telemetry.addData("Right Back Target Position", robot.rightRearWheel.getTargetPosition());
             telemetry.addData("Right Back Real Position", robot.rightRearWheel.getCurrentPosition());
-            telemetry.addData("Left Target Position",robot.leftForwardWheel.getTargetPosition());
+            telemetry.addData("Left Target Position", robot.leftForwardWheel.getTargetPosition());
             telemetry.addData("Left Real Position", robot.leftForwardWheel.getCurrentPosition());
-            telemetry.addData("Left Back Target Position",robot.leftRearWheel.getTargetPosition());
+            telemetry.addData("Left Back Target Position", robot.leftRearWheel.getTargetPosition());
             telemetry.addData("Left Back Real Position", robot.leftRearWheel.getCurrentPosition());
             telemetry.update();
         }
 
 
     }
-
-
-}
-

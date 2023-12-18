@@ -55,49 +55,45 @@ public class Hardware {
     public void init(HardwareMap hwMap) {
 
 
-        try{
-            rightForwardWheel = hwMap.get(DcMotor.class, "CM1");
+        try {
+            rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
         } catch (Exception p_exception) {
             rightForwardWheel = null;
         }
 
-        try{
+        try {
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
-            leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
         } catch (Exception p_exception) {
             leftForwardWheel = null;
         }
 
-        try{
+        try {
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
         } catch (Exception p_exception) {
             rightRearWheel = null;
         }
 
-        try{
-            leftRearWheel = hwMap.get(DcMotor.class, "CM2");
+        try {
+            leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
-            leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
         } catch (Exception p_exception) {
             leftRearWheel = null;
         }
 
-        try{
+        try {
             AMotorUpDown = hwMap.get(DcMotor.class, "CM4");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorUpDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -106,7 +102,7 @@ public class Hardware {
             AMotorUpDown = null;
         }
 
-        try{
+        try {
             AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -115,7 +111,7 @@ public class Hardware {
             AMotorOutIn = null;
         }
 
-        try{
+        try {
             AMotorIntake = hwMap.get(DcMotor.class, "CM6");
             AMotorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -163,15 +159,16 @@ public class Hardware {
         }
 
 
-            int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
-            WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
-            camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+        int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
+        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
 
 
     }
-    public void setPower(double fr, double br, double fl, double bl) {
+
+    /*public void setPower(double fr, double br, double fl, double bl) {
         if (rightForwardWheel != null) {
-            rightRearWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
+            rightForwardWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
         }
         if (rightRearWheel != null) {
             rightRearWheel.setPower(Range.clip(br, -maxSpeed, maxSpeed));
@@ -181,10 +178,10 @@ public class Hardware {
         }
         if (leftRearWheel != null) {
             leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
-        }
-    }
+        }*/
 
-   /* public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
+
+    public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
         if (rightForwardWheel != null) {
            rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
         }
@@ -199,9 +196,8 @@ public class Hardware {
         }
 
 
-    }*/
+    }
 
 
+    }
 
-
-}
