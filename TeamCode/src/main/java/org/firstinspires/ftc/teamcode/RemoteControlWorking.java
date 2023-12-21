@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp (name = "TeleOp")
-public class RemoteControl extends LinearOpMode {
+@TeleOp (name = "TeleOpTest")
+public class RemoteControlWorking extends LinearOpMode {
 
     //Config Variables
     // RF = "CM0"
@@ -21,7 +20,7 @@ public class RemoteControl extends LinearOpMode {
         telemetry.addData("Status", "Please wo- ope, it worked ");
         telemetry.update();
 
-        if (robot.rightForwardWheel != null) {
+        /*if (robot.rightForwardWheel != null) {
             robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         if (robot.leftForwardWheel != null) {
@@ -32,30 +31,40 @@ public class RemoteControl extends LinearOpMode {
         }
         if (robot.leftRearWheel != null) {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
+        }*/
 
 
         waitForStart();
 
-        boolean pressingChangeLauncher = false;
+        /*boolean pressingChangeLauncher = false;
         boolean pressingOpenLauncher = false;
-        boolean pressingOpenClaw = false;
+
+        boolean pressingOpenClaw = false;*/
 
         while (opModeIsActive()) {
 
-            double armUpDown = 0;
-            double armExtend = 0;
+
+            /*double armUpDown;
+            double armExtend;
+            boolean clawIntake;
+            boolean clawOutake;*/
 
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
-            boolean clawIntake = gamepad2.right_bumper;
-            boolean clawOutake = gamepad2.left_bumper;
+            /*clawIntake = gamepad2.right_bumper;
+            clawOutake = gamepad2.left_bumper;*/
 
             double rfm = axial - lateral - yaw;
             double rbm = axial + lateral - yaw;
             double lfm = axial + lateral + yaw;
             double lbm = axial - lateral + yaw;
+
+
+            /*double rfm = (forward - strafing - turning); // Updated calculation for right front motor
+            double rbm = (forward + strafing - turning); // Updated calculation for right back motor
+            double lfm = (forward + strafing + turning); // Updated calculation for left front motor
+            double lbm = (forward - strafing + turning); // Updated calculation for left back*/
 
             double max;
             max = Math.max(Math.abs(lfm), Math.abs(rfm));
@@ -81,7 +90,54 @@ public class RemoteControl extends LinearOpMode {
             robot.leftForwardWheel.setPower(lfm);
             robot.leftRearWheel.setPower(lbm);
 
-            if (clawIntake == true) {
+            /*
+            double max = Math.max(Math.abs(rfm), Math.max(Math.abs(lfm), Math.max(Math.abs(rbm), Math.abs(lbm))));
+            if (max < robot.maxSpeed) {
+                robot.setPower(rfm, lfm, rbm, lbm);
+            } else {
+                double scaleFactor = robot.maxSpeed / max;
+                robot.setPower((rfm) * scaleFactor, (lfm) * scaleFactor, (rbm) * scaleFactor, (lbm) * scaleFactor);
+            }*/
+            //double max;
+           /* double scaleFactor;
+            max = Math.max(Math.abs(forward - strafing - turning), Math.max(Math.abs(forward + strafing - turning), Math.max(Math.abs(forward + strafing + turning), Math.abs(forward + turning - strafing))));
+            if (max > robot.maxSpeed) {
+                scaleFactor = robot.maxSpeed / max;
+            } else {
+                scaleFactor = robot.maxSpeed;
+            }
+            scaleFactor *= Math.max(Math.abs(1 - gamepad1.right_trigger), 0.2);
+            robot.setPower((forward - strafing - turning) * scaleFactor, (forward + strafing - turning) * scaleFactor, (forward + strafing + turning) * scaleFactor, (forward + turning - strafing) * scaleFactor);
+        }*/
+
+
+
+            /*double max;
+            max = Math.max(Math.abs(lfm) , Math.abs(rfm));
+            max = Math.max(max, Math.abs(lbm));
+            max = Math.max(max, Math.abs(rbm));*/
+
+            /*if (max > 1.0) {
+                lfm /= max;
+                rfm /= max;
+                lbm /= max;
+                rbm /= max;
+            }*/
+
+
+            /*double max = Math.max(Math.abs(forward) + Math.abs(turning) + Math.abs(strafing), robot.maxSpeed);
+            double rfmPower = rfm / max;
+            double rbmPower = rfm / max;
+            double lfmPower = rfm / max;
+            double lbmPower = rfm / max;
+
+            robot.setPower(rfmPower, rbmPower, lfmPower, lbmPower);*/
+
+
+            //To start !GAMEPAD1! press "A + Start" at the same time
+            //To start !GAMEPAD2! press "B + Start" at the same time
+
+            /*if (clawIntake == true) {
                 if (!pressingOpenClaw) {
                     robot.AMotorIntake.setPower(1);
                     pressingOpenClaw = true;
@@ -100,13 +156,14 @@ public class RemoteControl extends LinearOpMode {
                 pressingOpenClaw = false;
                 robot.AMotorIntake.setPower(0);
 
-            }
+            }*/
 
-            double armScale = 0.5;
-            double power1 = armUpDown * armScale;
-            double power2 = armExtend * armScale;
 
-            if (gamepad2.left_stick_y > 0.1) {
+            //double armScale = 0.5;
+            //double power1 = armUpDown * armScale;
+            //double power2 = armExtend * armScale;
+
+            /*if (gamepad2.left_stick_y > 0.1) {
                 robot.AMotorUpDown.setPower(0.5);
             } else if (gamepad2.left_stick_y < -0.1) {
                 robot.AMotorUpDown.setPower(-0.5);
@@ -120,10 +177,9 @@ public class RemoteControl extends LinearOpMode {
                 robot.AMotorOutIn.setPower(-0.5);
             } else {
                 robot.AMotorOutIn.setPower(0);
-            }
-
-            robot.AMotorUpDown.setPower(armUpDown);
-            robot.AMotorOutIn.setPower(armExtend);
+            }*/
+            //robot.AMotorUpDown.setPower(armUpDown);
+            //robot.AMotorOutIn.setPower(armExtend);
 
 //            double armUp = 0.25;
 //            double armDown = -0.25;
@@ -173,10 +229,9 @@ public class RemoteControl extends LinearOpMode {
 //                pressingLB = false;
 //            }
 
-                }
-            }
+        }
     }
-
+}
 
 
 
