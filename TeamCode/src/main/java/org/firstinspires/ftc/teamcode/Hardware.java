@@ -35,12 +35,12 @@ public class Hardware {
 
     public Servo AServo;
 
+    public static double maxSpeed = 0.8;
+
 
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
-
-    public static double maxSpeed = 0.8;
 
     public OpenCvCamera camera;
     private static Hardware myInstance = null;
@@ -58,6 +58,7 @@ public class Hardware {
         try {
             rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightForwardWheel.setDirection(DcMotor.Direction.REVERSE);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -67,7 +68,7 @@ public class Hardware {
         try {
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftForwardWheel.setDirection(DcMotorSimple.Direction.FORWARD);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -77,6 +78,7 @@ public class Hardware {
         try {
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightRearWheel.setDirection(DcMotor.Direction.REVERSE);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -86,7 +88,7 @@ public class Hardware {
         try {
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.FORWARD);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -166,7 +168,7 @@ public class Hardware {
 
     }
 
-    /*public void setPower(double fr, double br, double fl, double bl) {
+    public void setPower(double fr, double br, double fl, double bl) {
         if (rightForwardWheel != null) {
             rightForwardWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
         }
@@ -178,10 +180,10 @@ public class Hardware {
         }
         if (leftRearWheel != null) {
             leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
-        }*/
+        }
 
 
-    public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
+    /*public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
         if (rightForwardWheel != null) {
            rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
         }
@@ -196,8 +198,9 @@ public class Hardware {
         }
 
 
-    }
+    }*/
 
 
     }
+}
 

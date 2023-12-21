@@ -51,8 +51,8 @@ public class FTCTest extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
         leftFrontDrive  = hardwareMap.get(DcMotor.class, "CM0");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "CM2");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "CM1");
+        leftBackDrive  = hardwareMap.get(DcMotor.class, "CM1");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "CM2");
         rightBackDrive = hardwareMap.get(DcMotor.class, "CM3");
 
         // ########################################################################################
@@ -117,10 +117,10 @@ public class FTCTest extends LinearOpMode {
             // Once the correct motors move in the correct direction re-comment this code.
 
 
-            leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
+            /*leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
             leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
             rightFrontPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-            rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
+            rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad*/
 
 
             // Send calculated power to wheels
