@@ -75,11 +75,17 @@ public class RemoteControl extends LinearOpMode {
                 rfm = gamepad1.y ? 1.0 : 0.0;
                 rbm = gamepad1.b ? 1.0 : 0.0;
             }
+            double speed;
+            if(gamepad1.left_bumper) {
+                speed = .6;
+            } else {
+                speed = 1;
+            }
 
-            robot.rightForwardWheel.setPower(rfm);
-            robot.rightRearWheel.setPower(rbm);
-            robot.leftForwardWheel.setPower(lfm);
-            robot.leftRearWheel.setPower(lbm);
+            robot.rightForwardWheel.setPower(rfm * speed);
+            robot.rightRearWheel.setPower(rbm * speed);
+            robot.leftForwardWheel.setPower(lfm * speed);
+            robot.leftRearWheel.setPower(lbm * speed);
 
             if (clawIntake == true) {
                 if (!pressingOpenClaw) {
