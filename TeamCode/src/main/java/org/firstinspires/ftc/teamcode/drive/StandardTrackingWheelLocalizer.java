@@ -25,6 +25,11 @@ import java.util.List;
  *    \--------------/
  *
  */
+
+// PID Tuning
+// 1. Increase P until it becomes unstable (shows increasing oscillations on the graph). Halve that value for your starting point.
+// 2. The immediate reaction is not the job, but follow P to bring the value to the set point; it also changes reaction time.
+// 3. Fix overshoot by tuning D until it minimizes as much overshoot as possible.
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 2000;
