@@ -58,7 +58,7 @@ public class Hardware {
         try {
             rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotor.Direction.REVERSE);
+            rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -68,7 +68,7 @@ public class Hardware {
         try {
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftForwardWheel.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -78,7 +78,7 @@ public class Hardware {
         try {
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setDirection(DcMotor.Direction.REVERSE);
+            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -88,7 +88,7 @@ public class Hardware {
         try {
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftRearWheel.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
         } catch (Exception p_exception) {
@@ -107,7 +107,7 @@ public class Hardware {
         try {
             AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorOutIn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
         } catch (Exception p_exception) {
             AMotorOutIn = null;
@@ -181,24 +181,6 @@ public class Hardware {
         if (leftRearWheel != null) {
             leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
         }
-
-
-    /*public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
-        if (rightForwardWheel != null) {
-           rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
-        }
-        if (leftForwardWheel != null) {
-            leftForwardWheel.setPower(Range.clip(leftFront, -maxSpeed, maxSpeed));
-        }
-        if (rightRearWheel != null) {
-            rightRearWheel.setPower(Range.clip(rightBack, -maxSpeed, maxSpeed));
-        }
-        if (leftRearWheel != null) {
-            leftRearWheel.setPower(Range.clip(leftBack, -maxSpeed, maxSpeed));
-        }
-
-
-    }*/
 
 
     }

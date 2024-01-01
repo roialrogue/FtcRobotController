@@ -34,7 +34,7 @@ public class RemoteControl extends LinearOpMode {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
 
         boolean pressingChangeLauncher = false;
@@ -87,7 +87,28 @@ public class RemoteControl extends LinearOpMode {
             robot.leftForwardWheel.setPower(lfm * speed);
             robot.leftRearWheel.setPower(lbm * speed);
 
-            if (clawIntake == true) {
+            //Up and down arm
+            if (gamepad2.left_stick_y > 0.1) {
+                robot.AMotorUpDown.setPower(-1);
+            } else if (gamepad2.left_stick_y < -0.1) {
+                robot.AMotorUpDown.setPower(1);
+            } else {
+                robot.AMotorUpDown.setPower(0);
+            }
+            //In and out arm
+            if (gamepad2.right_stick_y > 0.1) {
+                robot.AMotorOutIn.setPower(1);
+            } else if (gamepad2.right_stick_y < -0.1) {
+                robot.AMotorOutIn.setPower(-1);
+            } else {
+                robot.AMotorOutIn.setPower(0);
+            }
+            //3100 max
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            telemetry.addData("How fair is the arm out",robot.AMotorOutIn.getCurrentPosition());
+            telemetry.update();
+
+            /*if (clawIntake == true) {
                 if (!pressingOpenClaw) {
                     robot.AMotorIntake.setPower(1);
                     pressingOpenClaw = true;
@@ -104,32 +125,8 @@ public class RemoteControl extends LinearOpMode {
                 pressingOpenClaw = true;
             } else {
                 pressingOpenClaw = false;
-                robot.AMotorIntake.setPower(0);
 
-            }
-
-            double armScale = 0.5;
-            double power1 = armUpDown * armScale;
-            double power2 = armExtend * armScale;
-
-            if (gamepad2.left_stick_y > 0.1) {
-                robot.AMotorUpDown.setPower(0.5);
-            } else if (gamepad2.left_stick_y < -0.1) {
-                robot.AMotorUpDown.setPower(-0.5);
-            } else {
-                robot.AMotorUpDown.setPower(0);
-            }
-
-            if (gamepad2.right_stick_y > 0.1) {
-                robot.AMotorOutIn.setPower(0.5);
-            } else if (gamepad2.right_stick_y < -0.1) {
-                robot.AMotorOutIn.setPower(-0.5);
-            } else {
-                robot.AMotorOutIn.setPower(0);
-            }
-
-            robot.AMotorUpDown.setPower(armUpDown);
-            robot.AMotorOutIn.setPower(armExtend);
+            }*/
 
 //            double armUp = 0.25;
 //            double armDown = -0.25;
