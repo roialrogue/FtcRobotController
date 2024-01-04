@@ -29,11 +29,15 @@ public class Hardware {
     //"CM5"
     public DcMotor AMotorIntake;
     //"CM6"
-    public Servo PServo1;
+    public Servo HangServo;
 
-    public Servo PServo2;
+    public Servo InTakeServo1;
 
-    public Servo AServo;
+    public Servo InTakeServo2;
+
+    public Servo ClawRotationServo;
+
+    public Servo ClawDropServo;
 
     public static double maxSpeed = 0.8;
 
@@ -96,7 +100,7 @@ public class Hardware {
         }
 
         try {
-            AMotorUpDown = hwMap.get(DcMotor.class, "CM4");
+            AMotorUpDown = hwMap.get(DcMotor.class, "XH0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorUpDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             AMotorUpDown.setPower(0);
@@ -105,7 +109,7 @@ public class Hardware {
         }
 
         try {
-            AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
+            AMotorOutIn = hwMap.get(DcMotor.class, "XH3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
@@ -114,7 +118,7 @@ public class Hardware {
         }
 
         try {
-            AMotorIntake = hwMap.get(DcMotor.class, "CM6");
+            AMotorIntake = hwMap.get(DcMotor.class, "XH1");
             AMotorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             AMotorIntake.setPower(0);
@@ -123,21 +127,33 @@ public class Hardware {
         }
 
         try {
-            PServo1 = hwMap.get(Servo.class, "CS1");
+            HangServo = hwMap.get(Servo.class, "CS0");
         } catch (Exception p_exception) {
-            PServo1 = null;
+            HangServo = null;
         }
 
         try {
-            PServo2 = hwMap.get(Servo.class, "CS2");
+            InTakeServo1 = hwMap.get(Servo.class, "CS4");
         } catch (Exception p_exception) {
-            PServo2 = null;
+            InTakeServo2 = null;
         }
 
         try {
-            AServo = hwMap.get(Servo.class, "CS0");
+            InTakeServo2 = hwMap.get(Servo.class, "ES0");
         } catch (Exception p_exception) {
-            AServo = null;
+            InTakeServo2 = null;
+        }
+
+        try {
+            ClawRotationServo = hwMap.get(Servo.class, "CS2");
+        } catch (Exception p_exception) {
+            ClawRotationServo = null;
+        }
+
+        try {
+            ClawDropServo = hwMap.get(Servo.class, "ES2");
+        } catch (Exception p_exception) {
+            ClawDropServo = null;
         }
 
 
