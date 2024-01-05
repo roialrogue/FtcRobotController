@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -47,11 +48,13 @@ public class P2BlueAuto extends LinearOpMode{
 
 
         waitForStart();
-        /*runtime.reset();
+        */
+/*runtime.reset();
         while(runtime.seconds() < 5) {
             hw.leftForwardWheel.setPower(1);
         }
-        hw.leftForwardWheel.setPower(0);*/
+        hw.leftForwardWheel.setPower(0);*//*
+
 
         hw.camera.stopStreaming();
 
@@ -125,4 +128,4 @@ public class P2BlueAuto extends LinearOpMode{
         robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-}
+}*/

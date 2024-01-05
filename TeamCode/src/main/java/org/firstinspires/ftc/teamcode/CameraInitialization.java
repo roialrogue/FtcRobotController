@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -45,7 +46,8 @@ public class CameraInitialization extends OpenCvPipeline {
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, input, Imgproc.COLOR_RGB2HSV);
 
-        /*if (isBlue) {
+        */
+/*if (isBlue) {
             Scalar lowHSV = new Scalar(100, 100, 100);
             Scalar highHSV = new Scalar(130, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
@@ -53,7 +55,8 @@ public class CameraInitialization extends OpenCvPipeline {
             Scalar lowHSV = new Scalar(0, 100, 100);
             Scalar highHSV = new Scalar(11, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
-        }*/
+        }*//*
+
 
         Scalar lowVal, highVal;
         if(isBlue){
@@ -127,3 +130,4 @@ public class CameraInitialization extends OpenCvPipeline {
     }
 
 }
+*/
