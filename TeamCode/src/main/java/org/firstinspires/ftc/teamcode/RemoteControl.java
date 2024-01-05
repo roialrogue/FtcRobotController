@@ -30,10 +30,11 @@ public class RemoteControl extends LinearOpMode {
         if (robot.leftRearWheel != null) {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+
+
         double ServoUp = 0.521;
         double ServoDown = 0.243;
         robot.HangServo.setPosition(ServoDown);
-        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
 
         boolean pressingChangeLauncher = false;
@@ -42,39 +43,36 @@ public class RemoteControl extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            double armUpDown = 0;
-            double armExtend = 0;
-
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
             boolean slowDrive = gamepad1.left_bumper;
-            double clawBootWheelIntake = gamepad1.left_trigger;
-            double clawBarInTake = gamepad1.right_trigger;
 
             double beltOutIn = gamepad2.right_stick_y;
             double ArmUpDown = gamepad2.left_stick_y;
             boolean hangArm = gamepad2.y;
             boolean AUDSlowDrive = gamepad2.left_bumper;
             boolean BOISlowDrive = gamepad2.right_bumper;
+
+
             boolean clawDropRight = gamepad2.b;
             boolean clawDropLeft = gamepad2.a;
             double clawAngaleRotationUp = gamepad2.left_trigger;
             double clawAngaleRotationDown = gamepad2.right_trigger;
 
-            telemetry.addData("Your are gay",clawBootWheelIntake);
-            // Claw intake system
-            if(clawBootWheelIntake < .1) {
-                robot.InTakeServo1.setPosition(1);
-            } else {
-                robot.InTakeServo1.setPosition(0.5);
-            }
 
-            if(clawBarInTake < .1) {
+            double clawBootWheelIntake = gamepad1.left_trigger;
+            double clawBarInTake = gamepad1.right_trigger;
+
+            // Claw intake system
+            if(clawBootWheelIntake > .5) {
+                robot.InTakeServo1.setPosition(1);
                 robot.InTakeServo2.setPosition(1);
             } else {
-                robot.InTakeServo1.setPosition(.5);
+                robot.InTakeServo1.setPosition(0.5);
+                robot.InTakeServo2.setPosition(0.5);
             }
+
 
             //pickel droping
             if(clawDropLeft) {

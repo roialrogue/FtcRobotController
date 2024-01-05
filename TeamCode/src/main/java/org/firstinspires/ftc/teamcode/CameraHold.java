@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,7 +11,7 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-public class CameraInitialization extends OpenCvPipeline {
+public class CameraHold extends OpenCvPipeline {
     public static boolean stoneLeft = false;
     public static boolean stoneMiddle = false;
     public static boolean stoneRight = false;
@@ -36,16 +37,16 @@ public class CameraInitialization extends OpenCvPipeline {
 
     boolean isBlue;
 
-    public CameraInitialization(Telemetry t, boolean isBlue) {
+    public CameraHold(Telemetry t, boolean isBlue) {
         telemetry = t;
         this.isBlue = isBlue;
     }
 
     @Override
     public Mat processFrame(Mat input) {
-        Imgproc.cvtColor(input, input, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        /*if (isBlue) {
+        if (isBlue) {
             Scalar lowHSV = new Scalar(100, 100, 100);
             Scalar highHSV = new Scalar(130, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
@@ -53,15 +54,6 @@ public class CameraInitialization extends OpenCvPipeline {
             Scalar lowHSV = new Scalar(0, 100, 100);
             Scalar highHSV = new Scalar(11, 255, 255);
             Core.inRange(mat, lowHSV, highHSV, mat);
-        }*/
-
-        Scalar lowVal, highVal;
-        if(isBlue){
-            lowVal = new Scalar(150, 50, 50);
-            highVal = new Scalar(290, 255, 255);
-        }else{
-            lowVal = new Scalar(0, 100, 100);
-            highVal = new Scalar(11, 255, 255);
         }
         Mat left = mat.submat(LEFT_ROI);
         Mat middle = mat.submat(MIDDLE_ROI);
@@ -78,6 +70,9 @@ public class CameraInitialization extends OpenCvPipeline {
         telemetry.addData("Left raw value", stoneLeft);
         telemetry.addData("Middle raw value", stoneMiddle);
         telemetry.addData("Right raw value", stoneRight);
+        telemetry.addData("Left percentage", Math.round(leftValue * 100) + "%");
+        telemetry.addData("Middle percentage", Math.round(middleValue * 100) + "%");
+        telemetry.addData("Right percentage", Math.round(rightValue * 100) + "%");
 
         double leftper = Math.round(leftValue * 100);
         double middleper = Math.round(middleValue * 100);
@@ -126,4 +121,6 @@ public class CameraInitialization extends OpenCvPipeline {
         return location;
     }
 
+
 }
+*/

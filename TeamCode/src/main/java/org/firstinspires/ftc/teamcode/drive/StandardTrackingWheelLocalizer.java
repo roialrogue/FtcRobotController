@@ -55,7 +55,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 
         leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM0"));
         rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM3"));
-        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM4"));
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM1"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         rightEncoder.setDirection(Encoder.Direction.REVERSE);
@@ -65,7 +65,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
     }
 
-    public static double X_MULTIPLIER = .9934; // Multiplier in the X direction
+    public static double X_MULTIPLIER = .99469; // Multiplier in the X direction
     public static double Y_MULTIPLIER = 1.0154; // Multiplier in the Y direction
     @NonNull
     @Override

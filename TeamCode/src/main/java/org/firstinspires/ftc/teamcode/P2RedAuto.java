@@ -69,6 +69,8 @@ public class P2RedAuto extends LinearOpMode{
                 telemetry.update();
 
 
+
+
             }
         }
     }

@@ -46,7 +46,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 14.385; // in
+    public static double TRACK_WIDTH = 14.32; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -54,9 +54,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.01635;
-    public static double kA = 0.002;
-    public static double kStatic = 0.05869;
+    public static double kV = 0.0153;
+    public static double kA = 0.0032;
+    public static double kStatic = 0.06353;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -67,7 +67,7 @@ public class DriveConstants {
      */
     public static double MAX_VEL = 52.48291908330528;
     public static double MAX_ACCEL = 52.48291908330528;
-    public static double MAX_ANG_VEL = Math.toRadians(197.81142878061218);
+    public static double MAX_ANG_VEL = Math.toRadians(193.2644);
     public static double MAX_ANG_ACCEL = Math.toRadians(214.78926857142858);
 
     /*

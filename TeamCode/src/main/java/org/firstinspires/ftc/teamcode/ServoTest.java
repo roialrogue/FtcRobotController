@@ -22,10 +22,10 @@ public class ServoTest extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Position", position);
-            telemetry.addData("ActualMotorPosition", robot.InTakeServo2.getPosition());
+            telemetry.addData("ActualMotorPosition", robot.InTakeServo1.getPosition());
             telemetry.update();
 
-            robot.InTakeServo2.setPosition(position);
+            robot.InTakeServo1.setPosition(position);
 
             if (gamepad1.a && !pressingA) {
                 position += 0.01;
