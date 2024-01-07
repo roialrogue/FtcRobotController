@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.opencv.core.Point;
 
 @Autonomous(name = "P.1 Red Auto")
 public class P1RedAuto extends LinearOpMode {
@@ -34,8 +35,8 @@ public class P1RedAuto extends LinearOpMode {
         Trajectory trajP2Mark3T1 = drive.trajectoryBuilder(RedP2Mark3)
                 .lineToLinearHeading(new Pose2d(-52,-38, Math.toRadians(45)))
                 .build();
-
-        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(trajP2Mark3T1.end().plus(new Pose2d(0,0, Math.toRadians(125))),false) //125
+        //125
+        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(new Pose2d(-52,-38,Math.toRadians(175)))
                 .lineToLinearHeading(new Pose2d(-33,-60, Math.toRadians(0)))
                 .forward(30)
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
@@ -51,7 +52,7 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(trajP2Mark3T1);
         drive.turn(Math.toRadians(125));
-        drive.followTrajectory(trajP2Mark3T2);
+        /*drive.followTrajectory(trajP2Mark3T2);*/
 
 
         //Blue P.2 mark 3 to the line
