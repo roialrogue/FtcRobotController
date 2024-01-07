@@ -35,16 +35,16 @@ public class P1RedAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-52,-38, Math.toRadians(45)))
                 .build();
 
-        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(trajP2Mark3T1.end().plus(new Pose2d(0,0, Math.toRadians(170))),false) //125
+        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(trajP2Mark3T1.end().plus(new Pose2d(0,0, Math.toRadians(125))),false) //125
                 .lineToLinearHeading(new Pose2d(-33,-60, Math.toRadians(0)))
                 .forward(30)
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
                 .build();
 
-        Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end(),true)
+        /*Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end(),true)
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
-                .build();
-*/
+                .build();*/
+
         /*Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
                 .splineTo(new Vector2d(20, 9), Math.toRadians(45))
                 .build();*/

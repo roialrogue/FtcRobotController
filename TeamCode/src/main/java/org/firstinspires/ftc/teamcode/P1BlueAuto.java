@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -37,11 +38,13 @@ public class P1BlueAuto extends LinearOpMode{
             });
 
             waitForStart();
-            /*runtime.reset();
+            */
+/*runtime.reset();
             while(runtime.seconds() < 5) {
             hw.leftForwardWheel.setPower(1);
             }
-            hw.leftForwardWheel.setPower(0);*/
+            hw.leftForwardWheel.setPower(0);*//*
+
 
             if (cameraWorked[0]) {
                 sleep(100); // Adjust this sleep time as needed
@@ -64,4 +67,4 @@ public class P1BlueAuto extends LinearOpMode{
                 telemetry.update();
             }
         }
-    }
+    }*/

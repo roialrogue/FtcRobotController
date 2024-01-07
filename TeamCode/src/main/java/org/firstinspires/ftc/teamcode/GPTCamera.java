@@ -65,7 +65,8 @@ public class GPTCamera extends OpenCvPipeline {
         return input;
     }
 
-    public static Location getLocation(){
-        return location;
-    }
+    /*public static Location getLocation() {
+        //return location;
+        return */
+
 }
