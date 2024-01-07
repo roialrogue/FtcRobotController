@@ -1,23 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-import android.net.Uri;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "P.1 Red Auto")
-public class P1RedAuto extends LinearOpMode{
+public class P1RedAuto extends LinearOpMode {
     boolean isBlue;
     Hardware robot = Hardware.getInstance();
     ElapsedTime runtime = new ElapsedTime();
@@ -29,29 +22,46 @@ public class P1RedAuto extends LinearOpMode{
 
         waitForStart();
 
-        // We want to start the bot at x: 10, y: -8, heading: 90 degrees
-        Pose2d startPose = new Pose2d(-72, 36, Math.toRadians(0));
+        Pose2d RedP2Mark3 = new Pose2d(-33, -63, Math.toRadians(90));
 
-        drive.setPoseEstimate(startPose);
+        drive.setPoseEstimate(RedP2Mark3);
 
-        Trajectory myTrajectory = drive.trajectoryBuilder(startPose)
-                .forward(25)
+        /*drive.trajectorySequenceBuilder(new Pose2d(-53, -38, Math.toRadians(170)))
+                .lineToLinearHeading(new Pose2d(-33,-60, Math.toRadians(0)))
+                .forward(30)
+                .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0));*/
+
+        Trajectory trajP2Mark3T1 = drive.trajectoryBuilder(RedP2Mark3)
+                .lineToLinearHeading(new Pose2d(-52,-38, Math.toRadians(45)))
                 .build();
-        Trajectory myTrajectory2 = drive.trajectoryBuilder(myTrajectory.end())
-                .strafeRight(72)
+
+        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(trajP2Mark3T1.end().plus(new Pose2d(0,0, Math.toRadians(170))),false) //125
+                .lineToLinearHeading(new Pose2d(-33,-60, Math.toRadians(0)))
+                .forward(30)
+                .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
                 .build();
 
-        /*Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(, 9), Math.toRadians(45))
+        Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end(),true)
+                .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
                 .build();
 */
         /*Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
                 .splineTo(new Vector2d(20, 9), Math.toRadians(45))
                 .build();*/
 
-        drive.followTrajectory(myTrajectory);
-        drive.followTrajectory(myTrajectory2);
-    }
+        drive.followTrajectory(trajP2Mark3T1);
+        drive.turn(Math.toRadians(125));
+        drive.followTrajectory(trajP2Mark3T2);
 
 
+        //Blue P.2 mark 3 to the line
+        //will need to be edit depending on exact start
+        /*Pose2d BluePP = new Pose2d(-37, 63, Math.toRadians(0));
+
+        Trajectory BlueP2Mark3 = drive.trajectoryBuilder(BluePP)
+                .lineToLinearHeading(new Pose2d(-52,38, Math.toRadians(300)))
+                .build();
+        drive.followTrajectory(BlueP2Mark3);
+        drive.turn(Math.toRadians(-115));*/
     }
+}

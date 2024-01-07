@@ -46,7 +46,6 @@ public class P1BlueAuto extends LinearOpMode{
             if (cameraWorked[0]) {
                 sleep(100); // Adjust this sleep time as needed
                 //GPTCamera.Location location = cameraPipeline.getLocation();
-
                 location = Hardware.getInstance().GPTcamera.getLocation();
                 Hardware.getInstance().camera.stopStreaming(); //Watch this line
             }
