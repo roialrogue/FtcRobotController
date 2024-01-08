@@ -33,16 +33,21 @@ public class P1RedAuto extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0));*/
 
         Trajectory trajP2Mark3T1 = drive.trajectoryBuilder(RedP2Mark3)
-                .lineToLinearHeading(new Pose2d(-52,-38, Math.toRadians(45)))
+                .lineToLinearHeading(new Pose2d(-43,-42, Math.toRadians(90)))
                 .build();
-        //125
-        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(new Pose2d(-52,-38,Math.toRadians(175)))
-                .lineToLinearHeading(new Pose2d(-33,-60, Math.toRadians(0)))
-                .forward(30)
+
+
+        Trajectory trajP2Mark3T2 = drive.trajectoryBuilder(trajP2Mark3T1.end())
+                .lineToLinearHeading(new Pose2d(-55,-40, Math.toRadians(180)))
+                .build();
+
+        Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end())
+                .splineTo(new Vector2d(0, -60), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
                 .build();
 
-        /*Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end(),true)
+
+                /*Trajectory trajP2Mark3T3 = drive.trajectoryBuilder(trajP2Mark3T2.end(),true)
                 .splineToConstantHeading(new Vector2d(52, -29), Math.toRadians(0))
                 .build();*/
 
@@ -51,8 +56,18 @@ public class P1RedAuto extends LinearOpMode {
                 .build();*/
 
         drive.followTrajectory(trajP2Mark3T1);
-        drive.turn(Math.toRadians(125));
-        /*drive.followTrajectory(trajP2Mark3T2);*/
+        runtime.reset();
+        while (runtime.seconds() < 2) {
+            robot.InTakeServo1.setPosition(-1);
+            robot.InTakeServo2.setPosition(-1);
+        }
+        /*drive.turn(Math.toRadians(125));*/
+        drive.followTrajectory(trajP2Mark3T2);
+        while (runtime.seconds() < 3) {
+            robot.InTakeServo1.setPosition(1);
+            robot.InTakeServo2.setPosition(1);
+        }
+        /*drive.followTrajectory(trajP2Mark3T3);*/
 
 
         //Blue P.2 mark 3 to the line

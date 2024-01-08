@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
@@ -13,6 +12,13 @@ public class GPTCamera extends OpenCvPipeline {
     }
 
     private Location location;
+
+    public static boolean leftSide = false;
+    public static boolean rightSide = false;
+    public static boolean middleSide = false;
+    public static boolean nonSide = false;
+
+
     static final Rect LEFT_ROI = new Rect(new Point(0, 0), new Point(426, 720));
     static final Rect MIDDLE_ROI = new Rect(new Point(426, 0), new Point(852, 720));
     static final Rect RIGHT_ROI = new Rect(new Point(852, 0), new Point(1278, 720));
@@ -51,14 +57,16 @@ public class GPTCamera extends OpenCvPipeline {
         double middleper = Math.round(middleValue * 100);
         double rightper = Math.round(rightValue * 100);
 
+
+
         if (leftper > rightper && leftper > middleper) {
-            location = Location.LEFT;
+            leftSide = true;
         } else if (middleper > leftper && middleper > rightper){
-            location = Location.MIDDLE;
+            middleSide = true;
         } else if (rightper > leftper && rightper > middleper){
-            location = Location.RIGHT;
+            rightSide = true;
         } else {
-            location = Location.NOT_FOUND;
+            nonSide = true;
         }
 
         Imgproc.cvtColor(input, input, Imgproc.COLOR_GRAY2RGB);

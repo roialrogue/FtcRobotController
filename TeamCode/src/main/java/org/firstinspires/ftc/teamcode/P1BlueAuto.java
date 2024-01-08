@@ -1,4 +1,3 @@
-/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -38,33 +37,33 @@ public class P1BlueAuto extends LinearOpMode{
             });
 
             waitForStart();
-            */
+
+
 /*runtime.reset();
             while(runtime.seconds() < 5) {
             hw.leftForwardWheel.setPower(1);
             }
-            hw.leftForwardWheel.setPower(0);*//*
+            hw.leftForwardWheel.setPower(0);*/
+
 
 
             if (cameraWorked[0]) {
                 sleep(100); // Adjust this sleep time as needed
-                //GPTCamera.Location location = cameraPipeline.getLocation();
-                location = Hardware.getInstance().GPTcamera.getLocation();
                 Hardware.getInstance().camera.stopStreaming(); //Watch this line
             }
 
-            if (location == GPTCamera.Location.RIGHT) {
+            if (GPTCamera.leftSide == true) {
                 telemetry.addData("Found on the right", "");
 
-            } else if (location == GPTCamera.Location.MIDDLE) {
+            } else if (GPTCamera.middleSide == true) {
                 telemetry.addData("Found on the middle", "");
 
-            } else if (location == GPTCamera.Location.LEFT) {
+            } else if (GPTCamera.rightSide == true) {
                 telemetry.addData("Found on the left", "");
 
-            } else if (location == GPTCamera.Location.NOT_FOUND) {
+            } else if (GPTCamera.nonSide == true) {
                 telemetry.addData("Did not find","");
                 telemetry.update();
             }
         }
-    }*/
+    }
