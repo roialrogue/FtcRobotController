@@ -1,6 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
@@ -63,17 +61,19 @@ public class GPTCamera extends OpenCvPipeline {
 
         if (leftper > rightper && leftper > middleper) {
             leftSide = true;
-            telemetry.addData("Found on the", "right");
+            /*telemetry.addData("Found on the", "right");*/
         } else if (middleper > leftper && middleper > rightper){
             middleSide = true;
-            telemetry.addData("Found on the", "middle");
+            /*telemetry.addData("Found on the", "middle");
+            telemetry.update();*/
         } else if (rightper > leftper && rightper > middleper){
             rightSide = true;
-            telemetry.addData("Found on the", "left");
+            /*telemetry.addData("Found on the", "left");
+            telemetry.update();*/
         } else {
             nonSide = true;
-            telemetry.addData("Did not find","Nooo");
-            telemetry.update();
+            /*telemetry.addData("Did not find","Nooo");
+            telemetry.update();*/
         }
 
         Imgproc.cvtColor(input, input, Imgproc.COLOR_GRAY2RGB);
