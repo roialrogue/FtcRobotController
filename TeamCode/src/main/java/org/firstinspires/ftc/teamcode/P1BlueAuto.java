@@ -22,6 +22,7 @@ public class P1BlueAuto extends LinearOpMode{
         Hardware robot = Hardware.getInstance();
         FtcDashboard dashboard = FtcDashboard.getInstance();
         Telemetry dashboardTelemetry = dashboard.getTelemetry();
+        private GPTCamera detector;
         public void runOpMode() {
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -32,7 +33,8 @@ public class P1BlueAuto extends LinearOpMode{
                 public void onOpened() {
                     GPTCamera cameraPipeline = new GPTCamera(true);
                     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-                    webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"), cameraMonitorViewId);
+                    /*detector = new GPTCamera();*/
+                    webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
                     Hardware.getInstance().camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                     Hardware.getInstance().camera.setPipeline(cameraPipeline);
                     telemetry.addData("Webcam has initialized correctly", "");

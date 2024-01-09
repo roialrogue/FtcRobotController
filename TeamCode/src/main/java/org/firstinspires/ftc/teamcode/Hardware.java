@@ -100,7 +100,7 @@ public class Hardware {
         }
 
         try {
-            AMotorUpDown = hwMap.get(DcMotor.class, "XH0");
+            AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorUpDown.setPower(0);
@@ -109,7 +109,7 @@ public class Hardware {
         }
 
         try {
-            AMotorOutIn = hwMap.get(DcMotor.class, "XH3");
+            AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
