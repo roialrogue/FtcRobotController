@@ -63,16 +63,16 @@ public class GPTCamera extends OpenCvPipeline {
 
         if (leftper > rightper && leftper > middleper) {
             leftSide = true;
-            telemetry.addData("Found on the right", "");
+            telemetry.addData("Found on the", "right");
         } else if (middleper > leftper && middleper > rightper){
             middleSide = true;
-            telemetry.addData("Found on the middle", "");
+            telemetry.addData("Found on the", "middle");
         } else if (rightper > leftper && rightper > middleper){
             rightSide = true;
-            telemetry.addData("Found on the left", "");
+            telemetry.addData("Found on the", "left");
         } else {
             nonSide = true;
-            telemetry.addData("Did not find","");
+            telemetry.addData("Did not find","Nooo");
             telemetry.update();
         }
 

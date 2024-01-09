@@ -26,13 +26,13 @@ public class P1BlueAuto extends LinearOpMode{
         public void runOpMode() {
             telemetry.addData("Status", "Initailized");
             telemetry.update();
-            sleep(500);
+            sleep(1000);
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
             /*final boolean[] cameraWorked = {false};*/
             telemetry.addData("Before Hardware.geInstance","Hi");
             telemetry.update();
-            sleep(500);
+            sleep(1000);
             /*Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                 @Override
                 public void onOpened() {*/
@@ -44,7 +44,7 @@ public class P1BlueAuto extends LinearOpMode{
                     webCam.setPipeline(detector);
                     telemetry.addData("Webcam has initialized correctly", "Ya");
                     telemetry.update();
-                    sleep(500);
+                    sleep(1000);
 
                     /*cameraWorked[0] = true;*/
 
@@ -60,12 +60,12 @@ public class P1BlueAuto extends LinearOpMode{
 
             telemetry.addData("Before Start","Hi");
             telemetry.update();
-            sleep(500);
+            sleep(1000);
             waitForStart();
 
             telemetry.addData("After Start","Hi");
             telemetry.update();
-            sleep(500);
+            sleep(1000);
             Trajectory BlueP2M1T1 = drive.trajectoryBuilder(new Pose2d(0,0))
                     .lineToLinearHeading(new Pose2d(10,10, Math.toRadians(180)))
                     .build();
