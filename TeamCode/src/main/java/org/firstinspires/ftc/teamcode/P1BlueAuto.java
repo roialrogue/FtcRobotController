@@ -58,9 +58,9 @@ public class P1BlueAuto extends LinearOpMode{
                 //Hardware.getInstance().camera.stopStreaming(); //Watch this line
             //}
 
-            telemetry.addData("Before Start","Hi");
+            /*telemetry.addData("Before Start","Hi");
             telemetry.update();
-            sleep(1000);
+            sleep(1000);*/
             waitForStart();
 
             telemetry.addData("After Start","Hi");
