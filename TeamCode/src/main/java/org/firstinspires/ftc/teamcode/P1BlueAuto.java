@@ -31,9 +31,9 @@ public class P1BlueAuto extends LinearOpMode{
             final boolean[] cameraWorked = {false};
             telemetry.addData("Before Hardware.geInstance","Hi");
             telemetry.update();
-            Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            /*Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                 @Override
-                public void onOpened() {
+                public void onOpened() {*/
                     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
                     detector = new GPTCamera(true);
                     webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -44,14 +44,13 @@ public class P1BlueAuto extends LinearOpMode{
                     telemetry.update();
 
                     cameraWorked[0] = true;
-                }
 
-                @Override
+            /*    @Override
                 public void onError(int errorCode) {
                     telemetry.addData("Camera has broken", "");
                     telemetry.update();
                 }
-            });
+            });*/
             telemetry.addData("Before if CameraWorked", "");
             telemetry.update();
             if (cameraWorked[0]) {
