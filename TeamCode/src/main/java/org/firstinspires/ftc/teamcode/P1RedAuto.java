@@ -350,7 +350,6 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory();
         drive.followTrajectory(RedP2M1T2);
         drive.followTrajectory(RedP2M1T3);
         drive.followTrajectory(RedP2M1T4);
@@ -408,9 +407,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(RedP2M3T1);
         drive.followTrajectory(RedP2M3T2);
-
         drive.followTrajectory(RedP2M3T4);
         drive.followTrajectory(RedP2M3T5);
         drive.turn(180);
