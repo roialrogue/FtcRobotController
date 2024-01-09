@@ -328,12 +328,21 @@ public class P1RedAuto extends LinearOpMode {
                 .build();
 
         Trajectory RedP2M1T2 = drive.trajectoryBuilder(RedP2M1T1.end())
-                .lineToLinearHeading(new Pose2d(-59, -36, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
                 .build();
 
         Trajectory RedP2M1T3 = drive.trajectoryBuilder(RedP2M1T2.end())
-                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(5, -58, Math.toRadians(0)))
                 .build();
+
+        Trajectory RedP2M1T4 = drive.trajectoryBuilder(RedP2M1T3.end())
+                .splineToConstantHeading(new Vector2d(50, -42), Math.toRadians(0))
+                .build();
+
+        Trajectory RedP2M1T5 = drive.trajectoryBuilder(RedP2M1T4.end())
+                .strafeTo(new Vector2d(50, -60))
+                .build();
+
 
         drive.followTrajectory(RedP2M1T1);
         runtime.reset();
@@ -343,6 +352,9 @@ public class P1RedAuto extends LinearOpMode {
         }
         drive.followTrajectory(RedP2M1T2);
         drive.followTrajectory(RedP2M1T3);
+        drive.followTrajectory(RedP2M1T4);
+        drive.followTrajectory(RedP2M1T5);
+        drive.turn(180);
 
         //Path Red mark 2
         Trajectory RedP2M2T1 = drive.trajectoryBuilder(RedP2)
@@ -370,7 +382,7 @@ public class P1RedAuto extends LinearOpMode {
 
         //Path Red mark 3
         Trajectory RedP2M3T1 = drive.trajectoryBuilder(RedP2)
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-34, -32, Math.toRadians(180)))
                 .build();
 
         Trajectory RedP2M3T2 = drive.trajectoryBuilder(RedP2M3T1.end())
@@ -380,6 +392,18 @@ public class P1RedAuto extends LinearOpMode {
         Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
                 .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
                 .build();
+
+        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
+                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
+                .build();
+
+        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
+                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
+                .build();
+                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(5, -58, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(50, -30), Math.toRadians(0))
+                .strafeTo(new Vector2d(50, -60))
 
         drive.followTrajectory(RedP2M3T1);
         runtime.reset();

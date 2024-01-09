@@ -31,12 +31,12 @@ public class P1BlueAuto extends LinearOpMode{
             Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                 @Override
                 public void onOpened() {
-                    GPTCamera cameraPipeline = new GPTCamera(true);
+                    GPTCamera.GPTCamera(true);
                     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-                    /*detector = new GPTCamera();*/
+                    detector = new GPTCamera();
                     webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-                    Hardware.getInstance().camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                    Hardware.getInstance().camera.setPipeline(cameraPipeline);
+                    webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                    webCam.setPipeline(detector);
                     telemetry.addData("Webcam has initialized correctly", "");
                     cameraWorked[0] = true;
                 }

@@ -14,10 +14,12 @@ public class MeepMeepRoadRunner {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(52.48291908330528, 52.48291908330528, Math.toRadians(193.2644), Math.toRadians(214.78926857142858), 14.32)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-33, -63, Math.toRadians(90)))
-                                    .lineToLinearHeading(new Pose2d(-34, -32, Math.toRadians(0)))
-                                    .lineToLinearHeading(new Pose2d(-59, -36, Math.toRadians(180)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-33, -65, Math.toRadians(90)))
+                                    .lineToLinearHeading(new Pose2d(-34, -32, Math.toRadians(180)))
                                     .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                                    .lineToLinearHeading(new Pose2d(5, -58, Math.toRadians(0)))
+                                    .splineToConstantHeading(new Vector2d(50, -30), Math.toRadians(0))
+                                    .strafeTo(new Vector2d(50, -60))
                                 .build()
                 );
 
