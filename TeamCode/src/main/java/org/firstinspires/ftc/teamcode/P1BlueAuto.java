@@ -26,11 +26,13 @@ public class P1BlueAuto extends LinearOpMode{
         public void runOpMode() {
             telemetry.addData("Status", "Initailized");
             telemetry.update();
+            sleep(500);
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
             /*final boolean[] cameraWorked = {false};*/
             telemetry.addData("Before Hardware.geInstance","Hi");
             telemetry.update();
+            sleep(500);
             /*Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                 @Override
                 public void onOpened() {*/
@@ -42,6 +44,7 @@ public class P1BlueAuto extends LinearOpMode{
                     webCam.setPipeline(detector);
                     telemetry.addData("Webcam has initialized correctly", "Ya");
                     telemetry.update();
+                    sleep(500);
 
                     /*cameraWorked[0] = true;*/
 
@@ -51,36 +54,36 @@ public class P1BlueAuto extends LinearOpMode{
                     telemetry.update();
                 }
             });*/
-            telemetry.addData("Before if CameraWorked", "");
-            telemetry.update();
             /*if (cameraWorked[0]) {*/
                 //Hardware.getInstance().camera.stopStreaming(); //Watch this line
             //}
 
-            telemetry.addData("Before Start","");
+            telemetry.addData("Before Start","Hi");
             telemetry.update();
+            sleep(500);
             waitForStart();
 
-            telemetry.addData("After Start","");
+            telemetry.addData("After Start","Hi");
             telemetry.update();
+            sleep(500);
             Trajectory BlueP2M1T1 = drive.trajectoryBuilder(new Pose2d(0,0))
                     .lineToLinearHeading(new Pose2d(10,10, Math.toRadians(180)))
                     .build();
 
             if (GPTCamera.leftSide == true) {
-                telemetry.addData("Found in Auto on the right", "");
+                telemetry.addData("Found in Auto on the", "right");
                 telemetry.update();
                 drive.followTrajectory(BlueP2M1T1);
             } else if (GPTCamera.middleSide == true) {
-                telemetry.addData("Found in Auto on the middle", "");
+                telemetry.addData("Found in Auto on the", "middle");
                 telemetry.update();
                 drive.followTrajectory(BlueP2M1T1);
             } else if (GPTCamera.rightSide == true) {
-                telemetry.addData("Found in Auto on the left", "");
+                telemetry.addData("Found in Auto on the", "left");
                 telemetry.update();
                 drive.followTrajectory(BlueP2M1T1);
             } else if (GPTCamera.nonSide == true) {
-                telemetry.addData("Did not find in Auto","");
+                telemetry.addData("Did not find in Auto","Fail");
                 telemetry.update();
                 drive.followTrajectory(BlueP2M1T1);
             }
