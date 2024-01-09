@@ -29,13 +29,14 @@ public class P1BlueAuto extends LinearOpMode{
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
             final boolean[] cameraWorked = {false};
-            telemetry.addData("Before Hardware.geInstance","");
+            telemetry.addData("Before Hardware.geInstance"," ");
             Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                 @Override
                 public void onOpened() {
                     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
                     detector = new GPTCamera(true);
                     webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+                    webCam.openCameraDevice();
                     webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                     webCam.setPipeline(detector);
                     telemetry.addData("Webcam has initialized correctly", "");
