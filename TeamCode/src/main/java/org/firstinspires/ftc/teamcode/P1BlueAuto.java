@@ -54,7 +54,7 @@ public class P1BlueAuto extends LinearOpMode{
             telemetry.addData("Before if CameraWorked", "");
             telemetry.update();
             if (cameraWorked[0]) {
-                Hardware.getInstance().camera.stopStreaming(); //Watch this line
+                //Hardware.getInstance().camera.stopStreaming(); //Watch this line
             }
 
             telemetry.addData("Before Start","");
