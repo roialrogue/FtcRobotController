@@ -1,20 +1,27 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "P.1 Blue Auto")
 public class P1BlueAuto extends LinearOpMode{
-    boolean isBlue;
-    Hardware robot = Hardware.getInstance();
     ElapsedTime runtime = new ElapsedTime();
+        boolean isBlue;
+        OpenCvCamera webCam;
+        Hardware robot = Hardware.getInstance();
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashboardTelemetry = dashboard.getTelemetry();
         public void runOpMode() {
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -24,12 +31,14 @@ public class P1BlueAuto extends LinearOpMode{
                 @Override
                 public void onOpened() {
                     GPTCamera cameraPipeline = new GPTCamera(true);
+                    int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+                    webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"), cameraMonitorViewId);
                     Hardware.getInstance().camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                     Hardware.getInstance().camera.setPipeline(cameraPipeline);
                     telemetry.addData("Webcam has initialized correctly", "");
                     cameraWorked[0] = true;
                 }
-            //telemetry.addData("Why is this not working","")
+
                 @Override
                 public void onError(int errorCode) {
                     telemetry.addData("Camera has broken", "");
