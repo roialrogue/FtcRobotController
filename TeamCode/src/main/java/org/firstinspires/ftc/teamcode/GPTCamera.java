@@ -36,7 +36,7 @@ public class GPTCamera extends OpenCvPipeline {
         if (workingMatrix.empty()) {
             return input;
         }
-        Imgproc.cvtColor(input, input, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_RGB2HSV);
 
         Scalar lowVal, highVal;
         if (isBlue) {
@@ -46,9 +46,9 @@ public class GPTCamera extends OpenCvPipeline {
             lowVal = new Scalar(0, 100, 100);
             highVal = new Scalar(11, 255, 255);
         }
-        Mat left = input.submat(LEFT_ROI);
-        Mat middle = input.submat(MIDDLE_ROI);
-        Mat right = input.submat(RIGHT_ROI);
+        Mat left = workingMatrix.submat(LEFT_ROI);
+        Mat middle = workingMatrix.submat(MIDDLE_ROI);
+        Mat right = workingMatrix.submat(RIGHT_ROI);
 
         double leftValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 255;
         double middleValue = Core.sumElems(middle).val[0] / MIDDLE_ROI.area() / 255;
@@ -81,8 +81,8 @@ public class GPTCamera extends OpenCvPipeline {
             telemetry.update();*/
         }
 
-        Imgproc.cvtColor(input, input, Imgproc.COLOR_GRAY2RGB);
-        return input;
+        Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_GRAY2RGB);
+        return workingMatrix;
     }
 
     /*public static Location getLocation() {
