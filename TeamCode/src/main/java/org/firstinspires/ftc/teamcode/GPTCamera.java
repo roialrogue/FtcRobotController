@@ -4,6 +4,7 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public class GPTCamera extends OpenCvPipeline {
+    private Mat workingMatrix = new Mat();
     public enum Location {
         LEFT,
         MIDDLE,
@@ -31,6 +32,10 @@ public class GPTCamera extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat input) {
+        input.copyTo(workingMatrix);
+        if (workingMatrix.empty()) {
+            return input;
+        }
         Imgproc.cvtColor(input, input, Imgproc.COLOR_RGB2HSV);
 
         Scalar lowVal, highVal;
