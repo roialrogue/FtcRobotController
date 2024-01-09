@@ -25,7 +25,6 @@ public class P1BlueAuto extends LinearOpMode{
         private GPTCamera detector;
         public void runOpMode() {
             telemetry.addData("Status", "Initailized");
-            telemetry.update();
             robot.init(hardwareMap);
             SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
             final boolean[] cameraWorked = {false};
