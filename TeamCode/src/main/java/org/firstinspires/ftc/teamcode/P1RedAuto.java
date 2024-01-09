@@ -376,11 +376,11 @@ public class P1RedAuto extends LinearOpMode {
         Trajectory RedP2M2T5 = drive.trajectoryBuilder(RedP2M2T4.end())
                 .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
                 .build();
-        .lineToLinearHeading(new Pose2d(-34, -34, Math.toRadians(90)))
+        /*.lineToLinearHeading(new Pose2d(-34, -34, Math.toRadians(90)))
                 .lineToLinearHeading(new Pose2d(-38, -58, Math.toRadians(0)))
                 .lineToLinearHeading(new Pose2d(5, -60, Math.toRadians(0)))
                 .splineToConstantHeading(new Vector2d(50, -36), Math.toRadians(0))
-                .strafeTo(new Vector2d(50, -60))
+                .strafeTo(new Vector2d(50, -60))*/
 
         drive.followTrajectory(RedP2M2T1);
         runtime.reset();
