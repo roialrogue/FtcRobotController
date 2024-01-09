@@ -350,6 +350,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        drive.followTrajectory();
         drive.followTrajectory(RedP2M1T2);
         drive.followTrajectory(RedP2M1T3);
         drive.followTrajectory(RedP2M1T4);
@@ -386,24 +387,20 @@ public class P1RedAuto extends LinearOpMode {
                 .build();
 
         Trajectory RedP2M3T2 = drive.trajectoryBuilder(RedP2M3T1.end())
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
-                .build();
-
-        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
-                .build();
-
-        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
-                .build();
-
-        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
-                .build();
                 .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .build();
+
+        Trajectory RedP2M3T3 = drive.trajectoryBuilder(RedP2M3T2.end())
                 .lineToLinearHeading(new Pose2d(5, -58, Math.toRadians(0)))
+                .build();
+
+        Trajectory RedP2M3T4 = drive.trajectoryBuilder(RedP2M3T3.end())
                 .splineToConstantHeading(new Vector2d(50, -30), Math.toRadians(0))
+                .build();
+
+        Trajectory RedP2M3T5 = drive.trajectoryBuilder(RedP2M3T4.end())
                 .strafeTo(new Vector2d(50, -60))
+                .build();
 
         drive.followTrajectory(RedP2M3T1);
         runtime.reset();
@@ -411,8 +408,12 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        drive.followTrajectory(RedP2M3T1);
         drive.followTrajectory(RedP2M3T2);
-        drive.followTrajectory(RedP2M3T3);
+
+        drive.followTrajectory(RedP2M3T4);
+        drive.followTrajectory(RedP2M3T5);
+        drive.turn(180);
 
     }
 }
