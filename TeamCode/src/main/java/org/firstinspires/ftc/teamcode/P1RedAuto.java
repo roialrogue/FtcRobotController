@@ -5,6 +5,8 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -20,15 +22,23 @@ public class P1RedAuto extends LinearOpMode {
     public void runOpMode() {
         robot.init(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
+
+        telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
+        telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
+        telemetry.update();
 
         //P.1 Blue
         //Starting Position
-        Pose2d BlueP1 = new Pose2d(10, 62, Math.toRadians(270));
-        drive.setPoseEstimate(BlueP1);
+        /*Pose2d BlueP1 = new Pose2d(10, 62, Math.toRadians(270));
+        drive.setPoseEstimate(BlueP1);*/
         //Path Blue mark 1
-        Trajectory BlueP1M1T1 = drive.trajectoryBuilder(BlueP1)
+        /*Trajectory BlueP1M1T1 = drive.trajectoryBuilder(BlueP1)
                 .lineToLinearHeading(new Pose2d(11,32, Math.toRadians(180)))
                 .build();
 
@@ -42,10 +52,10 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(BlueP1M1T2);
+        drive.followTrajectory(BlueP1M1T2);*/
 
         //Path Blue mark 2
-        Trajectory BlueP1M2T1 = drive.trajectoryBuilder(BlueP1)
+        /*Trajectory BlueP1M2T1 = drive.trajectoryBuilder(BlueP1)
                 .lineToLinearHeading(new Pose2d(16,34, Math.toRadians(270)))
                 .build();
 
@@ -59,10 +69,10 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(BlueP1M2T2);
+        drive.followTrajectory(BlueP1M2T2);*/
 
         //Path Blue mark 3
-        Trajectory BlueP1M3T1 = drive.trajectoryBuilder(BlueP1)
+        /*Trajectory BlueP1M3T1 = drive.trajectoryBuilder(BlueP1)
                 .lineToLinearHeading(new Pose2d(30,42, Math.toRadians(225)))
                 .build();
 
@@ -76,7 +86,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(BlueP1M3T2);
+        drive.followTrajectory(BlueP1M3T2);*/
 
         //P.1 Red
         //Starting Position
@@ -88,18 +98,50 @@ public class P1RedAuto extends LinearOpMode {
                 .build();
 
         Trajectory RedP1M1T2 = drive.trajectoryBuilder(RedP1M1T1.end())
-                .lineToLinearHeading(new Pose2d(50,-28, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(50,-30, Math.toRadians(0)))
                 .build();
+        //in init
+
+        robot.ClawRotationServo.setPosition(.333);
+        robot.ClawDropServo.setPosition(.5);
+
+        robot.AMotorOutIn.setPower(0.7);
+        robot.AMotorOutIn.setTargetPosition(-300);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(opModeIsActive() && robot.AMotorOutIn.isBusy()) {}
+        robot.AMotorOutIn.setPower(0);
 
         drive.followTrajectory(RedP1M1T1);
+
         runtime.reset();
         while (runtime.seconds() < 2) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M1T2);
+
+        robot.AMotorUpDown.setPower(0.7);
+        robot.AMotorUpDown.setTargetPosition(1000);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(opModeIsActive() && robot.AMotorUpDown.isBusy()) {}
+        robot.AMotorUpDown.setPower(0);
+
+        robot.ClawRotationServo.setPosition(.23);
+        robot.AMotorOutIn.setPower(0.7);
+        robot.AMotorOutIn.setTargetPosition(-1500);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(opModeIsActive() && robot.AMotorOutIn.isBusy()) {}
+        robot.AMotorOutIn.setPower(0);
+
+        robot.ClawDropServo.setPosition(0.040);
+        robot.ClawDropServo.setPosition(0.095);
+
+
+
         //Path Red mark 2
-        Trajectory RedP1M2T1 = drive.trajectoryBuilder(RedP1)
+        /*Trajectory RedP1M2T1 = drive.trajectoryBuilder(RedP1)
                 .lineToLinearHeading(new Pose2d(16,-34, Math.toRadians(90)))
                 .build();
 
@@ -113,10 +155,10 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(RedP1M2T2);
+        drive.followTrajectory(RedP1M2T2);*/
 
         //Path Red mark 3
-        Trajectory RedP1M3T1 = drive.trajectoryBuilder(RedP1)
+        /*Trajectory RedP1M3T1 = drive.trajectoryBuilder(RedP1)
                 .lineToLinearHeading(new Pose2d(30,-44, Math.toRadians(125)))
                 .build();
 
@@ -130,7 +172,8 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
-        drive.followTrajectory(RedP1M3T2);
+        drive.followTrajectory(RedP1M3T2);*/
+/*
 
         //P.2 Blue
         //Starting Position
@@ -296,6 +339,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.InTakeServo2.setPosition(1);
         }
         drive.followTrajectory(RedP2M3T3);
+*/
 
 
 
