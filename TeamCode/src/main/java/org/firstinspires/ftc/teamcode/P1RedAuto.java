@@ -27,6 +27,9 @@ public class P1RedAuto extends LinearOpMode {
 
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.ClawRotationServo.setPosition(.333);
+        robot.ClawDropServo.setPosition(.5);
         waitForStart();
 
         /*//P.1 Blue
@@ -124,10 +127,6 @@ public class P1RedAuto extends LinearOpMode {
         Trajectory RedP1M1T3 = drive.trajectoryBuilder(RedP1M1T2.end())
                 .strafeTo(new Vector2d(50, -60))
                 .build();
-        //in init
-
-        robot.ClawRotationServo.setPosition(.333);
-        robot.ClawDropServo.setPosition(.5);
 
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-300);
