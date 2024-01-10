@@ -29,11 +29,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
 
-        telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
-        telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
-        telemetry.update();
-
-        //P.1 Blue
+        /*//P.1 Blue
         //Starting Position
         Pose2d BlueP1 = new Pose2d(10, 62, Math.toRadians(270));
         drive.setPoseEstimate(BlueP1);
@@ -110,7 +106,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP1M3T2);
         drive.followTrajectory(BlueP1M3T3);
-        drive.turn(180);
+        drive.turn(180);*/
 
         //P.1 Red
         //Starting Position
@@ -139,11 +135,16 @@ public class P1RedAuto extends LinearOpMode {
         while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
         }
         robot.AMotorOutIn.setPower(0);
+        while (!isStopRequested() && !isStarted()) {
+            telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
+            telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
+            telemetry.update();
+        }
 
         drive.followTrajectory(RedP1M1T1);
 
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
@@ -159,6 +160,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorUpDown.setPower(0);
 
         robot.ClawRotationServo.setPosition(.23);
+
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-1500);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -172,7 +174,7 @@ public class P1RedAuto extends LinearOpMode {
         drive.turn(180);
 
 
-        //Path Red mark 2
+        /*//Path Red mark 2
         Trajectory RedP1M2T1 = drive.trajectoryBuilder(RedP1)
                 .lineToLinearHeading(new Pose2d(16, -34, Math.toRadians(90)))
                 .build();
@@ -437,7 +439,7 @@ public class P1RedAuto extends LinearOpMode {
         drive.followTrajectory(RedP2M3T2);
         drive.followTrajectory(RedP2M3T4);
         drive.followTrajectory(RedP2M3T5);
-        drive.turn(180);
+        drive.turn(180);*/
 
     }
 }
