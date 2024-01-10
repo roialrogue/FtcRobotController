@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import org.opencv.core.Core;
@@ -82,3 +83,4 @@ public class BianacaPipline extends OpenCvPipeline {
         return workingMatrix;
     }
 }
+*/
