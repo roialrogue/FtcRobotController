@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 
 import java.util.Arrays;
 import java.util.List;
-
+// Lines 63-64 need to be tuned when building is done
 /*
  * Sample tracking wheel localizer implementation assuming the standard configuration:
  *
@@ -25,18 +25,21 @@ import java.util.List;
  *    \--------------/
  *
  */
+
+// PID Tuning
+// 1. Increase P until it becomes unstable (shows increasing oscillations on the graph). Halve that value for your starting point.
+// 2. The immediate reaction is not the job, but follow P to bring the value to the set point; it also changes reaction time.
+// 3. Fix overshoot by tuning D until it minimizes as much overshoot as possible.
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 2000;
     public static double WHEEL_RADIUS = 0.944882; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double LATERAL_DISTANCE = 11.22047; // in; distance between the left and right wheels
-    public static double FORWARD_OFFSET = 6.29921; // in; offset of the lateral wheel
+    public static double LATERAL_DISTANCE = 14.65; // in; distance between the left and right wheels
+    public static double FORWARD_OFFSET = -7.5; // in; offset of the lateral wheel //TBD may need to be negative
 
     private Encoder leftEncoder, rightEncoder, frontEncoder;
-    public static double X_MULTIPLIER = .9934; // Multiplier in the X direction
-    public static double Y_MULTIPLIER = 1; // Multiplier in the Y direction
 
     private List<Integer> lastEncPositions, lastEncVels;
 
@@ -50,18 +53,20 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         lastEncPositions = lastTrackingEncPositions;
         lastEncVels = lastTrackingEncVels;
 
-        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM1"));
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM0"));
         rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM3"));
-        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM0"));
-        leftEncoder.setDirection(Encoder.Direction.REVERSE);
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "CM1"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
+        rightEncoder.setDirection(Encoder.Direction.REVERSE);
     }
 
     public static double encoderTicksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
     }
 
+    public static double X_MULTIPLIER = .99469; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = 1.0154; // Multiplier in the Y direction
     @NonNull
     @Override
     public List<Double> getWheelPositions() {

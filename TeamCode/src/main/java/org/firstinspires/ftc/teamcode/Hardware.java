@@ -29,18 +29,22 @@ public class Hardware {
     //"CM5"
     public DcMotor AMotorIntake;
     //"CM6"
-    public Servo PServo1;
+    public Servo HangServo;
 
-    public Servo PServo2;
+    public Servo InTakeServo1;
 
-    public Servo AServo;
+    public Servo InTakeServo2;
+
+    public Servo ClawRotationServo;
+
+    public Servo ClawDropServo;
+
+    public static double maxSpeed = 0.8;
 
 
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
-
-    public static double maxSpeed = 0.8;
 
     public OpenCvCamera camera;
     private static Hardware myInstance = null;
@@ -54,89 +58,93 @@ public class Hardware {
 
     public void init(HardwareMap hwMap) {
 
-        try{
-            rightForwardWheel = hwMap.get(DcMotor.class, "CM3");
+
+        try {
+            rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
         } catch (Exception p_exception) {
             rightForwardWheel = null;
         }
 
-        try{
-            leftForwardWheel = hwMap.get(DcMotor.class, "CM1");
+        try {
+            leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
         } catch (Exception p_exception) {
             leftForwardWheel = null;
         }
 
-        try{
-            rightRearWheel = hwMap.get(DcMotor.class, "CM2");
+        try {
+            rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
+            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
         } catch (Exception p_exception) {
             rightRearWheel = null;
         }
 
-        try{
-            leftRearWheel = hwMap.get(DcMotor.class, "CM0");
+        try {
+            leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
         } catch (Exception p_exception) {
             leftRearWheel = null;
         }
 
-        try{
-            AMotorUpDown = hwMap.get(DcMotor.class, "CM4");
+        try {
+            AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorUpDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorUpDown.setPower(0);
         } catch (Exception p_exception) {
             AMotorUpDown = null;
         }
 
-        try{
-            AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
+        try {
+            AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorOutIn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
         } catch (Exception p_exception) {
             AMotorOutIn = null;
         }
 
-        try{
-            AMotorIntake = hwMap.get(DcMotor.class, "CM6");
-            AMotorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            AMotorIntake.setPower(0);
+        try {
+            HangServo = hwMap.get(Servo.class, "CS0");
         } catch (Exception p_exception) {
-            AMotorIntake = null;
+            HangServo = null;
         }
 
         try {
-            PServo1 = hwMap.get(Servo.class, "CS1");
+            InTakeServo1 = hwMap.get(Servo.class, "CS4");
         } catch (Exception p_exception) {
-            PServo1 = null;
+            InTakeServo2 = null;
         }
 
         try {
-            PServo2 = hwMap.get(Servo.class, "CS2");
+            InTakeServo2 = hwMap.get(Servo.class, "ES0");
         } catch (Exception p_exception) {
-            PServo2 = null;
+            InTakeServo2 = null;
         }
 
         try {
-            AServo = hwMap.get(Servo.class, "CS0");
+            ClawRotationServo = hwMap.get(Servo.class, "CS2");
         } catch (Exception p_exception) {
-            AServo = null;
+            ClawRotationServo = null;
+        }
+
+        try {
+            ClawDropServo = hwMap.get(Servo.class, "ES2");
+        } catch (Exception p_exception) {
+            ClawDropServo = null;
         }
 
 
@@ -160,31 +168,28 @@ public class Hardware {
         }
 
 
-            int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
-            WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
-            camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+        int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
+        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
 
 
     }
 
-    public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
+    public void setPower(double fr, double br, double fl, double bl) {
         if (rightForwardWheel != null) {
-           rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
-        }
-        if (leftForwardWheel != null) {
-            leftForwardWheel.setPower(Range.clip(leftFront, -maxSpeed, maxSpeed));
+            rightForwardWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
         }
         if (rightRearWheel != null) {
-            rightRearWheel.setPower(Range.clip(rightBack, -maxSpeed, maxSpeed));
+            rightRearWheel.setPower(Range.clip(br, -maxSpeed, maxSpeed));
+        }
+        if (leftForwardWheel != null) {
+            leftForwardWheel.setPower(Range.clip(fl, -maxSpeed, maxSpeed));
         }
         if (leftRearWheel != null) {
-            leftRearWheel.setPower(Range.clip(leftBack, -maxSpeed, maxSpeed));
+            leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
         }
 
 
     }
-
-
-
-
 }
+

@@ -1,128 +1,92 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "P.1 Blue Auto")
 public class P1BlueAuto extends LinearOpMode{
-    boolean isBlue;
-    Hardware robot = Hardware.getInstance();
     ElapsedTime runtime = new ElapsedTime();
-
-
-    public void runOpMode() {
-        robot.init(hardwareMap);
-        CameraInitialization cameraPipeline = new CameraInitialization(telemetry, true);
-        boolean isBlue = true;
-        Hardware hw = Hardware.getInstance();
-
-        final boolean[] cameraWorked = new boolean[1];
-
-        hw.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                cameraWorked[0] = true;
-                hw.camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                hw.camera.setPipeline(cameraPipeline);
-
-                telemetry.addData("Webcam has initialized correctly", "");
-                telemetry.update();
-            }
-
-            @Override
-            public void onError(int errorCode) {
-                cameraWorked[0] = false;
-                telemetry.addData("Camera has broken", "");
-                telemetry.update();
-            }
-
-        });
-
-
-
-        waitForStart();
-        /*runtime.reset();
-        while(runtime.seconds() < 5) {
-            hw.leftForwardWheel.setPower(1);
-        }
-        hw.leftForwardWheel.setPower(0);*/
-
-        hw.camera.stopStreaming();
-
-
-
-            if (cameraWorked[0]) {
-                //runs if camera works
-                CameraInitialization.Location location = cameraPipeline.getLocation();
-                if (CameraInitialization.stoneRight) {
-                    //thing is on right
-                    telemetry.addData("Found on the right", "");
+        boolean isBlue;
+        OpenCvCamera webCam;
+        Hardware robot = Hardware.getInstance();
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashboardTelemetry = dashboard.getTelemetry();
+        private GPTCamera detector;
+        public void runOpMode() {
+            telemetry.addData("Status", "Initailized");
+            telemetry.update();
+            sleep(1000);
+            robot.init(hardwareMap);
+            SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+            /*final boolean[] cameraWorked = {false};*/
+            telemetry.addData("Before Hardware.geInstance","Hi");
+            telemetry.update();
+            sleep(1000);
+            /*Hardware.getInstance().camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+                @Override
+                public void onOpened() {*/
+                    int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+                    detector = new GPTCamera(true);
+                    webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+                    webCam.openCameraDevice();
+                    webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                    webCam.setPipeline(detector);
+                    telemetry.addData("Webcam has initialized correctly", "Ya");
                     telemetry.update();
-                    move(65,.4);
+                    sleep(1000);
 
+                    /*cameraWorked[0] = true;*/
 
-
-                } else if (CameraInitialization.stoneMiddle) {
-                    //thing is on middle
-                    telemetry.addData("Found on the middle", "");
-                    //telemetry.update();
-                    move(65,.4);
-
-
-
-                } else if (CameraInitialization.stoneLeft) {
-                    //thing is on left
-                    telemetry.addData("Found on the left", "");
+            /*    @Override
+                public void onError(int errorCode) {
+                    telemetry.addData("Camera has broken", "");
                     telemetry.update();
-                    move(65,.4);
-                } else {
-                    move(65, .4);
                 }
+            });*/
+            /*if (cameraWorked[0]) {*/
+                //Hardware.getInstance().camera.stopStreaming(); //Watch this line
+            //}
 
+            telemetry.addData("Before Start","Hi");
+            telemetry.update();
+            sleep(1000);
+            waitForStart();
+
+            telemetry.addData("After Start","Hi");
+            telemetry.update();
+            sleep(1000);
+            Trajectory BlueP2M1T1 = drive.trajectoryBuilder(new Pose2d(0,0))
+                    .lineToLinearHeading(new Pose2d(10,10, Math.toRadians(180)))
+                    .build();
+
+            if (GPTCamera.leftSide == true) {
+                telemetry.addData("Found in Auto on the", "right");
+                telemetry.update();
+                drive.followTrajectory(BlueP2M1T1);
+            } else if (GPTCamera.middleSide == true) {
+                telemetry.addData("Found in Auto on the", "middle");
+                telemetry.update();
+                drive.followTrajectory(BlueP2M1T1);
+            } else if (GPTCamera.rightSide == true) {
+                telemetry.addData("Found in Auto on the", "left");
+                telemetry.update();
+                drive.followTrajectory(BlueP2M1T1);
+            } else if (GPTCamera.nonSide == true) {
+                telemetry.addData("Did not find in Auto","Fail");
+                telemetry.update();
+                drive.followTrajectory(BlueP2M1T1);
             }
         }
 
-
-    public void move(double distanceMoving, double speedMoving){
-        //in inches
-        double whellCircumfrance = 4 * Math.PI; //96
-        double wheelMotor = 512; //312
-        double ticks = (distanceMoving * (wheelMotor/whellCircumfrance));
-
-        robot.setPower(0,0,0,0);
-
-        robot.rightForwardWheel.setTargetPosition((int)Math.round(ticks));
-        robot.rightRearWheel.setTargetPosition((int)Math.round(ticks));
-        robot.leftForwardWheel.setTargetPosition((int)Math.round(ticks));
-        robot.leftRearWheel.setTargetPosition((int)Math.round(ticks));
-
-        robot.rightForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftForwardWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftRearWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        robot.setPower(speedMoving,speedMoving,speedMoving,speedMoving);
-
-        while (opModeIsActive() && (robot.rightForwardWheel.getCurrentPosition() + 10 < ticks || robot.rightForwardWheel.getCurrentPosition() - 10 > ticks)){
-
-        }
-        robot.setPower(0,0,0,0);
-
-        robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.leftForwardWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-}
