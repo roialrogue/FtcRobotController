@@ -5,24 +5,26 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class GPTCamera extends OpenCvPipeline {
     private Mat workingMatrix = new Mat();
-    public enum Location {
-        LEFT,
-        MIDDLE,
-        RIGHT,
-        NOT_FOUND
-    }
-
-    private Location location;
-
     public static boolean leftSide = false;
     public static boolean rightSide = false;
     public static boolean middleSide = false;
     public static boolean nonSide = false;
 
 
-    static final Rect LEFT_ROI = new Rect(new Point(0, 0), new Point(426, 720));
-    static final Rect MIDDLE_ROI = new Rect(new Point(426, 0), new Point(852, 720));
-    static final Rect RIGHT_ROI = new Rect(new Point(852, 0), new Point(1278, 720));
+    public static int matBrowStart = 0;
+    public static int matBrowEnd = 426;
+    public static int matBcolStart = 0;
+    public static int matBcolEnd = 720;
+
+    public static int matCrowStart = 426;
+    public static int matCrowEnd = 852;
+    public static int matCcolStart = 0;
+    public static int matCcolEnd = 720;
+
+    public static int matArowStart = 852;
+    public static int matArowEnd = 1278;
+    public static int matAcolStart = 0;
+    public static int matAcolEnd = 720;
 
     boolean isBlue;
 
@@ -30,8 +32,10 @@ public class GPTCamera extends OpenCvPipeline {
         this.isBlue = isBlue;
     }
 
-    @Override
-    public Mat processFrame(Mat input) {
+    Mat matA = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
+    Mat matB = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
+    Mat matC = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
+    public final Mat processFrame(Mat input) {
         input.copyTo(workingMatrix);
         if (workingMatrix.empty()) {
             return input;
@@ -46,13 +50,13 @@ public class GPTCamera extends OpenCvPipeline {
             lowVal = new Scalar(0, 100, 100);
             highVal = new Scalar(11, 255, 255);
         }
-        Mat left = workingMatrix.submat(LEFT_ROI);
-        Mat middle = workingMatrix.submat(MIDDLE_ROI);
-        Mat right = workingMatrix.submat(RIGHT_ROI);
+        Mat left = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
+        Mat middle = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
+        Mat right = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
 
-        double leftValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 255;
-        double middleValue = Core.sumElems(middle).val[0] / MIDDLE_ROI.area() / 255;
-        double rightValue = Core.sumElems(right).val[0] / RIGHT_ROI.area() / 255;
+        double leftValue = Core.sumElems(left).val[0];
+        double middleValue = Core.sumElems(middle).val[0];
+        double rightValue = Core.sumElems(right).val[0];
 
         left.release();
         middle.release();
@@ -66,27 +70,15 @@ public class GPTCamera extends OpenCvPipeline {
 
         if (leftper > rightper && leftper > middleper) {
             leftSide = true;
-            /*telemetry.addData("Found on the", "right");*/
         } else if (middleper > leftper && middleper > rightper){
             middleSide = true;
-            /*telemetry.addData("Found on the", "middle");
-            telemetry.update();*/
         } else if (rightper > leftper && rightper > middleper){
             rightSide = true;
-            /*telemetry.addData("Found on the", "left");
-            telemetry.update();*/
         } else {
             nonSide = true;
-            /*telemetry.addData("Did not find","Nooo");
-            telemetry.update();*/
         }
 
         Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_GRAY2RGB);
         return workingMatrix;
     }
-
-    /*public static Location getLocation() {
-        //return location;
-        return */
-
 }

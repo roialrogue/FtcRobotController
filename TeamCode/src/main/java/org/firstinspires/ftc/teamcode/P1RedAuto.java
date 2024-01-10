@@ -52,10 +52,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP1M1T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP1M1T2);
         drive.followTrajectory(BlueP1M1T3);
         drive.turn(180);
@@ -75,10 +77,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP1M2T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP1M2T2);
         drive.followTrajectory(BlueP1M2T3);
         drive.turn(180);
@@ -98,10 +102,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP1M3T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP1M3T2);
         drive.followTrajectory(BlueP1M3T3);
         drive.turn(180);
@@ -133,6 +139,7 @@ public class P1RedAuto extends LinearOpMode {
         while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
         }
         robot.AMotorOutIn.setPower(0);
+
         drive.followTrajectory(RedP1M1T1);
 
         runtime.reset();
@@ -180,10 +187,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(RedP1M2T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M2T2);
         drive.followTrajectory(RedP1M2T3);
         drive.turn(180);
@@ -203,10 +212,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(RedP1M3T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M3T2);
         drive.followTrajectory(RedP1M3T3);
         drive.turn(180);
@@ -238,15 +249,13 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP2M1T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP2M1T2);
-        while (runtime.seconds() < 2) {
-            robot.InTakeServo1.setPosition(1);
-            robot.InTakeServo2.setPosition(1);
-        }
         drive.followTrajectory(BlueP2M1T3);
         drive.followTrajectory(BlueP2M1T4);
         drive.followTrajectory(BlueP2M1T5);
@@ -275,10 +284,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP2M2T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP2M2T2);
         drive.followTrajectory(BlueP2M2T3);
         drive.followTrajectory(BlueP2M2T4);
@@ -308,10 +319,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(BlueP2M3T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(BlueP2M3T2);
         drive.followTrajectory(BlueP2M3T3);
         drive.followTrajectory(BlueP2M3T4);
@@ -346,10 +359,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(RedP2M1T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP2M1T2);
         drive.followTrajectory(RedP2M1T3);
         drive.followTrajectory(RedP2M1T4);
@@ -362,32 +377,29 @@ public class P1RedAuto extends LinearOpMode {
                 .build();
 
         Trajectory RedP2M2T2 = drive.trajectoryBuilder(RedP2M2T1.end())
-                .lineToLinearHeading(new Pose2d(-59, -36, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-38, -58, Math.toRadians(0)))
                 .build();
 
         Trajectory RedP2M2T3 = drive.trajectoryBuilder(RedP2M2T2.end())
-                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(5, -60, Math.toRadians(0)))
                 .build();
 
         Trajectory RedP2M2T4 = drive.trajectoryBuilder(RedP2M2T3.end())
-                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .splineToConstantHeading(new Vector2d(50, -36), Math.toRadians(0))
                 .build();
 
         Trajectory RedP2M2T5 = drive.trajectoryBuilder(RedP2M2T4.end())
-                .lineToLinearHeading(new Pose2d(-33, -58, Math.toRadians(0)))
+                .strafeTo(new Vector2d(50, -60))
                 .build();
-        /*.lineToLinearHeading(new Pose2d(-34, -34, Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(-38, -58, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(5, -60, Math.toRadians(0)))
-                .splineToConstantHeading(new Vector2d(50, -36), Math.toRadians(0))
-                .strafeTo(new Vector2d(50, -60))*/
 
         drive.followTrajectory(RedP2M2T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP2M2T2);
 
 
@@ -416,10 +428,12 @@ public class P1RedAuto extends LinearOpMode {
 
         drive.followTrajectory(RedP2M3T1);
         runtime.reset();
-        while (runtime.seconds() < 2) {
+        while (runtime.seconds() < 1.5) {
             robot.InTakeServo1.setPosition(-1);
             robot.InTakeServo2.setPosition(-1);
         }
+        robot.InTakeServo1.setPosition(.5);
+        robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP2M3T2);
         drive.followTrajectory(RedP2M3T4);
         drive.followTrajectory(RedP2M3T5);
