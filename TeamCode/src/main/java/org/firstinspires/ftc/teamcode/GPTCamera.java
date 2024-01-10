@@ -31,10 +31,6 @@ public class GPTCamera extends OpenCvPipeline {
     public GPTCamera(boolean isBlue) {
         this.isBlue = isBlue;
     }
-
-    Mat matA = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
-    Mat matB = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
-    Mat matC = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
     public final Mat processFrame(Mat input) {
         input.copyTo(workingMatrix);
         if (workingMatrix.empty()) {
