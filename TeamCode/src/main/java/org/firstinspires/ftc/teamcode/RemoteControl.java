@@ -67,6 +67,7 @@ public class RemoteControl extends LinearOpMode {
 
             double targetAngle = 20.0; // Adjust this value based on your desired angle
             double basePosition = 0.624; // Adjust this value based on your servo's base position
+            double baseAdjustment = 0.060; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
             double scaleFactor = 0.002; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
             if (currentArmAngle >= targetAngle) {
