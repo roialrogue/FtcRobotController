@@ -28,7 +28,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        robot.ClawRotationServo.setPosition(.333);
+        robot.ClawRotationServo.setPosition(.642);
         robot.ClawDropServo.setPosition(.5);
         waitForStart();
 
@@ -162,22 +162,18 @@ public class P1RedAuto extends LinearOpMode {
 
         telemetry.addData("Hello","Before");
         telemetry.update();
-        sleep(1000);
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-1500);
         telemetry.addData("Hello","Before RUn");
         telemetry.update();
-        sleep(1000);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
             telemetry.addData("Hello","In Loop");
             telemetry.update();
-            sleep(1000);
         }
         robot.AMotorOutIn.setPower(0);
         telemetry.addData("Hello","After code");
         telemetry.update();
-        sleep(1000);
 
         robot.ClawDropServo.setPosition(0.040);
 
