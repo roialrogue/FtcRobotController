@@ -58,10 +58,6 @@ public class RemoteControl extends LinearOpMode {
             boolean clawDropLeft = gamepad2.a; //test
             boolean clawDropBoth = gamepad2.x;
 
-            if(gamepad1.right_trigger > 5) {
-                robot.ClawRotationServo.setPosition(.6);
-            }
-
             //Claw wrist joint stabilization
             double ticksPerRevolution = 537.6 * 20;
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
@@ -69,11 +65,17 @@ public class RemoteControl extends LinearOpMode {
             telemetry.addData("Ticks", ticksPerRevolution);
             telemetry.addData("Arm Angle", currentArmAngle);
 
-            double targetAngle = 30.0; // Adjust this value based on your desired angle
-            double basePosition = 0.0; // Adjust this value based on your servo's base position
-            double scaleFactor = 1; // Adjust this value based on how much you want the servo to move per degree
+            double targetAngle = 20.0; // Adjust this value based on your desired angle
+            double basePosition = 0.6; // Adjust this value based on your servo's base position
+            double scaleFactor = 0.01; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
-            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
+            if (currentArmAngle >= targetAngle) {
+                robot.ClawRotationServo.setPosition((currentArmAngle * scaleFactor) + basePosition);
+            } else {
+                robot.ClawRotationServo.setPosition(basePosition);
+            }
+
+/*            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
 
             desiredServoPosition = Math.max(0.0, Math.min(1.0, desiredServoPosition));
 
@@ -86,7 +88,7 @@ public class RemoteControl extends LinearOpMode {
             } else if (currentArmAngle < 30) {
                 above30 = false;
                 robot.ClawRotationServo.setPosition(basePosition);
-            }
+            }*/
 
 
             //Drive code
