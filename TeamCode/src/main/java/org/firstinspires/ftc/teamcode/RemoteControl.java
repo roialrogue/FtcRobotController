@@ -67,8 +67,8 @@ public class RemoteControl extends LinearOpMode {
             telemetry.addData("Current Servo Pos", robot.ClawRotationServo.getPosition());
             telemetry.addData("Current Servo Angle", (robot.ClawRotationServo.getPosition() * 300));
 
-            double targetAngle = 20.0; // Adjust this value based on your desired angle
-            double basePosition = 0.618; // Adjust this value based on your servo's base position
+            double targetAngle = 25.0; // Adjust this value based on your desired angle
+            double basePosition = 0.61; // Adjust this value based on your servo's base position
             double baseAdjustment = 0.060; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
             double scaleFactor = 0.0022; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
