@@ -45,7 +45,7 @@ public class RemoteControl extends LinearOpMode {
 
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
-            double yaw = gamepad1.right_stick_x; //check turning
+            double yaw = gamepad1.right_stick_x;
             boolean slowDrive = gamepad1.left_bumper;
             double clawWheelIntake = gamepad1.left_trigger;
 
@@ -54,10 +54,10 @@ public class RemoteControl extends LinearOpMode {
             double armUpDown = gamepad2.left_stick_y;
             boolean armSlowDrive = gamepad2.left_bumper;
             boolean hangArm = gamepad2.y;
-            boolean clawDropRight = gamepad2.b; //test
-            boolean clawDropLeft = gamepad2.a; //test
+            boolean clawDropRight = gamepad2.b;
+            boolean clawDropLeft = gamepad2.a;
             boolean clawDropBoth = gamepad2.x;
-
+            // trigger angle manual add
             //Claw wrist joint stabilization
             double ticksPerRevolution = 537.6 * 20;
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));

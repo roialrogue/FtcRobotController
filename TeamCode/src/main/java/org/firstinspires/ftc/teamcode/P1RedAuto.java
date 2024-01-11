@@ -131,6 +131,10 @@ public class P1RedAuto extends LinearOpMode {
                 .build();
 
         Trajectory RedP1M1T3 = drive.trajectoryBuilder(RedP1M1T2.end())
+                .back(10)
+                .build();
+
+        Trajectory RedP1M1T4 = drive.trajectoryBuilder(RedP1M1T3.end())
                 .strafeTo(new Vector2d(50, -60))
                 .build();
 
@@ -151,10 +155,15 @@ public class P1RedAuto extends LinearOpMode {
         robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M1T2);
 
+        telemetry.addData("Hi","");
+        telemetry.update();
         robot.AMotorUpDown.setPower(0.7);
         robot.AMotorUpDown.setTargetPosition(1000);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) { }
+        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) {
+            telemetry.addData("by","");
+            telemetry.update();
+        }
         robot.AMotorUpDown.setPower(0);
 
         robot.ClawRotationServo.setPosition(0.45);
@@ -168,6 +177,7 @@ public class P1RedAuto extends LinearOpMode {
 
         robot.ClawDropServo.setPosition(0.785);
         drive.followTrajectory(RedP1M1T3);
+        drive.followTrajectory(RedP1M1T4);
         drive.turn(Math.toRadians(180));
 
 
