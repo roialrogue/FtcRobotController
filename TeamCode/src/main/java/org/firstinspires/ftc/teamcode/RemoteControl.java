@@ -31,69 +31,72 @@ public class RemoteControl extends LinearOpMode {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double ServoUp = 0.521;
         double ServoDown = 0.243;
         robot.HangServo.setPosition(ServoDown);
-        waitForStart();
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        boolean pressingChangeLauncher = false;
-        boolean pressingOpenLauncher = false;
-        boolean pressingOpenClaw = false;
+        waitForStart();
 
         while (opModeIsActive()) {
 
-            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
-            double yaw = gamepad1.right_stick_x;
+            double yaw = gamepad1.right_stick_x; //check turning
             boolean slowDrive = gamepad1.left_bumper;
+            double clawWheelIntake = gamepad1.left_trigger;
 
             double beltOutIn = gamepad2.right_stick_y;
+            boolean beltSlowDrive = gamepad2.right_bumper;
             double armUpDown = gamepad2.left_stick_y;
-            boolean hangArm = gamepad2.y;
             boolean armSlowDrive = gamepad2.left_bumper;
-//          boolean beltSlowDrive = gamepad2.right_bumper;
+            boolean hangArm = gamepad2.y;
+            boolean clawDropRight = gamepad2.b; //test
+            boolean clawDropLeft = gamepad2.a; //test
+            boolean clawDropBoth = gamepad2.x;
 
-
-            boolean clawDropRight = gamepad2.b;
-            boolean clawDropLeft = gamepad2.a;
-            double clawAngleRotationUp = gamepad2.left_trigger;
-            double clawAngleRotationDown = gamepad2.right_trigger;
-
-
-            double clawBootWheelIntake = gamepad1.left_trigger;
-            double clawBarIntake = gamepad1.right_trigger;
-
+//            if(gamepad1.right_trigger > 5) {
+//                robot.ClawRotationServo.setPosition(.6);
+//            }
             //Claw wrist joint stabilization
-            double ticksPerRevolution = 537.6 * 20;
-            double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition()/ticksPerRevolution));
 
-            double position = robot.ClawRotationServo.getPosition();
-            if (currentArmAngle >= 20) {
-                robot.ClawRotationServo.setPosition(position + 0.01 * (currentArmAngle - 20));
-            }
+//            double ticksPerRevolution = 537.6 * 20;
+//            double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
+//
+//            telemetry.addData("Ticks", ticksPerRevolution);
+//            telemetry.addData("Arm Angle", currentArmAngle);
+//
+//            double targetAngle = 30.0; // Adjust this value based on your desired angle
+//            double basePosition = 0.0; // Adjust this value based on your servo's base position
+//            double scaleFactor = 1; // Adjust this value based on how much you want the servo to move per degree
+//
+//            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
+//
+//            desiredServoPosition = Math.max(0.0, Math.min(1.0, desiredServoPosition));
+//
+//            boolean above30 = false;
+//            if(above30 == true)  {
+//                robot.ClawRotationServo.setPosition(desiredServoPosition);
+//            }
+//            if (currentArmAngle >= 30) {
+//                above30 = true;
+//            } else if (currentArmAngle < 30) {
+//                above30 = false;
+//                robot.ClawRotationServo.setPosition(basePosition);
+//            }
 
-            // Claw intake system
-            if(clawBootWheelIntake > .5) {
-                robot.InTakeServo1.setPosition(1);
-                robot.InTakeServo2.setPosition(1);
+
+            //Drive code
+            //Slow Drive
+            double speed;
+            if (slowDrive) {
+                speed = .6;
             } else {
-                robot.InTakeServo1.setPosition(0.5);
-                robot.InTakeServo2.setPosition(0.5);
+                speed = 1;
             }
-
-
-            //pixel dropping
-            if(clawDropLeft) {
-                robot.ClawDropServo.setPosition(.930);
-            } else if (clawDropRight) {
-                robot.ClawDropServo.setPosition(0.040);
-            } else
-                robot.ClawDropServo.setPosition(0.500);
-
             double rfm = axial - lateral - yaw;
             double rbm = axial + lateral - yaw;
             double lfm = axial + lateral + yaw;
@@ -111,77 +114,68 @@ public class RemoteControl extends LinearOpMode {
                 rbm /= max;
             }
 
-            if (slowDrive) {
-                lfm = gamepad1.x ? 1.0 : 0.0;
-                lbm = gamepad1.a ? 1.0 : 0.0;
-                rfm = gamepad1.y ? 1.0 : 0.0;
-                rbm = gamepad1.b ? 1.0 : 0.0;
-            }
-            double speed;
-            if (gamepad1.left_bumper) {
-                speed = 0.33;
-            } else {
-                speed = 1;
-            }
-
             robot.rightForwardWheel.setPower(rfm * speed);
             robot.rightRearWheel.setPower(rbm * speed);
             robot.leftForwardWheel.setPower(lfm * speed);
             robot.leftRearWheel.setPower(lbm * speed);
 
+            //In and out arm
+            //Slow Drive
+            double SlowDriveArm = 1;
+            if (beltSlowDrive){
+                SlowDriveArm = 0.6;
+            }
+
+            if (beltOutIn > 0.1) {
+                //Claw motion out
+                robot.AMotorOutIn.setPower(1 * SlowDriveArm);
+            } else if (beltOutIn < -0.1) {
+                //Claw motion in
+                robot.AMotorOutIn.setPower(-1 * SlowDriveArm);
+            } else {
+                robot.AMotorOutIn.setPower(0);
+            }
+
             //Up and down arm
+            //slow Drive
             double fastDrive = 1;
             if (armSlowDrive){
                 fastDrive = 0.6;
             }
 
             if (armUpDown > 0.1) {
-                    robot.AMotorUpDown.setPower(-1 * fastDrive);
+                robot.AMotorUpDown.setPower(-1 * fastDrive);
             } else if (armUpDown < -0.1) {
-                    robot.AMotorUpDown.setPower(1 * fastDrive);
+                robot.AMotorUpDown.setPower(1 * fastDrive);
             } else {
                 robot.AMotorUpDown.setPower(0);
             }
 
-            //In and out arm
-            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            int currentArmPosition = robot.AMotorOutIn.getCurrentPosition() * -1;
-            final int maxBeltOut = 3000;
-            final int minBeltIn = 200;
-            final int slowdownThreshold = 200;
-            int remainingDistance = maxBeltOut - currentArmPosition;
-            double powerScale = 0.5;
-
-            if (remainingDistance <= slowdownThreshold && remainingDistance > 0) {
-                powerScale = (double) remainingDistance / slowdownThreshold;
-            }
-
-            if (beltOutIn > 0.1 && currentArmPosition > minBeltIn) {
-                //Claw motion in
-                robot.AMotorOutIn.setPower(1 * powerScale);
-            } else if (beltOutIn < -0.1 && currentArmPosition < maxBeltOut) {
-                //Claw motion out
-                robot.AMotorOutIn.setPower(1 * powerScale);
+            // Claw intake system
+            if(clawWheelIntake > .5) {
+                robot.InTakeServo1.setPosition(1);
+                robot.InTakeServo2.setPosition(1);
             } else {
-                robot.AMotorOutIn.setPower(0);
+                robot.InTakeServo1.setPosition(0.5);
+                robot.InTakeServo2.setPosition(0.5);
             }
-            telemetry.addData("How far is the arm out", currentArmPosition);
-            telemetry.addData("Real Value", robot.AMotorOutIn.getCurrentPosition());
-            telemetry.update();
+
+            //pixel dropping
+            if(clawDropLeft) {
+                robot.ClawDropServo.setPosition(0.115);
+            } else if (clawDropRight) {
+                robot.ClawDropServo.setPosition(0.785);
+            } else if (clawDropBoth) {
+                robot.ClawDropServo.setPosition(1);
+            } else {
+                robot.ClawDropServo.setPosition(0.500);
+            }
 
             //Servo for hanging
             ServoDown = 0.243;
             if (hangArm == true) {
                 robot.HangServo.setPosition(ServoUp);
-            } else {
-                robot.HangServo.setPosition(ServoDown);
             }
-
-
         }
-
-
     }
-
-
 }

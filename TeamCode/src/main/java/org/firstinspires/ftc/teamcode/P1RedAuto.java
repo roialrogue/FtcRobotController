@@ -28,9 +28,15 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        robot.ClawRotationServo.setPosition(.333);
+        robot.ClawRotationServo.setPosition(.642);
         robot.ClawDropServo.setPosition(.5);
         waitForStart();
+
+        while (!isStopRequested() && !isStarted()) {
+            telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
+            telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
+            telemetry.update();
+        }
 
         /*//P.1 Blue
         //Starting Position
@@ -131,14 +137,8 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-300);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
-        }
+        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
         robot.AMotorOutIn.setPower(0);
-        while (!isStopRequested() && !isStarted()) {
-            telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
-            telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
-            telemetry.update();
-        }
 
         drive.followTrajectory(RedP1M1T1);
 
@@ -151,26 +151,25 @@ public class P1RedAuto extends LinearOpMode {
         robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M1T2);
 
-        robot.AMotorOutIn.setPower(0.7);
-        robot.AMotorOutIn.setTargetPosition(-1500);
-        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
-        }
-        robot.AMotorOutIn.setPower(0);
-
-        robot.ClawRotationServo.setPosition(.23);
-
         robot.AMotorUpDown.setPower(0.7);
         robot.AMotorUpDown.setTargetPosition(1000);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) {
-        }
+        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) { }
         robot.AMotorUpDown.setPower(0);
 
-        robot.ClawDropServo.setPosition(0.040);
-        robot.ClawDropServo.setPosition(0.095);
+        robot.ClawRotationServo.setPosition(0.45);
+
+        robot.AMotorOutIn.setPower(0.7);
+        robot.AMotorOutIn.setTargetPosition(-1500);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
+        robot.AMotorOutIn.setPower(0);
+
+
+        robot.ClawDropServo.setPosition(0.785);
         drive.followTrajectory(RedP1M1T3);
-        drive.turn(180);
+        drive.turn(Math.toRadians(180));
+
 
 
         /*//Path Red mark 2

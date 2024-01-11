@@ -40,6 +40,7 @@ public class P1BlueAuto extends LinearOpMode{
                     detector = new GPTCamera(true);
                     webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
                     webCam.openCameraDevice();
+                    FtcDashboard.getInstance().startCameraStream(webCam, 0);
                     webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                     webCam.setPipeline(detector);
                     telemetry.addData("Webcam has initialized correctly", "Ya");
