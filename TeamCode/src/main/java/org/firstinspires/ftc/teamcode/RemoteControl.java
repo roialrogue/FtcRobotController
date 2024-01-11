@@ -79,21 +79,6 @@ public class RemoteControl extends LinearOpMode {
                 robot.ClawRotationServo.setPosition(basePosition);
             }
 
-/*            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
-
-            desiredServoPosition = Math.max(0.0, Math.min(1.0, desiredServoPosition));
-
-            boolean above30 = false;
-            if(above30 == true)  {
-                robot.ClawRotationServo.setPosition(desiredServoPosition);
-            }
-            if (currentArmAngle >= 30) {
-                above30 = true;
-            } else if (currentArmAngle < 30) {
-                above30 = false;
-                robot.ClawRotationServo.setPosition(basePosition);
-            }*/
-
 
             //Drive code
             //Slow Drive
@@ -142,6 +127,9 @@ public class RemoteControl extends LinearOpMode {
                 robot.AMotorOutIn.setPower(0);
             }
 
+            telemetry.addData("Arm Out Ticks", robot.AMotorOutIn.getCurrentPosition());
+            telemetry.update();
+
             //Up and down arm
             //slow Drive
             double fastDrive = 1;
@@ -150,9 +138,9 @@ public class RemoteControl extends LinearOpMode {
             }
 
             if (armUpDown > 0.1) {
-                robot.AMotorUpDown.setPower(-1 * fastDrive);
+                robot.AMotorUpDown.setPower(-0.9 * fastDrive);
             } else if (armUpDown < -0.1) {
-                robot.AMotorUpDown.setPower(1 * fastDrive);
+                robot.AMotorUpDown.setPower(0.9 * fastDrive);
             } else {
                 robot.AMotorUpDown.setPower(0);
             }
