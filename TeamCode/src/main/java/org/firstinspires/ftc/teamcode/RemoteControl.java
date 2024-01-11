@@ -71,7 +71,7 @@ public class RemoteControl extends LinearOpMode {
             double scaleFactor = 0.002; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
             if (currentArmAngle >= targetAngle) {
-                robot.ClawRotationServo.setPosition(basePosition - (currentArmAngle * scaleFactor));
+                robot.ClawRotationServo.setPosition(basePosition - baseAdjustment - (currentArmAngle * scaleFactor));
             } else {
                 robot.ClawRotationServo.setPosition(basePosition);
             }
