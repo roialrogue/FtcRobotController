@@ -32,6 +32,12 @@ public class P1RedAuto extends LinearOpMode {
         robot.ClawDropServo.setPosition(.5);
         waitForStart();
 
+        while (!isStopRequested() && !isStarted()) {
+            telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
+            telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
+            telemetry.update();
+        }
+
         /*//P.1 Blue
         //Starting Position
         Pose2d BlueP1 = new Pose2d(10, 62, Math.toRadians(270));
@@ -131,14 +137,8 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-300);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
-        }
+        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
         robot.AMotorOutIn.setPower(0);
-        while (!isStopRequested() && !isStarted()) {
-            telemetry.addData("AMoterUpDown position", robot.AMotorUpDown.getCurrentPosition());
-            telemetry.addData("AMoterOutIn position", robot.AMotorOutIn.getCurrentPosition());
-            telemetry.update();
-        }
 
         drive.followTrajectory(RedP1M1T1);
 
@@ -154,36 +154,20 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorUpDown.setPower(0.7);
         robot.AMotorUpDown.setTargetPosition(1000);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) {
-        }
+        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) { }
         robot.AMotorUpDown.setPower(0);
 
-        robot.ClawRotationServo.setPosition(.23);
+        robot.ClawRotationServo.setPosition(0.45);
 
-        telemetry.addData("Hello","Before");
-        telemetry.update();
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-1500);
-        telemetry.addData("Hello","Before RUn");
-        telemetry.update();
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) {
-            telemetry.addData("Hello","In Loop");
-            telemetry.update();
-        }
+        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
         robot.AMotorOutIn.setPower(0);
-        telemetry.addData("Hello","After code");
-        telemetry.update();
 
-        robot.ClawDropServo.setPosition(0.040);
 
-        robot.AMotorUpDown.setPower(0.7);
-        robot.AMotorUpDown.setTargetPosition(1200);
-        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) {
-        }
+        robot.ClawDropServo.setPosition(0.785);
         drive.followTrajectory(RedP1M1T3);
-
         drive.turn(Math.toRadians(180));
 
 

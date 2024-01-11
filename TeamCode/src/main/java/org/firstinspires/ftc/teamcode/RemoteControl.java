@@ -45,7 +45,7 @@ public class RemoteControl extends LinearOpMode {
 
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
-            double yaw = gamepad1.right_stick_x;
+            double yaw = gamepad1.right_stick_x; //check turning
             boolean slowDrive = gamepad1.left_bumper;
             double clawWheelIntake = gamepad1.left_trigger;
 
@@ -56,7 +56,7 @@ public class RemoteControl extends LinearOpMode {
             boolean hangArm = gamepad2.y;
             boolean clawDropRight = gamepad2.b; //test
             boolean clawDropLeft = gamepad2.a; //test
-            boolean clawDropBoth = gamepad2.x; //need to check
+            boolean clawDropBoth = gamepad2.x;
 
 //            if(gamepad1.right_trigger > 5) {
 //                robot.ClawRotationServo.setPosition(.6);
@@ -166,7 +166,7 @@ public class RemoteControl extends LinearOpMode {
             } else if (clawDropRight) {
                 robot.ClawDropServo.setPosition(0.785);
             } else if (clawDropBoth) {
-                robot.ClawDropServo.setPosition(0.995);
+                robot.ClawDropServo.setPosition(1);
             } else {
                 robot.ClawDropServo.setPosition(0.500);
             }
