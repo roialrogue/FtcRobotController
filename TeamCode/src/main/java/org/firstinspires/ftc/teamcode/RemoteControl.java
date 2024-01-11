@@ -71,8 +71,8 @@ public class RemoteControl extends LinearOpMode {
             double ticksPerRevolution = 537.6 * 20;
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition()/ticksPerRevolution));
 
-            double position = 0;
-            if (currentArmAngle > 20) {
+            double position = robot.ClawRotationServo.getPosition();
+            if (currentArmAngle >= 20) {
                 robot.ClawRotationServo.setPosition(position + 0.01 * (currentArmAngle - 20));
             }
 
