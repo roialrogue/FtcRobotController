@@ -58,35 +58,35 @@ public class RemoteControl extends LinearOpMode {
             boolean clawDropLeft = gamepad2.a; //test
             boolean clawDropBoth = gamepad2.x;
 
-//            if(gamepad1.right_trigger > 5) {
-//                robot.ClawRotationServo.setPosition(.6);
-//            }
-            //Claw wrist joint stabilization
+            if(gamepad1.right_trigger > 5) {
+                robot.ClawRotationServo.setPosition(.6);
+            }
 
-//            double ticksPerRevolution = 537.6 * 20;
-//            double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
-//
-//            telemetry.addData("Ticks", ticksPerRevolution);
-//            telemetry.addData("Arm Angle", currentArmAngle);
-//
-//            double targetAngle = 30.0; // Adjust this value based on your desired angle
-//            double basePosition = 0.0; // Adjust this value based on your servo's base position
-//            double scaleFactor = 1; // Adjust this value based on how much you want the servo to move per degree
-//
-//            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
-//
-//            desiredServoPosition = Math.max(0.0, Math.min(1.0, desiredServoPosition));
-//
-//            boolean above30 = false;
-//            if(above30 == true)  {
-//                robot.ClawRotationServo.setPosition(desiredServoPosition);
-//            }
-//            if (currentArmAngle >= 30) {
-//                above30 = true;
-//            } else if (currentArmAngle < 30) {
-//                above30 = false;
-//                robot.ClawRotationServo.setPosition(basePosition);
-//            }
+            //Claw wrist joint stabilization
+            double ticksPerRevolution = 537.6 * 20;
+            double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
+
+            telemetry.addData("Ticks", ticksPerRevolution);
+            telemetry.addData("Arm Angle", currentArmAngle);
+
+            double targetAngle = 30.0; // Adjust this value based on your desired angle
+            double basePosition = 0.0; // Adjust this value based on your servo's base position
+            double scaleFactor = 1; // Adjust this value based on how much you want the servo to move per degree
+
+            double desiredServoPosition = basePosition + scaleFactor * (currentArmAngle);
+
+            desiredServoPosition = Math.max(0.0, Math.min(1.0, desiredServoPosition));
+
+            boolean above30 = false;
+            if(above30 == true)  {
+                robot.ClawRotationServo.setPosition(desiredServoPosition);
+            }
+            if (currentArmAngle >= 30) {
+                above30 = true;
+            } else if (currentArmAngle < 30) {
+                above30 = false;
+                robot.ClawRotationServo.setPosition(basePosition);
+            }
 
 
             //Drive code
