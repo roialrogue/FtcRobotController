@@ -47,33 +47,33 @@ public class GPTCamera extends OpenCvPipeline {
             lowVal = new Scalar(0, 100, 100);
             highVal = new Scalar(11, 255, 255);
         }
-        Mat left = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
-        Mat middle = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
-        Mat right = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
+//        Mat left = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
+//        Mat middle = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
+//        Mat right = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
 
-        double leftValue = Core.sumElems(left).val[0];
-        double middleValue = Core.sumElems(middle).val[0];
-        double rightValue = Core.sumElems(right).val[0];
+//        double leftValue = Core.sumElems(left).val[0];
+//        double middleValue = Core.sumElems(middle).val[0];
+//        double rightValue = Core.sumElems(right).val[0];
 
 //        left.release();
 //        middle.release();
 //        right.release();
 
-        double leftper = Math.round(leftValue * 100);
-        double middleper = Math.round(middleValue * 100);
-        double rightper = Math.round(rightValue * 100);
+//        double leftper = Math.round(leftValue * 100);
+//        double middleper = Math.round(middleValue * 100);
+//        double rightper = Math.round(rightValue * 100);
 
 
 
-        if (leftper > rightper && leftper > middleper) {
-            leftSide = true;
-        } else if (middleper > leftper && middleper > rightper){
-            middleSide = true;
-        } else if (rightper > leftper && rightper > middleper){
-            rightSide = true;
-        } else {
-            nonSide = true;
-        }
+//        if (leftper > rightper && leftper > middleper) {
+//            leftSide = true;
+//        } else if (middleper > leftper && middleper > rightper){
+//            middleSide = true;
+//        } else if (rightper > leftper && rightper > middleper){
+//            rightSide = true;
+//        } else {
+//            nonSide = true;
+//        }
 
         Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_GRAY2RGB);
         return workingMatrix;
