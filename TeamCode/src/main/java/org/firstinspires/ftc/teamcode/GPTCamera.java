@@ -10,6 +10,11 @@ public class GPTCamera extends OpenCvPipeline {
     public static boolean middleSide = false;
     public static boolean nonSide = false;
 
+    public static int matArowStart = 852;
+    public static int matArowEnd = 1278;
+    public static int matAcolStart = 0;
+    public static int matAcolEnd = 720;
+
 
     public static int matBrowStart = 0;
     public static int matBrowEnd = 426;
@@ -21,10 +26,6 @@ public class GPTCamera extends OpenCvPipeline {
     public static int matCcolStart = 0;
     public static int matCcolEnd = 720;
 
-    public static int matArowStart = 852;
-    public static int matArowEnd = 1278;
-    public static int matAcolStart = 0;
-    public static int matAcolEnd = 720;
 
     boolean isBlue;
 
@@ -54,9 +55,9 @@ public class GPTCamera extends OpenCvPipeline {
         double middleValue = Core.sumElems(middle).val[0];
         double rightValue = Core.sumElems(right).val[0];
 
-        left.release();
-        middle.release();
-        right.release();
+//        left.release();
+//        middle.release();
+//        right.release();
 
         double leftper = Math.round(leftValue * 100);
         double middleper = Math.round(middleValue * 100);
