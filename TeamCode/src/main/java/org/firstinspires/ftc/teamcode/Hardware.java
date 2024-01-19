@@ -39,8 +39,9 @@ public class Hardware {
 
     public Servo ClawDropServo;
 
-    public static double maxSpeed = 0.8;
+    public Servo AirplaneServo;
 
+    public static double maxSpeed = 0.8;
 
     public BNO055IMU gyro;
 
@@ -145,6 +146,12 @@ public class Hardware {
             ClawDropServo = hwMap.get(Servo.class, "ES2");
         } catch (Exception p_exception) {
             ClawDropServo = null;
+        }
+
+        try {
+            AirplaneServo = hwMap.get(Servo.class, "ES2");
+        } catch (Exception p_exception) {
+            AirplaneServo = null;
         }
 
 
