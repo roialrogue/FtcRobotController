@@ -171,7 +171,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-1500);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
+        while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) < 5) { }
         robot.AMotorOutIn.setPower(0);
 
 
