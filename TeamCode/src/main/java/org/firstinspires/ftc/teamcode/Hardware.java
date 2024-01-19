@@ -59,45 +59,31 @@ public class Hardware {
     public void init(HardwareMap hwMap) {
 
 
-        try {
+
             rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
-        } catch (Exception p_exception) {
-            rightForwardWheel = null;
-        }
 
-        try {
+
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
-        } catch (Exception p_exception) {
-            leftForwardWheel = null;
-        }
 
-        try {
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
-        } catch (Exception p_exception) {
-            rightRearWheel = null;
-        }
 
-        try {
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
-        } catch (Exception p_exception) {
-            leftRearWheel = null;
-        }
 
         try {
             AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
