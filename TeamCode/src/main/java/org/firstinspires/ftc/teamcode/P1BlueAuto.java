@@ -21,12 +21,12 @@ public class P1BlueAuto extends LinearOpMode {
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
     boolean isBlue;
     private GPTCamera detector;
 
     public void runOpMode() {
         robot.init(hardwareMap);
+                SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
                 int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
                 GPTCamera detector = new GPTCamera(true);
                 webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -45,6 +45,7 @@ public class P1BlueAuto extends LinearOpMode {
                     telemetry.addData("Found in Auto on the", "left");
                     telemetry.update();
                 }
+//                sleep(50000);
 
                 waitForStart();
 

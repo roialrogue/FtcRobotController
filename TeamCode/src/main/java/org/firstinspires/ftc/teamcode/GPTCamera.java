@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
@@ -21,18 +22,19 @@ public class GPTCamera extends OpenCvPipeline {
     public double totalBC = 0;
     public double totalCC = 0;
     public double Ctotal = 0;
-    public static int matArowStart = 852;
-    public static int matArowEnd = 1278;
+
+    public static int matArowStart = 0;
+    public static int matArowEnd = 720; //720
     public static int matAcolStart = 0;
-    public static int matAcolEnd = 720;
+    public static int matAcolEnd = 426; //426
     public static int matBrowStart = 0;
-    public static int matBrowEnd = 426;
-    public static int matBcolStart = 0;
-    public static int matBcolEnd = 720;
-    public static int matCrowStart = 426;
-    public static int matCrowEnd = 852;
-    public static int matCcolStart = 0;
-    public static int matCcolEnd = 720;
+    public static int matBrowEnd = 720; //720
+    public static int matBcolStart = 426; //426
+    public static int matBcolEnd = 852; //852
+    public static int matCrowStart = 0;
+    public static int matCrowEnd = 720;
+    public static int matCcolStart = 852;
+    public static int matCcolEnd = 1280;
     boolean isBlue;
 
     public GPTCamera(boolean isBlue) {
@@ -46,13 +48,14 @@ public class GPTCamera extends OpenCvPipeline {
             return input;
         }
 
-        Mat left = workingMatrix.submat(matArowStart, matArowEnd, matAcolStart, matAcolEnd);
+        Mat left = workingMatrix.submat(matArowStart,matArowEnd, matAcolStart, matAcolEnd);
         Mat middle = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
         Mat right = workingMatrix.submat(matCrowStart, matCrowEnd, matCcolStart, matCcolEnd);
 
-        Imgproc.rectangle(workingMatrix, new Rect( matAcolStart, matArowStart, (matArowEnd - matArowStart), (matAcolEnd - matAcolStart)), new Scalar(0, 255, 0));
-        Imgproc.rectangle(workingMatrix, new Rect(matBcolStart, matBrowStart, (matBrowEnd - matBrowStart), (matBcolEnd - matBcolStart)), new Scalar(0, 255, 0));
-        Imgproc.rectangle(workingMatrix, new Rect(matCcolStart, matCrowStart, (matCrowEnd - matCrowStart), (matCcolEnd - matCcolStart)), new Scalar(0, 255, 0));
+        Imgproc.rectangle(workingMatrix, new Rect(matAcolStart, matArowStart, (matAcolEnd - matAcolStart), (matArowEnd - matArowStart)), new Scalar(0, 255, 0));
+        Imgproc.rectangle(workingMatrix, new Rect(matBcolStart,matBrowStart , (matBcolEnd - matBcolStart), (matBrowEnd - matBrowStart)), new Scalar(0, 0, 0));
+        Imgproc.rectangle(workingMatrix, new Rect(matCcolStart, matCrowStart, (matCcolEnd - matCcolStart), (matCrowEnd - matCrowStart)), new Scalar(0, 0, 255));
+
 
         Scalar lowVal, highVal;
         if (isBlue) {
