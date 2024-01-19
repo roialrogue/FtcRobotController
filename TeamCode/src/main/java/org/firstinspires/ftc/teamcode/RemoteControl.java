@@ -33,13 +33,17 @@ public class RemoteControl extends LinearOpMode {
 
         robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        double ServoUp = 0.521;
-        double ServoDown = 0.243;
-        robot.HangServo.setPosition(ServoDown);
+        double ServoUp = 0.25;
+        double ServoDown = 0;
+        double PSU = 0;
+        double PSD = 0;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
+
+        robot.HangServo.setPosition(ServoDown);
+        robot.AirplaneServo.setPosition(PSD);
 
         while (opModeIsActive()) {
 
@@ -47,26 +51,22 @@ public class RemoteControl extends LinearOpMode {
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
             boolean slowDrive = gamepad1.left_bumper;
-            double clawWheelIntake = gamepad1.left_trigger;
 
             double beltOutIn = gamepad2.right_stick_y;
-            boolean beltSlowDrive = gamepad2.right_bumper;
             double armUpDown = gamepad2.left_stick_y;
+            boolean beltSlowDrive = gamepad2.right_bumper;
             boolean armSlowDrive = gamepad2.left_bumper;
+            boolean clawWheelIntake = gamepad2.left_stick_button;
+            double airplane = gamepad2.right_trigger;
             boolean hangArm = gamepad2.y;
             boolean clawDropRight = gamepad2.b;
             boolean clawDropLeft = gamepad2.a;
             boolean clawDropBoth = gamepad2.x;
+
             // trigger angle manual add
             //Claw wrist joint stabilization
             double ticksPerRevolution = 537.6 * 20;
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
-
-            telemetry.addData("Ticks", ticksPerRevolution);
-            telemetry.addData("Arm Angle", currentArmAngle);
-            telemetry.addData("Current Servo Pos", robot.ClawRotationServo.getPosition());
-            telemetry.addData("Current Servo Angle", (robot.ClawRotationServo.getPosition() * 300));
-            telemetry.update();
 
             double targetAngle = 30; // Adjust this value based on your desired angle
             double basePosition = 0.63; // Adjust this value based on your servo's base position
@@ -146,7 +146,7 @@ public class RemoteControl extends LinearOpMode {
             }
 
             // Claw intake system
-            if(clawWheelIntake > .5) {
+            if(clawWheelIntake) {
                 robot.InTakeServo1.setPosition(1);
                 robot.InTakeServo2.setPosition(1);
             } else {
@@ -169,6 +169,11 @@ public class RemoteControl extends LinearOpMode {
             ServoDown = 0.243;
             if (hangArm == true) {
                 robot.HangServo.setPosition(ServoUp);
+            }
+
+            //Servo for hanging
+            if (airplane > 0.1) {
+                robot.AirplaneServo.setPosition(PSU);
             }
         }
     }
