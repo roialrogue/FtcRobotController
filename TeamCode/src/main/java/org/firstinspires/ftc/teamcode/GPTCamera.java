@@ -25,8 +25,6 @@ public class GPTCamera extends OpenCvPipeline {
     public static int matArowEnd = 1278;
     public static int matAcolStart = 0;
     public static int matAcolEnd = 720;
-
-
     public static int matBrowStart = 0;
     public static int matBrowEnd = 426;
     public static int matBcolStart = 0;

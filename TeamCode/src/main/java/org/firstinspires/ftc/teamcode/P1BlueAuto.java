@@ -49,15 +49,11 @@ public class P1BlueAuto extends LinearOpMode {
                 waitForStart();
 
                 if (GPTCamera.leftSide == true) {
-                    telemetry.addData("Found in Auto on the", "right");
-                } else if (GPTCamera.middleSide == true) {
-                    telemetry.addData("Found in Auto on the", "middle");
-                } else if (GPTCamera.rightSide == true) {
-                    telemetry.addData("Found in Auto on the", "left");
-                }
-                telemetry.update();
 
+                } else if (GPTCamera.middleSide == true) {
+
+                } else if (GPTCamera.rightSide == true) {
+
+                }
             }
         }
-
-
