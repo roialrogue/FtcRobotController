@@ -135,7 +135,7 @@ public class Hardware {
         }
 
         try {
-            AirplaneServo = hwMap.get(Servo.class, "ES2");
+            AirplaneServo = hwMap.get(Servo.class, "ES4");
         } catch (Exception p_exception) {
             AirplaneServo = null;
         }

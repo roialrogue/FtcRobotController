@@ -11,6 +11,8 @@ public class RemoteControl extends LinearOpMode {
     // 1 ticke = intake roller
     // 0 tickes = angle
 
+    //servo intake need to be programed
+
     Hardware robot = Hardware.getInstance();
     public void runOpMode() {
 
@@ -35,8 +37,8 @@ public class RemoteControl extends LinearOpMode {
         robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double ServoUp = 0.25;
         double ServoDown = 0;
-        double PSU = 0;
-        double PSD = 0;
+        double PSU = 0.11;
+        double PSD = 0.38;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -65,11 +67,12 @@ public class RemoteControl extends LinearOpMode {
 
             // trigger angle manual add
             //Claw wrist joint stabilization
-            double ticksPerRevolution = 537.6 * 20;
+            double ticksPerRevolution = 537.6 * 20; //0.424 base ground value
+            //
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
 
             double targetAngle = 30; // Adjust this value based on your desired angle
-            double basePosition = 0.63; // Adjust this value based on your servo's base position
+            double basePosition = 0.424; // Adjust this value based on your servo's base position
             double baseAdjustment = 0.064; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
             double scaleFactor = 0.002; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
@@ -84,9 +87,9 @@ public class RemoteControl extends LinearOpMode {
             //Slow Drive
             double speed;
             if (slowDrive) {
-                speed = .6;
-            } else {
                 speed = 1;
+            } else {
+                speed = .6;
             }
             double rfm = axial - lateral - yaw;
             double rbm = axial + lateral - yaw;
@@ -166,14 +169,17 @@ public class RemoteControl extends LinearOpMode {
             }
 
             //Servo for hanging
-            ServoDown = 0.243;
             if (hangArm == true) {
                 robot.HangServo.setPosition(ServoUp);
+            } else {
+                robot.HangServo.setPosition(ServoDown);
             }
 
             //Servo for hanging
             if (airplane > 0.1) {
                 robot.AirplaneServo.setPosition(PSU);
+            } else {
+                robot.AirplaneServo.setPosition(PSD);
             }
         }
     }

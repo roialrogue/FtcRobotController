@@ -141,7 +141,7 @@ public class P1RedAuto extends LinearOpMode {
         robot.AMotorOutIn.setPower(0.7);
         robot.AMotorOutIn.setTargetPosition(-300);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorOutIn.isBusy()) { }
+        while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) < 5) { }
         robot.AMotorOutIn.setPower(0);
 
         drive.followTrajectory(RedP1M1T1);
@@ -155,14 +155,10 @@ public class P1RedAuto extends LinearOpMode {
         robot.InTakeServo2.setPosition(.5);
         drive.followTrajectory(RedP1M1T2);
 
-        telemetry.addData("Hi","");
-        telemetry.update();
         robot.AMotorUpDown.setPower(0.7);
         robot.AMotorUpDown.setTargetPosition(1000);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && robot.AMotorUpDown.isBusy()) {
-            telemetry.addData("by","");
-            telemetry.update();
+        while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) < 5) {
         }
         robot.AMotorUpDown.setPower(0);
 
@@ -179,6 +175,19 @@ public class P1RedAuto extends LinearOpMode {
         drive.followTrajectory(RedP1M1T3);
         drive.followTrajectory(RedP1M1T4);
         drive.turn(Math.toRadians(180));
+
+        robot.AMotorOutIn.setPower(0.7);
+        robot.AMotorOutIn.setTargetPosition(-1000);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) < 5) { }
+        robot.AMotorOutIn.setPower(0);
+
+        robot.AMotorUpDown.setPower(0.7);
+        robot.AMotorUpDown.setTargetPosition(-300);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) < 5) {
+        }
+        robot.AMotorUpDown.setPower(0);
 
 
 
