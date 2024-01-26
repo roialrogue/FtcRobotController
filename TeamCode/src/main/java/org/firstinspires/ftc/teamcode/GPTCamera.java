@@ -37,8 +37,11 @@ public class GPTCamera extends OpenCvPipeline {
     public static int matCcolEnd = 1280;
     boolean isBlue;
 
-    public GPTCamera(boolean isBlue) {
+    Telemetry telemetry;
+
+    public GPTCamera(boolean isBlue, Telemetry telemetry) {
         this.isBlue = isBlue;
+        this.telemetry = telemetry;
     }
     public final Mat processFrame(Mat input) {
 
@@ -57,8 +60,7 @@ public class GPTCamera extends OpenCvPipeline {
         Imgproc.rectangle(workingMatrix, new Rect(matCcolStart, matCrowStart, (matCcolEnd - matCcolStart), (matCrowEnd - matCrowStart)), new Scalar(0, 0, 255));
 
 
-        Scalar lowVal, highVal;
-        if (isBlue) {
+        if (isBlue == true) {
             totalA = Core.sumElems(left).val[2];
             totalA /= left.rows() * left.cols();
             totalB = Core.sumElems(middle).val[2];
@@ -66,7 +68,7 @@ public class GPTCamera extends OpenCvPipeline {
             totalC = Core.sumElems(right).val[2];
             totalC /= right.rows() * right.cols();
             Atotal = (totalA + totalB + totalC);
-        } else {
+        } else if(isBlue == false) {
             totalA = Core.sumElems(left).val[0];
             totalA /= left.rows() * left.cols();
             totalB = Core.sumElems(middle).val[0];
@@ -75,13 +77,23 @@ public class GPTCamera extends OpenCvPipeline {
             totalC /= right.rows() * right.cols();
             Atotal = (totalA + totalB + totalC);
         }
+        telemetry.addData("Total A",totalA);
+        telemetry.addData("Total B",totalB);
+        telemetry.addData("Total C",totalC);
+        telemetry.update();
+
+        try {
+            Thread.sleep(5000);
+        } catch( Exception e ) {
+
+        }
 
         if ((totalA > totalB) && (totalA > totalC)) {
-            leftSide = true;
+            rightSide = true;
         } else if ((totalB > totalA) && (totalB > totalC)){
             middleSide = true;
         } else if ((totalC > totalA) && (totalC > totalB)){
-            rightSide = true;
+            leftSide = true;
         } else {
             nonSide = true;
         }

@@ -82,6 +82,8 @@ public class RemoteControl extends LinearOpMode {
                 robot.ClawRotationServo.setPosition(basePosition);
             }
 
+            telemetry.addData("Current arm angle", currentArmAngle);
+            telemetry.update();
 
             //Drive code
             //Slow Drive
