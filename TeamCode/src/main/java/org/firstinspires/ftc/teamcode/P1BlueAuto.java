@@ -34,7 +34,11 @@ public class P1BlueAuto extends LinearOpMode {
                 FtcDashboard.getInstance().startCameraStream(webCam, 0);
                 webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                 webCam.setPipeline(detector);
-
+                int Num = 0;
+while(GPTCamera.nonSide == true && Num < 10) {
+    sleep(200);
+    Num = Num + 1;
+}
                 if (GPTCamera.rightSide == true) {
                     telemetry.addData("Found in Auto on the", "right");
                     telemetry.update();
@@ -48,7 +52,6 @@ public class P1BlueAuto extends LinearOpMode {
                     telemetry.addData("Did not find","Side");
                     telemetry.update();
                 }
-//                sleep(50000);
 
                 waitForStart();
 

@@ -45,10 +45,21 @@ public class GPTCamera extends OpenCvPipeline {
     }
     public final Mat processFrame(Mat input) {
 
-        input.copyTo(workingMatrix);
-
-        if (workingMatrix.empty()) {
+        if (input.empty()) {
             return input;
+        }
+
+        Imgproc.cvtColor(input, workingMatrix, Imgproc.COLOR_RGB2HSV);
+
+
+if (isBlue) {
+            Scalar lowHSV = new Scalar(100, 100, 100);
+            Scalar highHSV = new Scalar(140, 255, 255);
+            Core.inRange(workingMatrix, lowHSV, highHSV, workingMatrix);
+        } else {
+            Scalar lowHSV = new Scalar(0, 100, 100);
+            Scalar highHSV = new Scalar(20, 255, 255);
+            Core.inRange(workingMatrix, lowHSV, highHSV, workingMatrix);
         }
 
         Mat left = workingMatrix.submat(matArowStart,matArowEnd, matAcolStart, matAcolEnd);
@@ -59,24 +70,14 @@ public class GPTCamera extends OpenCvPipeline {
         Imgproc.rectangle(workingMatrix, new Rect(matBcolStart,matBrowStart , (matBcolEnd - matBcolStart), (matBrowEnd - matBrowStart)), new Scalar(0, 0, 0));
         Imgproc.rectangle(workingMatrix, new Rect(matCcolStart, matCrowStart, (matCcolEnd - matCcolStart), (matCrowEnd - matCrowStart)), new Scalar(0, 0, 255));
 
+        totalA = Core.sumElems(left).val[0];
+        totalA /= left.rows() * left.cols();
+        totalB = Core.sumElems(middle).val[0];
+        totalB /= middle.rows() * middle.cols();
+        totalC = Core.sumElems(right).val[0];
+        totalC /= right.rows() * right.cols();
+        Atotal = (totalA + totalB + totalC);
 
-        if (isBlue == true) {
-            totalA = Core.sumElems(left).val[2];
-            totalA /= left.rows() * left.cols();
-            totalB = Core.sumElems(middle).val[2];
-            totalB /= middle.rows() * middle.cols();
-            totalC = Core.sumElems(right).val[2];
-            totalC /= right.rows() * right.cols();
-            Atotal = (totalA + totalB + totalC);
-        } else if(isBlue == false) {
-            totalA = Core.sumElems(left).val[0];
-            totalA /= left.rows() * left.cols();
-            totalB = Core.sumElems(middle).val[0];
-            totalB /= middle.rows() * middle.cols();
-            totalC = Core.sumElems(right).val[0];
-            totalC /= right.rows() * right.cols();
-            Atotal = (totalA + totalB + totalC);
-        }
         telemetry.addData("Total A",totalA);
         telemetry.addData("Total B",totalB);
         telemetry.addData("Total C",totalC);
