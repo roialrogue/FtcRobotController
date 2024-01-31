@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Camera Test Blue")
+@Autonomous(name = "Blue P.1 Auto")
 public class P1BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
@@ -26,41 +28,26 @@ public class P1BlueAuto extends LinearOpMode {
 
     public void runOpMode() {
         robot.init(hardwareMap);
-                SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-                int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-                GPTCamera detector = new GPTCamera(true,telemetry);
-                webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-                webCam.openCameraDevice();
-                FtcDashboard.getInstance().startCameraStream(webCam, 0);
-                webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                webCam.setPipeline(detector);
-                int Num = 0;
-while(GPTCamera.nonSide == true && Num < 10) {
-    sleep(200);
-    Num = Num + 1;
-}
-                if (GPTCamera.rightSide == true) {
-                    telemetry.addData("Found in Auto on the", "right");
-                    telemetry.update();
-                } else if (GPTCamera.middleSide == true) {
-                    telemetry.addData("Found in Auto on the", "middle");
-                    telemetry.update();
-                } else if (GPTCamera.leftSide == true) {
-                    telemetry.addData("Found in Auto on the", "left");
-                    telemetry.update();
-                } else {
-                    telemetry.addData("Did not find","Side");
-                    telemetry.update();
-                }
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        GPTCamera detector = new GPTCamera(true, telemetry);
+        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webCam.openCameraDevice();
+        FtcDashboard.getInstance().startCameraStream(webCam, 0);
+        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+        webCam.setPipeline(detector);
 
-                waitForStart();
+        waitForStart();
+        webCam.stopStreaming();
 
-                if (GPTCamera.leftSide == true) {
+        if (GPTCamera.rightSide == true) {
 
-                } else if (GPTCamera.middleSide == true) {
+        } else if (GPTCamera.middleSide == true) {
 
-                } else if (GPTCamera.rightSide == true) {
+        } else if (GPTCamera.leftSide == true) {
 
-                }
-            }
+        } else {
+
         }
+    }
+}

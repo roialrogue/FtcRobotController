@@ -1,78 +1,47 @@
-/*
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "P.2 Red Auto")
-public class P2RedAuto extends LinearOpMode{
-    boolean isBlue;
-    Hardware robot = Hardware.getInstance();
+@Autonomous(name = "Red P.2 Auto")
+public class P2RedAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
-
+    Hardware robot = Hardware.getInstance();
+    OpenCvCamera webCam;
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    boolean isBlue;
+    private GPTCamera detector;
 
     public void runOpMode() {
         robot.init(hardwareMap);
-        CameraInitialization cameraPipeline = new CameraInitialization(telemetry, false);
-        boolean isBlue = true;
-        Hardware hw = Hardware.getInstance();
-
-        final boolean[] cameraWorked = new boolean[1];
-
-        hw.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                cameraWorked[0] = true;
-                hw.camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                hw.camera.setPipeline(cameraPipeline);
-
-                telemetry.addData("Webcam has initialized correctly", "");
-                telemetry.update();
-            }
-
-            @Override
-            public void onError(int errorCode) {
-                cameraWorked[0] = false;
-                telemetry.addData("Camera has broken", "");
-                telemetry.update();
-            }
-
-        });
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        GPTCamera detector = new GPTCamera(false, telemetry);
+        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webCam.openCameraDevice();
+        FtcDashboard.getInstance().startCameraStream(webCam, 0);
+        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+        webCam.setPipeline(detector);
 
         waitForStart();
-        hw.camera.stopStreaming();
+        webCam.stopStreaming();
 
+        if (GPTCamera.rightSide == true) {
 
-        if (cameraWorked[0]) {
-            //runs if camera works
-            CameraInitialization.Location location = cameraPipeline.getLocation();
-            if (CameraInitialization.stoneRight) {
-                //thing is on right
-                telemetry.addData("Found on the right", "");
-                telemetry.update();
+        } else if (GPTCamera.middleSide == true) {
 
+        } else if (GPTCamera.leftSide == true) {
 
-            } else if (CameraInitialization.stoneMiddle) {
-                //thing is on middle
-                telemetry.addData("Found on the middle", "");
-                telemetry.update();
+        } else {
 
-
-            } else if (CameraInitialization.stoneLeft){
-                //thing is on left
-                telemetry.addData("Found on the left","");
-                telemetry.update();
-
-
-
-
-            }
         }
     }
-}*/
+}
