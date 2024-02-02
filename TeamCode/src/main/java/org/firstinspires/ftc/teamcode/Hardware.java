@@ -86,62 +86,28 @@ public class Hardware {
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
 
-        try {
             AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorUpDown.setPower(0);
-        } catch (Exception p_exception) {
-            AMotorUpDown = null;
-        }
 
-        try {
             AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
-        } catch (Exception p_exception) {
-            AMotorOutIn = null;
-        }
 
-        try {
             HangServo = hwMap.get(Servo.class, "CS0");
-        } catch (Exception p_exception) {
-            HangServo = null;
-        }
 
-        try {
             InTakeServo1 = hwMap.get(Servo.class, "CS4");
-        } catch (Exception p_exception) {
-            InTakeServo2 = null;
-        }
 
-        try {
             InTakeServo2 = hwMap.get(Servo.class, "ES0");
-        } catch (Exception p_exception) {
-            InTakeServo2 = null;
-        }
 
-        try {
             ClawRotationServo = hwMap.get(Servo.class, "CS2");
-        } catch (Exception p_exception) {
-            ClawRotationServo = null;
-        }
 
-        try {
             ClawDropServo = hwMap.get(Servo.class, "ES2");
-        } catch (Exception p_exception) {
-            ClawDropServo = null;
-        }
 
-        try {
             AirplaneServo = hwMap.get(Servo.class, "ES4");
-        } catch (Exception p_exception) {
-            AirplaneServo = null;
-        }
 
-
-        try {
             gyro = hwMap.get(BNO055IMU.class, "gyro");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -150,15 +116,8 @@ public class Hardware {
             parameters.loggingTag = "gyro";
             parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
             gyro.initialize(parameters);
-        } catch (Exception p_exception) {
-            gyro = null;
-        }
 
-        try {
             color = hwMap.get(RevColorSensorV3.class, "Color");
-        } catch (Exception p_exception) {
-            color = null;
-        }
 
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());

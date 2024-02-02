@@ -35,73 +35,224 @@ public class P1RedAuto extends LinearOpMode {
         webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
         webCam.setPipeline(detector);
 
-        Pose2d RedP1 = new Pose2d(14, -62, Math.toRadians(90));
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.ClawRotationServo.setPosition(.642);
+        robot.ClawDropServo.setPosition(.5);
+
+        Pose2d RedP1 = new Pose2d(10, -61, Math.toRadians(90));
         drive.setPoseEstimate(RedP1);
 
         waitForStart();
         webCam.stopStreaming();
 
         if (GPTCamera.rightSide == true) {
-            //Path Red mark 1
-            Trajectory RedP1M1T1 = drive.trajectoryBuilder(RedP1)
-                    .lineToLinearHeading(new Pose2d(12, -32, Math.toRadians(180)))
+            ////Mark right
+            Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
+                    .lineToLinearHeading(new Pose2d(12, -35, Math.toRadians(180)))
                     .build();
 
-            Trajectory RedP1M1T2 = drive.trajectoryBuilder(RedP1M1T1.end())
-                    .lineToLinearHeading(new Pose2d(50, -30, Math.toRadians(0)))
+            Trajectory RedP1MLT2 = drive.trajectoryBuilder(RedP1MLT1.end())
+                    .forward(12)
                     .build();
 
-            Trajectory RedP1M1T3 = drive.trajectoryBuilder(RedP1M1T2.end())
+            Trajectory RedP1MLT3 = drive.trajectoryBuilder(RedP1MLT2.end())
+                    .back(12)
+                    .build();
+
+            Trajectory RedP1MLT4 = drive.trajectoryBuilder(RedP1MLT3.end())
+                    .lineToLinearHeading(new Pose2d(49, -30, Math.toRadians(0)))
+                    .build();
+
+            Trajectory RedP1MLT5 = drive.trajectoryBuilder(RedP1MLT4.end())
                     .back(10)
                     .build();
 
-            Trajectory RedP1M1T4 = drive.trajectoryBuilder(RedP1M1T3.end())
+            Trajectory RedP1MLT6 = drive.trajectoryBuilder(RedP1MLT5.end())
                     .strafeTo(new Vector2d(50, -60))
                     .build();
 
-            drive.followTrajectory(RedP1M1T1);
-            drive.followTrajectory(RedP1M1T2);
+            drive.followTrajectory(RedP1MLT1);
+            drive.followTrajectory(RedP1MLT2);
+            drive.followTrajectory(RedP1MLT3);
+            drive.followTrajectory(RedP1MLT4);
 
-            robot.AMotorUpDown.setPower(0.7);
-            robot.AMotorUpDown.setTargetPosition(1000);
-            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) < 5) {
-            }
-            robot.AMotorUpDown.setPower(0);
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(1000);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
 
-            robot.ClawRotationServo.setPosition(0.45);
+//            robot.ClawRotationServo.setPosition(0.45);
 
-            robot.AMotorOutIn.setPower(0.7);
-            robot.AMotorOutIn.setTargetPosition(-1500);
-            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) < 5) { }
-            robot.AMotorOutIn.setPower(0);
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1500);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);
 
+//            robot.ClawDropServo.setPosition(0.785);
 
-            robot.ClawDropServo.setPosition(0.785);
-            drive.followTrajectory(RedP1M1T3);
-            drive.followTrajectory(RedP1M1T4);
+            drive.followTrajectory(RedP1MLT5);
+
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1000);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);|
+
+            drive.followTrajectory(RedP1MLT6);
             drive.turn(Math.toRadians(180));
 
-            robot.AMotorOutIn.setPower(0.7);
-            robot.AMotorOutIn.setTargetPosition(-1000);
-            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) < 5) { }
-            robot.AMotorOutIn.setPower(0);
+//            robot.ClawRotationServo.setPosition(0.424);
 
-            robot.AMotorUpDown.setPower(0.7);
-            robot.AMotorUpDown.setTargetPosition(-300);
-            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) < 5) {
-            }
-            robot.AMotorUpDown.setPower(0);
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(-300);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
 
         } else if (GPTCamera.middleSide == true) {
+            //Mark middle
+
+            Trajectory RedP1MMT1 = drive.trajectoryBuilder(RedP1)
+                    .lineToLinearHeading(new Pose2d(16, -34, Math.toRadians(90)))
+                    .build();
+
+            Trajectory RedP1MMT2 = drive.trajectoryBuilder(RedP1MMT1.end())
+                    .forward(10)
+                    .build();
+
+            Trajectory RedP1MMT3 = drive.trajectoryBuilder(RedP1MMT2.end())
+                    .back(13)
+                    .build();
+
+            Trajectory RedP1MMT4 = drive.trajectoryBuilder(RedP1MMT3.end())
+                    .lineToLinearHeading(new Pose2d(49, -36, Math.toRadians(0)))
+                    .build();
+
+            Trajectory RedP1MMT5 = drive.trajectoryBuilder(RedP1MMT4.end())
+                    .back(10)
+                    .build();
+
+            Trajectory RedP1MMT6 = drive.trajectoryBuilder(RedP1MMT5.end())
+                    .strafeTo(new Vector2d(50, -60))
+                    .build();
+
+            drive.followTrajectory(RedP1MMT1);
+            drive.followTrajectory(RedP1MMT2);
+            drive.followTrajectory(RedP1MMT3);
+            drive.followTrajectory(RedP1MMT4);
+
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(1000);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
+
+//            robot.ClawRotationServo.setPosition(0.45);
+
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1500);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);
+
+//            robot.ClawDropServo.setPosition(0.785);
+
+            drive.followTrajectory(RedP1MMT5);
+
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1000);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);
+
+            drive.followTrajectory(RedP1MMT6);
+            drive.turn(Math.toRadians(180));
+
+//            robot.ClawRotationServo.setPosition(0.424);
+
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(-300);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
+
 
         } else if (GPTCamera.leftSide == true) {
+            //Mark left
+
+            Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
+                    .lineToLinearHeading(new Pose2d(30, -44, Math.toRadians(125)))
+                    .build();
+
+            Trajectory RedP1MLT2 = drive.trajectoryBuilder(RedP1MLT1.end())
+                    .forward(10)
+                    .build();
+
+            Trajectory RedP1MLT3 = drive.trajectoryBuilder(RedP1MLT2.end())
+                    .back(10)
+                    .build();
+
+            Trajectory RedP1MLT4 = drive.trajectoryBuilder(RedP1MLT3.end())
+                    .lineToLinearHeading(new Pose2d(49, -42, Math.toRadians(0)))
+                    .build();
+
+            Trajectory RedP1MLT5 = drive.trajectoryBuilder(RedP1MLT4.end())
+                    .back(10)
+                    .build();
+
+            Trajectory RedP1MLT6 = drive.trajectoryBuilder(RedP1MLT5.end())
+                    .strafeTo(new Vector2d(50, -60))
+                    .build();
+
+            drive.followTrajectory(RedP1MLT1);
+            drive.followTrajectory(RedP1MLT2);
+            drive.followTrajectory(RedP1MLT3);
+            drive.followTrajectory(RedP1MLT4);
+
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(1000);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
+
+//            robot.ClawRotationServo.setPosition(0.45);
+
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1500);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);
+
+//            robot.ClawDropServo.setPosition(0.785);
+
+            drive.followTrajectory(RedP1MLT5);
+
+//            robot.AMotorOutIn.setPower(0.9);
+//            robot.AMotorOutIn.setTargetPosition(-1000);
+//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+//            robot.AMotorOutIn.setPower(0);
+
+            drive.followTrajectory(RedP1MLT6);
+            drive.turn(Math.toRadians(180));
+
+//            robot.ClawRotationServo.setPosition(0.424);
+
+//            robot.AMotorUpDown.setPower(0.9);
+//            robot.AMotorUpDown.setTargetPosition(-300);
+//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+//            robot.AMotorUpDown.setPower(0);
 
         } else {
-
+            telemetry.addData("Wait","Wait");
+            telemetry.update();
         }
     }
 }
