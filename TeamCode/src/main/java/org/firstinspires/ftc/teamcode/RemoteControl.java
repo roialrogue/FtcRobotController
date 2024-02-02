@@ -59,6 +59,7 @@ public class RemoteControl extends LinearOpMode {
             boolean beltSlowDrive = gamepad2.right_bumper;
             boolean armSlowDrive = gamepad2.left_bumper;
             boolean clawWheelIntake = gamepad2.left_stick_button;
+            boolean clawWheelOutake = gamepad2.right_stick_button;
             double airplane = gamepad2.right_trigger;
             boolean hangArm = gamepad2.y;
             boolean clawDropRight = gamepad2.b;
@@ -71,15 +72,19 @@ public class RemoteControl extends LinearOpMode {
             //
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
 
-            double targetAngle = 30; // Adjust this value based on your desired angle
+            double targetAngle = 35; // Adjust this value based on your desired angle
             double basePosition = 0.424; // Adjust this value based on your servo's base position
-            double baseAdjustment = 0.064; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
-            double scaleFactor = 0.002; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
+            double baseAdjustment = 0.07; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
+            double scaleFactor = 0.001; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
             if (currentArmAngle >= targetAngle) {
                 robot.ClawRotationServo.setPosition(basePosition - baseAdjustment - (currentArmAngle * scaleFactor));
             } else {
-                robot.ClawRotationServo.setPosition(basePosition);
+                if (currentArmAngle >= -1) {
+                    robot.ClawRotationServo.setPosition(basePosition);
+                } else if (currentArmAngle < -1) {
+                    robot.ClawRotationServo.setPosition(basePosition + (scaleFactor * 0.5 * currentArmAngle));
+                }
             }
 
             telemetry.addData("Current arm angle", currentArmAngle);
@@ -132,8 +137,6 @@ public class RemoteControl extends LinearOpMode {
                 robot.AMotorOutIn.setPower(0);
             }
 
-            telemetry.addData("Arm Out Ticks", robot.AMotorOutIn.getCurrentPosition());
-            telemetry.update();
 
             //Up and down arm
             //slow Drive
@@ -151,9 +154,12 @@ public class RemoteControl extends LinearOpMode {
             }
 
             // Claw intake system
-            if(clawWheelIntake) {
-                robot.InTakeServo1.setPosition(1);
+            if (clawWheelIntake) {
                 robot.InTakeServo2.setPosition(1);
+                robot.InTakeServo1.setPosition(1);
+            } else if (clawWheelOutake) {
+                robot.InTakeServo2.setPosition(-1);
+                robot.InTakeServo1.setPosition(-1);
             } else {
                 robot.InTakeServo1.setPosition(0.5);
                 robot.InTakeServo2.setPosition(0.5);
@@ -177,7 +183,7 @@ public class RemoteControl extends LinearOpMode {
                 robot.HangServo.setPosition(ServoDown);
             }
 
-            //Servo for hanging
+            //Servo for airplane
             if (airplane > 0.1) {
                 robot.AirplaneServo.setPosition(PSU);
             } else {
