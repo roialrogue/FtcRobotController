@@ -40,7 +40,7 @@ public class P2BlueAuto extends LinearOpMode {
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        robot.ClawRotationServo.setPosition(.642);
+        robot.ClawRotationServo.setPosition(.38);
         robot.ClawDropServo.setPosition(.5);
 
         Pose2d BlueP2 = new Pose2d(-33, 61, Math.toRadians(270));
@@ -73,7 +73,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MRT6 = drive.trajectoryBuilder(BlueP2MRT5.end())
-                    .splineToConstantHeading(new Vector2d(49, 42), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(52, 26), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MRT7 = drive.trajectoryBuilder(BlueP2MRT6.end())
@@ -81,7 +81,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MRT8 = drive.trajectoryBuilder(BlueP2MRT7.end())
-                    .strafeTo(new Vector2d(50, 60))
+                    .strafeTo(new Vector2d(50, 52))
                     .build();
 
             drive.followTrajectory(BlueP2MRT1);
@@ -91,40 +91,40 @@ public class P2BlueAuto extends LinearOpMode {
             drive.followTrajectory(BlueP2MRT5);
             drive.followTrajectory(BlueP2MRT6);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(1000);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(1050);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
-//            robot.ClawRotationServo.setPosition(0.45);
+            robot.ClawRotationServo.setPosition(0.2);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1500);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
-//            robot.ClawDropServo.setPosition(0.785);
+            robot.ClawDropServo.setPosition(0.785);
 
             drive.followTrajectory(BlueP2MRT7);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1000);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-760);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(BlueP2MRT8);
             drive.turn(Math.toRadians(180));
 
-//            robot.ClawRotationServo.setPosition(0.424);
+            robot.ClawRotationServo.setPosition(.38);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(-300);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(-300);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
         } else if (GPTCamera.middleSide == true) {
             //Mark middle
@@ -150,7 +150,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MMT6 = drive.trajectoryBuilder(BlueP2MMT5.end())
-                    .splineToConstantHeading(new Vector2d(49, 42), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(52, 33), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MMT7 = drive.trajectoryBuilder(BlueP2MMT6.end())
@@ -158,7 +158,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MMT8 = drive.trajectoryBuilder(BlueP2MMT7.end())
-                    .strafeTo(new Vector2d(50, 60))
+                    .strafeTo(new Vector2d(50, 52))
                     .build();
 
             drive.followTrajectory(BlueP2MMT1);
@@ -168,40 +168,40 @@ public class P2BlueAuto extends LinearOpMode {
             drive.followTrajectory(BlueP2MMT5);
             drive.followTrajectory(BlueP2MMT6);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(1000);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(1050);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
-//            robot.ClawRotationServo.setPosition(0.45);
+            robot.ClawRotationServo.setPosition(0.2);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1500);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
-//            robot.ClawDropServo.setPosition(0.785);
+            robot.ClawDropServo.setPosition(0.785);
 
             drive.followTrajectory(BlueP2MMT7);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1000);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-760);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(BlueP2MMT8);
             drive.turn(Math.toRadians(180));
 
-//            robot.ClawRotationServo.setPosition(0.424);
+            robot.ClawRotationServo.setPosition(.38);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(-300);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(-300);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
         } else if (GPTCamera.leftSide == true) {
             //Mark left
@@ -227,7 +227,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MRT6 = drive.trajectoryBuilder(BlueP2MRT5.end())
-                    .splineToConstantHeading(new Vector2d(49, 42), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(52, 40), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MRT7 = drive.trajectoryBuilder(BlueP2MRT6.end())
@@ -235,7 +235,7 @@ public class P2BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP2MRT8 = drive.trajectoryBuilder(BlueP2MRT7.end())
-                    .strafeTo(new Vector2d(50, 60))
+                    .strafeTo(new Vector2d(50, 52))
                     .build();
 
             drive.followTrajectory(BlueP2MRT1);
@@ -245,40 +245,40 @@ public class P2BlueAuto extends LinearOpMode {
             drive.followTrajectory(BlueP2MRT5);
             drive.followTrajectory(BlueP2MRT6);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(1000);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(1050);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
-//            robot.ClawRotationServo.setPosition(0.45);
+            robot.ClawRotationServo.setPosition(0.2);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1500);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
-//            robot.ClawDropServo.setPosition(0.785);
+           robot.ClawDropServo.setPosition(0.785);
 
             drive.followTrajectory(BlueP2MRT7);
 
-//            robot.AMotorOutIn.setPower(0.9);
-//            robot.AMotorOutIn.setTargetPosition(-1000);
-//            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
-//            robot.AMotorOutIn.setPower(0);
+            robot.AMotorOutIn.setPower(0.9);
+            robot.AMotorOutIn.setTargetPosition(-760);
+            robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(BlueP2MRT8);
             drive.turn(Math.toRadians(180));
 
-//            robot.ClawRotationServo.setPosition(0.424);
+            robot.ClawRotationServo.setPosition(.38);
 
-//            robot.AMotorUpDown.setPower(0.9);
-//            robot.AMotorUpDown.setTargetPosition(-300);
-//            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
-//            robot.AMotorUpDown.setPower(0);
+            robot.AMotorUpDown.setPower(0.9);
+            robot.AMotorUpDown.setTargetPosition(-300);
+            robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            robot.AMotorUpDown.setPower(0);
 
         } else {
             telemetry.addData("Wait","Wait");

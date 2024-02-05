@@ -15,8 +15,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Red P.1 Auto")
-public class P1RedAuto extends LinearOpMode {
+@Autonomous(name = "Red Auto 516")
+public class RedAuto516 extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -50,7 +50,6 @@ public class P1RedAuto extends LinearOpMode {
         webCam.stopStreaming();
 
         if (GPTCamera.rightSide == true) {
-            sleep(12000);
             //mark right
 
             Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
@@ -74,7 +73,11 @@ public class P1RedAuto extends LinearOpMode {
                     .build();
 
             Trajectory RedP1MLT6 = drive.trajectoryBuilder(RedP1MLT5.end())
-                    .strafeTo(new Vector2d(46, -55))
+                    .lineToLinearHeading(new Pose2d(44, -10, Math.toRadians(180)))
+                    .build();
+
+            Trajectory RedP1MLT7 = drive.trajectoryBuilder(RedP1MLT6.end())
+                    .back(10)
                     .build();
 
             drive.followTrajectory(RedP1MLT1);
@@ -83,7 +86,7 @@ public class P1RedAuto extends LinearOpMode {
             drive.followTrajectory(RedP1MLT4);
 
             robot.AMotorUpDown.setPower(0.9);
-            robot.AMotorUpDown.setTargetPosition(1050);
+            robot.AMotorUpDown.setTargetPosition(1100);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
             robot.AMotorUpDown.setPower(0);
@@ -91,7 +94,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.ClawRotationServo.setPosition(0.2);
 
             robot.AMotorOutIn.setPower(0.9);
-            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setTargetPosition(-1270);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
@@ -108,7 +111,7 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(RedP1MLT6);
-            drive.turn(Math.toRadians(200));
+            drive.followTrajectory(RedP1MLT7);
 
             robot.ClawRotationServo.setPosition(.38);
 
@@ -118,10 +121,8 @@ public class P1RedAuto extends LinearOpMode {
             while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
             robot.AMotorUpDown.setPower(0);
 
-
         } else if (GPTCamera.middleSide == true) {
             //Mark middle
-            sleep(12000);
 
             Trajectory RedP1MMT1 = drive.trajectoryBuilder(RedP1)
                     .lineToLinearHeading(new Pose2d(10, -34, Math.toRadians(90)))
@@ -136,7 +137,7 @@ public class P1RedAuto extends LinearOpMode {
                     .build();
 
             Trajectory RedP1MMT4 = drive.trajectoryBuilder(RedP1MMT3.end())
-                    .lineToLinearHeading(new Pose2d(46, -30, Math.toRadians(0)))
+                    .lineToLinearHeading(new Pose2d(46, -27.5, Math.toRadians(0)))
                     .build();
 
             Trajectory RedP1MMT5 = drive.trajectoryBuilder(RedP1MMT4.end())
@@ -144,7 +145,11 @@ public class P1RedAuto extends LinearOpMode {
                     .build();
 
             Trajectory RedP1MMT6 = drive.trajectoryBuilder(RedP1MMT5.end())
-                    .strafeTo(new Vector2d(46, -55))
+                    .lineToLinearHeading(new Pose2d(46, -10, Math.toRadians(180)))
+                    .build();
+
+            Trajectory RedP1MMT7 = drive.trajectoryBuilder(RedP1MMT6.end())
+                    .back(10)
                     .build();
 
             drive.followTrajectory(RedP1MMT1);
@@ -155,7 +160,8 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(1050);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) {
+            }
             robot.AMotorUpDown.setPower(0);
 
             robot.ClawRotationServo.setPosition(0.2);
@@ -163,7 +169,8 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-1250);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) {
+            }
             robot.AMotorOutIn.setPower(0);
 
             robot.ClawDropServo.setPosition(0.785);
@@ -174,27 +181,28 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-760);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) {
+            }
             robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(RedP1MMT6);
-            drive.turn(Math.toRadians(200));
+            drive.followTrajectory(RedP1MMT7);
 
             robot.ClawRotationServo.setPosition(.36);
 
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(-300);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) {
+            }
             robot.AMotorUpDown.setPower(0);
 
 
         } else if (GPTCamera.leftSide == true) {
             //Mark left
-            sleep(12000);
 
             Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
-                    .lineToLinearHeading(new Pose2d(12, -35, Math.toRadians(180)))
+                    .lineToLinearHeading(new Pose2d(30, -44, Math.toRadians(140)))
                     .build();
 
             Trajectory RedP1MLT2 = drive.trajectoryBuilder(RedP1MLT1.end())
@@ -206,7 +214,7 @@ public class P1RedAuto extends LinearOpMode {
                     .build();
 
             Trajectory RedP1MLT4 = drive.trajectoryBuilder(RedP1MLT3.end())
-                    .lineToLinearHeading(new Pose2d(46, -28, Math.toRadians(0)))
+                    .lineToLinearHeading(new Pose2d(46, -35, Math.toRadians(0)))
                     .build();
 
             Trajectory RedP1MLT5 = drive.trajectoryBuilder(RedP1MLT4.end())
@@ -214,7 +222,11 @@ public class P1RedAuto extends LinearOpMode {
                     .build();
 
             Trajectory RedP1MLT6 = drive.trajectoryBuilder(RedP1MLT5.end())
-                    .strafeTo(new Vector2d(46, -55))
+                    .lineToLinearHeading(new Pose2d(46, -10, Math.toRadians(180)))
+                    .build();
+
+            Trajectory RedP1MLT7 = drive.trajectoryBuilder(RedP1MLT6.end())
+                    .back(10)
                     .build();
 
             drive.followTrajectory(RedP1MLT1);
@@ -225,15 +237,17 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(1050);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) {
+            }
             robot.AMotorUpDown.setPower(0);
 
             robot.ClawRotationServo.setPosition(0.2);
 
             robot.AMotorOutIn.setPower(0.9);
-            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setTargetPosition(-1270);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) {
+            }
             robot.AMotorOutIn.setPower(0);
 
             robot.ClawDropServo.setPosition(0.785);
@@ -244,22 +258,24 @@ public class P1RedAuto extends LinearOpMode {
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-760);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) {
+            }
             robot.AMotorOutIn.setPower(0);
 
             drive.followTrajectory(RedP1MLT6);
-            drive.turn(Math.toRadians(200));
+            drive.followTrajectory(RedP1MLT7);
 
             robot.ClawRotationServo.setPosition(.38);
 
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(-300);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
+            while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) {
+            }
             robot.AMotorUpDown.setPower(0);
 
         } else {
-            telemetry.addData("Wait","Wait");
+            telemetry.addData("Wait", "Wait");
             telemetry.update();
         }
     }

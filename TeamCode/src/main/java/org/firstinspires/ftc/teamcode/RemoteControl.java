@@ -38,14 +38,15 @@ public class RemoteControl extends LinearOpMode {
         double ServoUp = 0.25;
         double ServoDown = 0;
         double PSU = 0.11;
-        double PSD = 0.38;
+        double PSD = 0.5;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.AirplaneServo.setPosition(PSD);
 
         waitForStart();
 
         robot.HangServo.setPosition(ServoDown);
-        robot.AirplaneServo.setPosition(PSD);
 
         while (opModeIsActive()) {
 
@@ -73,7 +74,7 @@ public class RemoteControl extends LinearOpMode {
             double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
 
             double targetAngle = 35; // Adjust this value based on your desired angle
-            double basePosition = 0.424; // Adjust this value based on your servo's base position
+            double basePosition = 0.38; // Adjust this value based on your servo's base position
             double baseAdjustment = 0.07; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
             double scaleFactor = 0.001; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
@@ -83,7 +84,7 @@ public class RemoteControl extends LinearOpMode {
                 if (currentArmAngle >= -1) {
                     robot.ClawRotationServo.setPosition(basePosition);
                 } else if (currentArmAngle < -1) {
-                    robot.ClawRotationServo.setPosition(basePosition + (scaleFactor * 0.5 * currentArmAngle));
+                    robot.ClawRotationServo.setPosition(basePosition + (scaleFactor * 0.4 * currentArmAngle));
                 }
             }
 
@@ -94,9 +95,9 @@ public class RemoteControl extends LinearOpMode {
             //Slow Drive
             double speed;
             if (slowDrive) {
-                speed = 1;
+                speed = 0.33;
             } else {
-                speed = .6;
+                speed = .9;
             }
             double rfm = axial - lateral - yaw;
             double rbm = axial + lateral - yaw;

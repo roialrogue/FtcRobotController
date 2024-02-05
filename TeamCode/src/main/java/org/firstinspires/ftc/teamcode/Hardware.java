@@ -108,16 +108,16 @@ public class Hardware {
 
             AirplaneServo = hwMap.get(Servo.class, "ES4");
 
-            gyro = hwMap.get(BNO055IMU.class, "gyro");
-            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-            parameters.loggingEnabled = true;
-            parameters.loggingTag = "gyro";
-            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-            gyro.initialize(parameters);
+//            gyro = hwMap.get(BNO055IMU.class, "gyro");
+//            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+//            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+//            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+//            parameters.loggingEnabled = true;
+//            parameters.loggingTag = "gyro";
+//            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+//            gyro.initialize(parameters);
 
-            color = hwMap.get(RevColorSensorV3.class, "Color");
+//['            color = hwMap.get(RevColorSensorV3.class, "Color");']
 
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
