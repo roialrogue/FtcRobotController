@@ -46,11 +46,40 @@ public class P1RedAuto extends LinearOpMode {
         Pose2d RedP1 = new Pose2d(10, -61, Math.toRadians(90));
         drive.setPoseEstimate(RedP1);
 
+        int editingWait = 0;
+        int waitTime = 0;
+
+        if(gamepad1.a){
+            editingWait = editingWait + 1;
+        }
+
+        while(editingWait % 2 == 0){
+            if(gamepad1.x) {
+                waitTime = waitTime + 500;
+            } else if(gamepad1.b && !(waitTime == 0)) {
+                waitTime = waitTime - 500;
+            }
+            telemetry.addData("Time the robot is waiting", waitTime);
+            telemetry.update();
+        }
+
+        int editingParking = 0;
+        if(gamepad1.y){
+            editingParking = editingParking + 1;
+        }
+
+        while(editingParking % 2 == 0) {
+            boolean parkingInside = false;
+            boolean parkingOutside = false;
+            telemetry.addData("Parking on the inside", parkingInside);
+            telemetry.addData("parking on the outside", parkingOutside);
+        }
+
         waitForStart();
+        sleep(waitTime);
         webCam.stopStreaming();
 
         if (GPTCamera.rightSide == true) {
-            sleep(12000);
             //mark right
 
             Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
@@ -121,7 +150,6 @@ public class P1RedAuto extends LinearOpMode {
 
         } else if (GPTCamera.middleSide == true) {
             //Mark middle
-            sleep(12000);
 
             Trajectory RedP1MMT1 = drive.trajectoryBuilder(RedP1)
                     .lineToLinearHeading(new Pose2d(10, -34, Math.toRadians(90)))
@@ -191,7 +219,6 @@ public class P1RedAuto extends LinearOpMode {
 
         } else if (GPTCamera.leftSide == true) {
             //Mark left
-            sleep(12000);
 
             Trajectory RedP1MLT1 = drive.trajectoryBuilder(RedP1)
                     .lineToLinearHeading(new Pose2d(12, -35, Math.toRadians(180)))
