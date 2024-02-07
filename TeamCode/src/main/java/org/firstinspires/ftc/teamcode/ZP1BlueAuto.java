@@ -11,6 +11,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+import java.security.cert.CertificateNotYetValidException;
+
 @Autonomous(name = "Red P.1 Auto")
 public class ZP1BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
@@ -32,10 +34,12 @@ public class ZP1BlueAuto extends LinearOpMode {
         webCam.setPipeline(detector);
 
         int editingWait = 0;
-        int waitTime = 0;
+        int editingCycling = 0;
         int editingParking = 0;
         boolean parkingInside = false; // set default
         boolean parkingOutside = false;
+        int waitTime = 0;
+        boolean Cycling = false;
 
         if (gamepad1.a) {
             editingWait = editingWait + 1;
@@ -51,7 +55,23 @@ public class ZP1BlueAuto extends LinearOpMode {
                 }
             }
         }
+
         if (gamepad1.b) {
+            editingCycling = editingCycling + 1;
+            if (editingCycling % 2 == 0) {
+                while (editingCycling % 2 == 0) {
+                    if (gamepad1.left_bumper) {
+                        Cycling = true;
+                    } else if (gamepad1.right_bumper && !(waitTime == 0)) {
+                        Cycling = false;
+                    }
+                    telemetry.addData("Cycling", Cycling);
+                    telemetry.update();
+                }
+            }
+        }
+
+        if (gamepad1.x) {
             editingParking = editingParking + 1;
             if (editingParking % 2 == 0) {
                 while (editingParking % 2 == 0) {
@@ -69,15 +89,25 @@ public class ZP1BlueAuto extends LinearOpMode {
             }
         }
 
-
         telemetry.addData("Time the robot is waiting", waitTime);
+        telemetry.addData("Cycling", Cycling);
+        telemetry.addData("Parking on the inside", parkingInside);
+        telemetry.addData("parking on the outside", parkingOutside);
 
         waitForStart();
         sleep(waitTime);
         webCam.stopStreaming();
 
+        if (Cycling == true) {
+
+        } else if (Cycling == false) {
+
+        }
+
         if (parkingOutside == true) {
 
-        } else if(parkingInside) {
-  lk    }
+        } else if (parkingInside == true) {
+
         }
+    }
+}
