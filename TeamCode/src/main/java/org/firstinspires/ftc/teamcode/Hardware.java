@@ -27,6 +27,8 @@ public class Hardware {
     //"CM4"
     public DcMotor AMotorOutIn;
     //"CM5"
+    public DcMotor AirplaneM;
+    //"CM7"
     public DcMotor AMotorIntake;
     //"CM6"
     public Servo HangServo;
@@ -95,6 +97,11 @@ public class Hardware {
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
+
+            AirplaneM = hwMap.get(DcMotor.class, "EH2");
+            AirplaneM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AirplaneM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AirplaneM.setPower(0);
 
             HangServo = hwMap.get(Servo.class, "CS0");
 

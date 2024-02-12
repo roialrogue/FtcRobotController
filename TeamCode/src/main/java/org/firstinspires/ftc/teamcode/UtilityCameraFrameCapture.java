@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Size;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -65,6 +66,8 @@ public class UtilityCameraFrameCapture extends LinearOpMode
     /*
      * EDIT THESE PARAMETERS AS NEEDED
      */
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
     final boolean USING_WEBCAM = true;
     final BuiltinCameraDirection INTERNAL_CAM_DIR = BuiltinCameraDirection.BACK;
     final int RESOLUTION_WIDTH = 640;
@@ -86,6 +89,7 @@ public class UtilityCameraFrameCapture extends LinearOpMode
                     .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                     .setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT))
                     .build();
+
         }
         else
         {

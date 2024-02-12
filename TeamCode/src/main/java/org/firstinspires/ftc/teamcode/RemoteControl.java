@@ -186,9 +186,9 @@ public class RemoteControl extends LinearOpMode {
 
             //Servo for airplane
             if (airplane > 0.1) {
-                robot.AirplaneServo.setPosition(PSU);
+                robot.AirplaneM.setPower(1);
             } else {
-                robot.AirplaneServo.setPosition(PSD);
+                robot.AirplaneM.setPower(0);
             }
         }
     }

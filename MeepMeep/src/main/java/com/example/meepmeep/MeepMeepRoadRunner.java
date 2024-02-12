@@ -15,8 +15,8 @@ public class MeepMeepRoadRunner {
                 .setConstraints(52.48291908330528, 52.48291908330528, Math.toRadians(193.2644), Math.toRadians(214.78926857142858), 14.32)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(10, -61, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(46, 6, Math.toRadians(180)))
-                .build()
+                                .lineToLinearHeading(new Pose2d(38, 38, Math.toRadians(0)))
+                                .build()
                 );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)

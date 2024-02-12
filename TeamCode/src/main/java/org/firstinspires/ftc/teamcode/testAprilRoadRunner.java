@@ -173,6 +173,15 @@ public class testAprilRoadRunner extends LinearOpMode {
                 telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
                 telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
                 telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+
+                detection.metadata.fieldPosition.get(0); // 0 = x, 1 = y, 2 = z
+                telemetry.addData("tag position x", detection.metadata.fieldPosition.get(0));
+                telemetry.addData("tag position y", detection.metadata.fieldPosition.get(1));
+
+                telemetry.addData("X", detection.ftcPose.x);
+                telemetry.addData("Y", detection.ftcPose.y);
+                telemetry.addData("Bearing", detection.ftcPose.bearing);
+
             } else {
                 telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
