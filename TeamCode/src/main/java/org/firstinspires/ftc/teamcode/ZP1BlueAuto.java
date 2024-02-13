@@ -90,5 +90,7 @@ public class ZP1BlueAuto extends LinearOpMode {
             } else if (parkingInside == true) {
 
             }
+
+        PoseStorage.currentPose = drive.getPoseEstimate();
         }
     }
