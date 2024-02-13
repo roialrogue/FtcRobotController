@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.security.cert.CertificateNotYetValidException;
 
-@Autonomous(name = "Red P.1 Auto")
+@Autonomous(name = "Test Edit Auto")
 public class ZP1BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
@@ -42,14 +42,14 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         while (editingConfig) {
             if (gamepad1.x) {
-                if (gamepad1.dpad_left) {
+                if (gamepad1.dpad_right) {
                     waitTime = waitTime + 500;
-                } else if (gamepad1.dpad_right && !(waitTime == 0)) {
+                } else if (gamepad1.dpad_left && !(waitTime == 0)) {
                     waitTime = waitTime - 500;
                 }
             }
             if (gamepad1.a) {
-                if (gamepad1.dpad_left) {
+                if (gamepad1.dpad_right) {
                     parkingInside = true;
                     parkingOutside = false;
                 } else if (gamepad1.dpad_right) {
@@ -58,9 +58,9 @@ public class ZP1BlueAuto extends LinearOpMode {
                 }
             }
             if (gamepad1.b) {
-                if (gamepad1.dpad_left) {
+                if (gamepad1.dpad_right) {
                     cycling = true;
-                } else if (gamepad1.dpad_right) {
+                } else if (gamepad1.dpad_left) {
                     cycling = false;
                 }
             }

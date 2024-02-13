@@ -22,6 +22,9 @@ import java.util.concurrent.TimeUnit;
 @Autonomous(name = "Test Auto Camera")
 public class TestApril extends LinearOpMode {
 
+    int DESIRED_TAG_ID = 2;
+    private AprilTagDetection desiredTag = null;
+
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -40,7 +43,7 @@ public class TestApril extends LinearOpMode {
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480)) //bigger the resolution the further it can see but impact performance
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+//                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
 //                .enableCameraMonitoring(Ture)
 //                .setCameraMonitorViewId(portalsList[1]) // 2 for second Camera
                 .build();
@@ -52,7 +55,7 @@ public class TestApril extends LinearOpMode {
 
         ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
         exposure.setMode(ExposureControl.Mode.Manual);
-        exposure.setExposure(15, TimeUnit.MILLISECONDS);
+        exposure.setExposure(17, TimeUnit.MILLISECONDS);
 
         GainControl gain = visionPortal.getCameraControl(GainControl.class);
         //gain.setGain(255);
@@ -63,30 +66,56 @@ public class TestApril extends LinearOpMode {
 
         double testy = 0;
         double testx = 0;
-        double testBearing = 0;
+        double testAngle = 0;
+
         while (!isStopRequested() && opModeIsActive()) {
-            if (tagProcessor.getDetections().size() > 0) ;
-            //AprilTagDetection tag = tagProcessor.getDetections().get(2); //-1 for the first tag it sees or tag idea for specific one
+            desiredTag = null;
             List<AprilTagDetection> tagDetections = tagProcessor.getDetections();
+            telemetry.addData("#",tagDetections.size());
+            for (AprilTagDetection detection : tagDetections) {
+                if ((detection.metadata != null) &&
+                        ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID))  ){
+                    desiredTag = detection;
+                    break;  // don't look any further.
+                } else {
+                    telemetry.addData("Unknown Target", "Tag ID %d is not in TagLibrary\n", detection.id);
+                }
+                telemetry.update();
+            }
 
 
-//            telemetry.addLine(String.format("XYBearing %6.2f %6.2f %6.2f", tag.ftcPose.x, tag.ftcPose.y, tag.ftcPose.bearing));
+            if(desiredTag != null) {
+                telemetry.addLine(String.format("XYBearing %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.bearing));
 
-//            tag.metadata.fieldPosition.get(0); // 0 = x, 1 = y, 2 = z
-//            telemetry.addData("tag position x", tag.metadata.fieldPosition.get(0));
-//            telemetry.addData("tag position y", tag.metadata.fieldPosition.get(1));
-//
-//            telemetry.addData("exposure", exposure.isExposureSupported());
-//            telemetry.addData("gain Max", gain.getMaxGain());
-//            telemetry.addData("gain Min", gain.getMinGain());
-//            telemetry.addData("X", tag.ftcPose.x);
-//            telemetry.addData("Y", tag.ftcPose.y);
-//            telemetry.addData("Bearing", tag.ftcPose.bearing);
-//            testy = tag.ftcPose.x-64; //add right number
-//            testx = tag.ftcPose.y-64; //add right number
-//            testBearing = tag.ftcPose.bearing; //may be a problem
+                double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
+                double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
+
+                desiredTag.metadata.fieldPosition.get(0); // 0 = x, 1 = y, 2 = z
+                telemetry.addData("tag position x", tagPositionX );
+                telemetry.addData("tag position y", tagPositionY );
+
+                telemetry.addData("exposure", exposure.isExposureSupported());
+                telemetry.addData("gain Max", gain.getMaxGain());
+                telemetry.addData("gain Min", gain.getMinGain());
+                telemetry.addData("X", desiredTag.ftcPose.x);
+                telemetry.addData("Y", desiredTag.ftcPose.y);
+                telemetry.addData("Bearing", desiredTag.ftcPose.bearing);
+                telemetry.addData("Yaw", desiredTag.ftcPose.yaw);
+                testy = desiredTag.ftcPose.x - tagPositionY + 7; //add right number
+                testx = 63 - desiredTag.ftcPose.y; //add right number
+                testAngle = desiredTag.ftcPose.yaw; //may be a problem
+                if(testAngle < 0) {
+                    testAngle += 360;
+                }
+                telemetry.addData("testyaw", testAngle);
+                telemetry.addData("testy", testy);
+                telemetry.addData("testx", testx);
+
+
+                telemetry.update();
+            }
         }
-        telemetry.update();
+
         Pose2d RedP1 = new Pose2d(testx, testy, Math.toRadians(0));
         drive.setPoseEstimate(RedP1);
 
