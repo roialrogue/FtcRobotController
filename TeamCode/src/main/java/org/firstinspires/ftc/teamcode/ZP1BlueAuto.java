@@ -36,8 +36,9 @@ public class ZP1BlueAuto extends LinearOpMode {
         boolean editingConfig = true;
         boolean parkingInside = false; // set default
         boolean parkingOutside = false;
-        int waitTime = 0;
         boolean cycling = false;
+        int waitTime = 0;
+
 
         while (editingConfig) {
             if (gamepad1.x) {
