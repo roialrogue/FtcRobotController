@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,16 +12,20 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import java.security.cert.CertificateNotYetValidException;
-
 @Autonomous(name = "Test Edit Auto")
 public class ZP1BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    boolean isBlue;
+    myGamePad myGamepad = new myGamePad( gamepad1) ;
     private GPTCamera detector;
+    boolean isBlue;
+    boolean editingConfig = true;
+    boolean parkingInside = true;
+    boolean cyclingNum2 = true;
+    boolean cycling = true;
+    int waitTime = 0;
 
     public void runOpMode() {
         robot.init(hardwareMap);
@@ -33,61 +38,101 @@ public class ZP1BlueAuto extends LinearOpMode {
         webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
         webCam.setPipeline(detector);
 
-        boolean editingConfig = true;
-        boolean parkingInside = false; // set default
-        boolean parkingOutside = false;
-        boolean cycling = false;
-        int waitTime = 0;
-
-
         while (editingConfig) {
-            if (gamepad1.x) {
-                if (gamepad1.dpad_right) {
+            if (myGamepad.isXPressed()) {
+                if (myGamepad.rightBumperPressed) {
                     waitTime = waitTime + 500;
-                } else if (gamepad1.dpad_left && !(waitTime == 0)) {
+                } else if (myGamepad.leftBumperPressed && !(waitTime == 0)) {
                     waitTime = waitTime - 500;
                 }
             }
-            if (gamepad1.a) {
-                if (gamepad1.dpad_right) {
-                    parkingInside = true;
-                    parkingOutside = false;
-                } else if (gamepad1.dpad_right) {
-                    parkingInside = false;
-                    parkingOutside = true;
+            if (myGamepad.isYPressed()) {
+                if (myGamepad.rightBumperPressed) {
+                    cycling = true;
+                } else if (myGamepad.leftBumperPressed) {
+                    cycling = false;
                 }
             }
-            if (gamepad1.b) {
-                if (gamepad1.dpad_right) {
-                    cycling = true;
-                } else if (gamepad1.dpad_left) {
-                    cycling = false;
+            if (myGamepad.isBPressed()) {
+                if (myGamepad.rightBumperPressed) {
+                    cyclingNum2 = true;
+                } else if (myGamepad.leftBumperPressed) {
+                    cyclingNum2 = false;
+                }
+            }
+            if (myGamepad.isAPressed()) {
+                if (myGamepad.rightBumperPressed) {
+                    parkingInside = true;
+                } else if (myGamepad.leftBumperPressed) {
+                    parkingInside = false;
                 }
             }
 
             telemetry.addData("Time the robot is waiting", waitTime);
             telemetry.addData("Cycling", cycling);
+            telemetry.addData("We are cycling twice", cyclingNum2);
             telemetry.addData("Parking on the inside", parkingInside);
-            telemetry.addData("parking on the outside", parkingOutside);
             telemetry.update();
 
-            if (gamepad1.left_stick_button) {
+            if (myGamepad.leftStickButtonPressed) {
                 editingConfig = false;
             }
         }
 
+        telemetry.addData("Ready","Editing auto is done");
+        telemetry.update();
 
-            waitForStart();
-            sleep(waitTime);
-            webCam.stopStreaming();
+        //make sure to reset encoders
+        //set servos to positions
 
-            if (cycling == true) {
+        Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
+        drive.setPoseEstimate(BlueP1);
+
+        waitForStart();
+        webCam.stopStreaming();
+        sleep(waitTime);
+
+        if (GPTCamera.rightSide) {
+
+            if (cycling) {
+                if(cyclingNum2) {
+
+                } else {
+
+                }
+            } else {
 
             }
+        } else if(GPTCamera.middleSide) {
 
-            if (parkingOutside == true) {
+            if (cycling) {
+                if(cyclingNum2) {
 
-            } else if (parkingInside == true) {
+                } else {
+
+                }
+            } else {
+
+            }
+        } else if(GPTCamera.leftSide) {
+
+
+            if (cycling) {
+                if(cyclingNum2) {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        } else if(GPTCamera.nonSide) {
+            telemetry.addData("You need to wait for the Camera to Initialize", "");
+        }
+
+        if (parkingInside) {
+
+        } else {
 
             }
 
