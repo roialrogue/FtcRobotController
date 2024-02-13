@@ -36,7 +36,7 @@ public class TestApril extends LinearOpMode {
                 .setDrawCubeProjection(true)
                 .setDrawTagID(true)
                 .setDrawTagOutline(true)
-                //.setLensIntrinsics(0,0,0,0)
+                .setLensIntrinsics(814.353,814.353,339.689,224.275)
                 .build();
 
         VisionPortal visionPortal = new VisionPortal.Builder()
@@ -55,7 +55,7 @@ public class TestApril extends LinearOpMode {
 
         ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
         exposure.setMode(ExposureControl.Mode.Manual);
-        exposure.setExposure(17, TimeUnit.MILLISECONDS);
+        exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
         GainControl gain = visionPortal.getCameraControl(GainControl.class);
         //gain.setGain(255);
