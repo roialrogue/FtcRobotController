@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 
-public class GamePadEdit {
+public class myGamePad {
     Gamepad gamepad;
 
     boolean xButtonPressed = false;
@@ -14,12 +14,14 @@ public class GamePadEdit {
     boolean rightBumperPressed = false;
     boolean dpadLeftPressed = false;
     boolean dpadRightPressed = false;
+    boolean dpadUpPressed = false;
+    boolean dpadDownPressed = false;
     boolean leftStickButtonPressed = false;
     boolean rightstickbuttonPressed = false;
 
 
     /* Constructor */
-    public GamePadEdit( Gamepad gamepad ) {
+    public myGamePad(Gamepad gamepad ) {
 
         this.gamepad = gamepad;
     }
@@ -52,16 +54,6 @@ public class GamePadEdit {
     public double getRightTrigger() {
 
         return gamepad.right_trigger;
-    }
-
-    public boolean isDpadUpPressed() {
-
-        return gamepad.dpad_up;
-    }
-
-    public boolean isDpadDownPressed() {
-
-        return gamepad.dpad_down;
     }
 
     public boolean isXPressed() {
@@ -165,6 +157,31 @@ public class GamePadEdit {
         } else {
             if (!gamepad.dpad_right) {
                 dpadRightPressed = false;
+            }
+            return false;
+        }
+    }
+    public boolean isDpadUpPressed() {
+
+        if (gamepad.dpad_up && !dpadUpPressed) {
+            dpadUpPressed = true;
+            return true;
+        } else {
+            if (!gamepad.dpad_up) {
+                dpadUpPressed = false;
+            }
+            return false;
+        }
+    }
+
+    public boolean isDpadDownPressed() {
+
+        if (gamepad.dpad_down && !dpadDownPressed) {
+            dpadDownPressed = true;
+            return true;
+        } else {
+            if (!gamepad.dpad_down) {
+                dpadDownPressed = false;
             }
             return false;
         }
