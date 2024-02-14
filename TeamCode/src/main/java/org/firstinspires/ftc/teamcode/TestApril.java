@@ -58,7 +58,7 @@ public class TestApril extends LinearOpMode {
         exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
         GainControl gain = visionPortal.getCameraControl(GainControl.class);
-        //gain.setGain(255);
+        gain.setGain(255);
 
 
         tagProcessor.setDecimation(3);
