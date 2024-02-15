@@ -27,16 +27,23 @@ public class Hardware {
     //"CM4"
     public DcMotor AMotorOutIn;
     //"CM5"
+    public DcMotor AirplaneM;
+    //"CM7"
     public DcMotor AMotorIntake;
     //"CM6"
-    public Servo PServo1;
+    public Servo HangServo;
 
-    public Servo PServo2;
+    public Servo InTakeServo1;
 
-    public Servo AServo;
+    public Servo InTakeServo2;
+
+    public Servo ClawRotationServo;
+
+    public Servo ClawDropServo;
+
+    public Servo AirplaneServo;
 
     public static double maxSpeed = 0.8;
-
 
     public BNO055IMU gyro;
 
@@ -55,110 +62,69 @@ public class Hardware {
     public void init(HardwareMap hwMap) {
 
 
-        try {
+
             rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
             rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotor.Direction.REVERSE);
+            rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
             rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightForwardWheel.setPower(0);
-        } catch (Exception p_exception) {
-            rightForwardWheel = null;
-        }
 
-        try {
+
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftForwardWheel.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
-        } catch (Exception p_exception) {
-            leftForwardWheel = null;
-        }
 
-        try {
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setDirection(DcMotor.Direction.REVERSE);
+            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
-        } catch (Exception p_exception) {
-            rightRearWheel = null;
-        }
 
-        try {
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftRearWheel.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
-        } catch (Exception p_exception) {
-            leftRearWheel = null;
-        }
 
-        try {
-            AMotorUpDown = hwMap.get(DcMotor.class, "CM4");
+            AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorUpDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorUpDown.setPower(0);
-        } catch (Exception p_exception) {
-            AMotorUpDown = null;
-        }
 
-        try {
-            AMotorOutIn = hwMap.get(DcMotor.class, "CM5");
+            AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorOutIn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
-        } catch (Exception p_exception) {
-            AMotorOutIn = null;
-        }
 
-        try {
-            AMotorIntake = hwMap.get(DcMotor.class, "CM6");
-            AMotorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            AMotorIntake.setPower(0);
-        } catch (Exception p_exception) {
-            AMotorIntake = null;
-        }
+            AirplaneM = hwMap.get(DcMotor.class, "EH2");
+            AirplaneM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AirplaneM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AirplaneM.setPower(0);
 
-        try {
-            PServo1 = hwMap.get(Servo.class, "CS1");
-        } catch (Exception p_exception) {
-            PServo1 = null;
-        }
+            HangServo = hwMap.get(Servo.class, "CS0");
 
-        try {
-            PServo2 = hwMap.get(Servo.class, "CS2");
-        } catch (Exception p_exception) {
-            PServo2 = null;
-        }
+            InTakeServo1 = hwMap.get(Servo.class, "CS4");
 
-        try {
-            AServo = hwMap.get(Servo.class, "CS0");
-        } catch (Exception p_exception) {
-            AServo = null;
-        }
+            InTakeServo2 = hwMap.get(Servo.class, "ES0");
 
+            ClawRotationServo = hwMap.get(Servo.class, "CS2");
 
-        try {
-            gyro = hwMap.get(BNO055IMU.class, "gyro");
-            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-            parameters.loggingEnabled = true;
-            parameters.loggingTag = "gyro";
-            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-            gyro.initialize(parameters);
-        } catch (Exception p_exception) {
-            gyro = null;
-        }
+            ClawDropServo = hwMap.get(Servo.class, "ES2");
 
-        try {
-            color = hwMap.get(RevColorSensorV3.class, "Color");
-        } catch (Exception p_exception) {
-            color = null;
-        }
+            AirplaneServo = hwMap.get(Servo.class, "ES4");
+
+//            gyro = hwMap.get(BNO055IMU.class, "gyro");
+//            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+//            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+//            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+//            parameters.loggingEnabled = true;
+//            parameters.loggingTag = "gyro";
+//            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+//            gyro.initialize(parameters);
+
+//['            color = hwMap.get(RevColorSensorV3.class, "Color");']
 
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
@@ -181,24 +147,6 @@ public class Hardware {
         if (leftRearWheel != null) {
             leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
         }
-
-
-    /*public void setPower(double rightFront, double leftFront, double rightBack, double leftBack) {
-        if (rightForwardWheel != null) {
-           rightForwardWheel.setPower(Range.clip(rightFront, -maxSpeed, maxSpeed));
-        }
-        if (leftForwardWheel != null) {
-            leftForwardWheel.setPower(Range.clip(leftFront, -maxSpeed, maxSpeed));
-        }
-        if (rightRearWheel != null) {
-            rightRearWheel.setPower(Range.clip(rightBack, -maxSpeed, maxSpeed));
-        }
-        if (leftRearWheel != null) {
-            leftRearWheel.setPower(Range.clip(leftBack, -maxSpeed, maxSpeed));
-        }
-
-
-    }*/
 
 
     }

@@ -54,10 +54,10 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(17.5, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(16, 1.5, 0.1);
 
-    public static double LATERAL_MULTIPLIER = 1;
+    public static double LATERAL_MULTIPLIER = 1.697;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -93,12 +93,16 @@ public class SampleMecanumDrive extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-      //hi
+        // TODO: adjust the names of the following hardware devices to match your configuration
+        /*imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
+        imu.initialize(parameters);*/
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "CM1");
-        leftRear = hardwareMap.get(DcMotorEx.class, "CM0");
-        rightRear = hardwareMap.get(DcMotorEx.class, "CM2");
-        rightFront = hardwareMap.get(DcMotorEx.class, "CM3");
+        leftFront = hardwareMap.get(DcMotorEx.class, "CM0");
+        leftRear = hardwareMap.get(DcMotorEx.class, "CM1");
+        rightRear = hardwareMap.get(DcMotorEx.class, "CM3");
+        rightFront = hardwareMap.get(DcMotorEx.class, "CM2");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -119,6 +123,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
 
         List<Integer> lastTrackingEncPositions = new ArrayList<>();
         List<Integer> lastTrackingEncVels = new ArrayList<>();
@@ -286,11 +292,13 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public double getRawExternalHeading() {
+        //return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         return 0;
     }
 
     @Override
     public Double getExternalHeadingVelocity() {
+        //return (double) imu.getRobotAngularVelocity(AngleUnit.RADIANS).zRotationRate;
         return 0.0;
     }
 
