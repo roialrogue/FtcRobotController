@@ -16,13 +16,14 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Autonomous(name = "Test Auto Camera")
 public class TestApril extends LinearOpMode {
 
-    int DESIRED_TAG_ID = 2;
+    int DESIRED_TAG_ID = 5;
     private AprilTagDetection desiredTag = null;
 
     @Override
@@ -42,7 +43,7 @@ public class TestApril extends LinearOpMode {
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .setCameraResolution(new Size(640, 480)) //bigger the resolution the further it can see but impact performance
+                .setCameraResolution(new Size(1280, 720)) //bigger the resolution the further it can see but impact performance
 //                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
 //                .enableCameraMonitoring(Ture)
 //                .setCameraMonitorViewId(portalsList[1]) // 2 for second Camera
@@ -58,7 +59,7 @@ public class TestApril extends LinearOpMode {
         exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
         GainControl gain = visionPortal.getCameraControl(GainControl.class);
-        gain.setGain(255);
+        //gain.setGain(255);
 
 
         tagProcessor.setDecimation(3);
@@ -85,7 +86,7 @@ public class TestApril extends LinearOpMode {
 
 
             if(desiredTag != null) {
-                telemetry.addLine(String.format("XYBearing %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.bearing));
+                telemetry.addLine(String.format("X Y Yaw %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.yaw));
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
@@ -93,6 +94,7 @@ public class TestApril extends LinearOpMode {
                 desiredTag.metadata.fieldPosition.get(0); // 0 = x, 1 = y, 2 = z
                 telemetry.addData("tag position x", tagPositionX );
                 telemetry.addData("tag position y", tagPositionY );
+
 
                 telemetry.addData("exposure", exposure.isExposureSupported());
                 telemetry.addData("gain Max", gain.getMaxGain());
@@ -111,7 +113,8 @@ public class TestApril extends LinearOpMode {
                 telemetry.addData("testy", testy);
                 telemetry.addData("testx", testx);
 
-
+                telemetry.update();
+            } else {
                 telemetry.update();
             }
         }

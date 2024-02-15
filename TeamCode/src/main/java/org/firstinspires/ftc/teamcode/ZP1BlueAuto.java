@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.apache.commons.math3.linear.EigenDecomposition;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -18,7 +19,6 @@ public class ZP1BlueAuto extends LinearOpMode {
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    myGamePad myGamepad = new myGamePad( gamepad1) ;
     private GPTCamera detector;
     boolean isBlue;
     boolean editingConfig = true;
@@ -27,38 +27,56 @@ public class ZP1BlueAuto extends LinearOpMode {
     boolean cycling = true;
     int waitTime = 0;
 
+    enum EditingMode { None, WaitTime, Cycling, CyclingNum2, };
+
     public void runOpMode() {
         robot.init(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        myGamePad myGamepad = new myGamePad( gamepad1) ;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         GPTCamera detector = new GPTCamera(false, telemetry);
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webCam.openCameraDevice();
         FtcDashboard.getInstance().startCameraStream(webCam, 0);
         webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+
         webCam.setPipeline(detector);
+
+        EditingMode editingMode = EditingMode.None;
 
         while (editingConfig) {
             if (myGamepad.isXPressed()) {
-                if (myGamepad.rightBumperPressed) {
-                    waitTime = waitTime + 500;
-                } else if (myGamepad.leftBumperPressed && !(waitTime == 0)) {
-                    waitTime = waitTime - 500;
+                switch( editingMode ) {
+                    case None: editingMode = EditingMode.WaitTime; break;
+                    case WaitTime: editingMode = EditingMode.Cycling; break;
+                    case Cycling: editingMode = EditingMode.CyclingNum2; break;
+                    case CyclingNum2: editingMode = EditingMode.None; break;
                 }
             }
-            if (myGamepad.isYPressed()) {
-                if (myGamepad.rightBumperPressed) {
-                    cycling = true;
-                } else if (myGamepad.leftBumperPressed) {
-                    cycling = false;
-                }
-            }
-            if (myGamepad.isBPressed()) {
-                if (myGamepad.rightBumperPressed) {
-                    cyclingNum2 = true;
-                } else if (myGamepad.leftBumperPressed) {
-                    cyclingNum2 = false;
-                }
+
+            switch( editingMode ) {
+                case None: break;
+                case WaitTime:
+                    if (myGamepad.rightBumperPressed) {
+                        waitTime = waitTime + 500;
+                    } else if (myGamepad.leftBumperPressed && !(waitTime == 0)) {
+                        waitTime = waitTime - 500;
+                    }
+                    break;
+
+                case Cycling:
+                    if (myGamepad.rightBumperPressed) {
+                        cycling = true;
+                    } else if (myGamepad.leftBumperPressed) {
+                        cycling = false;
+                    }
+
+                case CyclingNum2:
+                    if (myGamepad.rightBumperPressed) {
+                        cyclingNum2 = true;
+                    } else if (myGamepad.leftBumperPressed) {
+                        cyclingNum2 = false;
+                    }
             }
             if (myGamepad.isAPressed()) {
                 if (myGamepad.rightBumperPressed) {
@@ -87,6 +105,8 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
         drive.setPoseEstimate(BlueP1);
+
+        Pose2d poseEstimate = drive.getLocalizer().getPoseEstimate();
 
         waitForStart();
         webCam.stopStreaming();
