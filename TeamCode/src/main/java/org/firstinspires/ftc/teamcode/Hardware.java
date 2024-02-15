@@ -23,7 +23,7 @@ public class Hardware {
     //"CM2"
     public DcMotor leftRearWheel;
     //"CM0"
-    public DcMotor AMotorUpDown;
+    public DcMotor HangMotor;
     //"CM4"
     public DcMotor AMotorOutIn;
     //"CM5"
@@ -31,15 +31,14 @@ public class Hardware {
     //"CM7"
     public DcMotor AMotorIntake;
     //"CM6"
-    public Servo HangServo;
 
-    public Servo InTakeServo1;
+    public Servo IntakeServoLeft;
 
-    public Servo InTakeServo2;
+    public Servo IntakeServoRight;
 
-    public Servo ClawRotationServo;
+    public Servo ClawUpDown;
 
-    public Servo ClawDropServo;
+    public Servo ClawLeftRight;
 
     public Servo AirplaneServo;
 
@@ -88,12 +87,12 @@ public class Hardware {
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
 
-            AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
-            AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AMotorUpDown.setPower(0);
+            HangMotor = hwMap.get(DcMotor.class, "EH3");
+            HangMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            HangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            HangMotor.setPower(0);
 
-            AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
+            AMotorOutIn = hwMap.get(DcMotor.class, "EH0");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
@@ -103,17 +102,16 @@ public class Hardware {
             AirplaneM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AirplaneM.setPower(0);
 
-            HangServo = hwMap.get(Servo.class, "CS0");
+            IntakeServoLeft = hwMap.get(Servo.class, "CS4");
 
-            InTakeServo1 = hwMap.get(Servo.class, "CS4");
+            IntakeServoRight = hwMap.get(Servo.class, "CS2");
 
-            InTakeServo2 = hwMap.get(Servo.class, "ES0");
+            ClawUpDown = hwMap.get(Servo.class, "ES0");
 
-            ClawRotationServo = hwMap.get(Servo.class, "CS2");
-
-            ClawDropServo = hwMap.get(Servo.class, "ES2");
+            ClawLeftRight = hwMap.get(Servo.class, "ES2");
 
             AirplaneServo = hwMap.get(Servo.class, "ES4");
+
 
 //            gyro = hwMap.get(BNO055IMU.class, "gyro");
 //            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

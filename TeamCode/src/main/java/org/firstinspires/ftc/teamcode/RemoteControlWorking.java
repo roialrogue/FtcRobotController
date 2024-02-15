@@ -109,7 +109,6 @@ public class RemoteControlWorking extends LinearOpMode {
                     robot.AMotorIntake.setPower(-1);
                     pressingOpenClaw = true;
                 }
-                pressingOpenClaw = true;
             } else {
                 pressingOpenClaw = false;
                 robot.AMotorIntake.setPower(0);
@@ -118,11 +117,11 @@ public class RemoteControlWorking extends LinearOpMode {
 
             // Arm Controls (UP AND DOWN)
             if (gamepad2.left_stick_y > 0.1) {
-                robot.AMotorUpDown.setPower(0.5);
+                //robot.AMotorUpDown.setPower(0.5);
             } else if (gamepad2.left_stick_y < -0.1) {
-                robot.AMotorUpDown.setPower(-0.5);
+                //robot.AMotorUpDown.setPower(-0.5);
             } else {
-                robot.AMotorUpDown.setPower(0);
+                //robot.AMotorUpDown.setPower(0);
             }
 
             // Arm Controls (OUT AND IN)

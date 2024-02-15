@@ -33,20 +33,20 @@ public class RemoteControl extends LinearOpMode {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double ServoUp = 0.25;
         double ServoDown = 0;
         double PSU = 0.11;
         double PSD = 0.5;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         robot.AirplaneServo.setPosition(PSD);
 
         waitForStart();
 
-        robot.HangServo.setPosition(ServoDown);
+        //robot.HangServo.setPosition(ServoDown);
 
         while (opModeIsActive()) {
 
@@ -71,24 +71,24 @@ public class RemoteControl extends LinearOpMode {
             //Claw wrist joint stabilization
             double ticksPerRevolution = 537.6 * 20; //0.424 base ground value
             //
-            double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
+            //double currentArmAngle = Math.round(360 * (robot.AMotorUpDown.getCurrentPosition() / ticksPerRevolution));
 
             double targetAngle = 35; // Adjust this value based on your desired angle
             double basePosition = 0.38; // Adjust this value based on your servo's base position
             double baseAdjustment = 0.07; // Automatically adjusts from the base angle to allow linear angle function to start in correct position
             double scaleFactor = 0.001; // Adjust this value based on how much you want the servo to move per degree (Serovs function on a 0 - 1 range)
 
-            if (currentArmAngle >= targetAngle) {
-                robot.ClawRotationServo.setPosition(basePosition - baseAdjustment - (currentArmAngle * scaleFactor));
-            } else {
-                if (currentArmAngle >= -1) {
-                    robot.ClawRotationServo.setPosition(basePosition);
-                } else if (currentArmAngle < -1) {
-                    robot.ClawRotationServo.setPosition(basePosition + (scaleFactor * 0.4 * currentArmAngle));
-                }
-            }
+//            if (currentArmAngle >= targetAngle) {
+//                robot.ClawRotationServo.setPosition(basePosition - baseAdjustment - (currentArmAngle * scaleFactor));
+//            } else {
+//                if (currentArmAngle >= -1) {
+//                    robot.ClawRotationServo.setPosition(basePosition);
+//                } else if (currentArmAngle < -1) {
+//                    robot.ClawRotationServo.setPosition(basePosition + (scaleFactor * 0.4 * currentArmAngle));
+//                }
+//            }
 
-            telemetry.addData("Current arm angle", currentArmAngle);
+            //telemetry.addData("Current arm angle", currentArmAngle);
             telemetry.update();
 
             //Drive code
@@ -146,43 +146,43 @@ public class RemoteControl extends LinearOpMode {
                 fastDrive = 0.6;
             }
 
-            if (armUpDown > 0.1) {
-                robot.AMotorUpDown.setPower(-0.9 * fastDrive);
-            } else if (armUpDown < -0.1) {
-                robot.AMotorUpDown.setPower(0.9 * fastDrive);
-            } else {
-                robot.AMotorUpDown.setPower(0);
-            }
-
-            // Claw intake system
-            if (clawWheelIntake) {
-                robot.InTakeServo2.setPosition(1);
-                robot.InTakeServo1.setPosition(1);
-            } else if (clawWheelOutake) {
-                robot.InTakeServo2.setPosition(-1);
-                robot.InTakeServo1.setPosition(-1);
-            } else {
-                robot.InTakeServo1.setPosition(0.5);
-                robot.InTakeServo2.setPosition(0.5);
-            }
-
-            //pixel dropping
-            if(clawDropLeft) {
-                robot.ClawDropServo.setPosition(0.115);
-            } else if (clawDropRight) {
-                robot.ClawDropServo.setPosition(0.785);
-            } else if (clawDropBoth) {
-                robot.ClawDropServo.setPosition(1);
-            } else {
-                robot.ClawDropServo.setPosition(0.500);
-            }
-
-            //Servo for hanging
-            if (hangArm == true) {
-                robot.HangServo.setPosition(ServoUp);
-            } else {
-                robot.HangServo.setPosition(ServoDown);
-            }
+//            if (armUpDown > 0.1) {
+//                robot.AMotorUpDown.setPower(-0.9 * fastDrive);
+//            } else if (armUpDown < -0.1) {
+//                robot.AMotorUpDown.setPower(0.9 * fastDrive);
+//            } else {
+//                robot.AMotorUpDown.setPower(0);
+//            }
+//
+//            // Claw intake system
+//            if (clawWheelIntake) {
+//                robot.InTakeServo2.setPosition(1);
+//                robot.InTakeServo1.setPosition(1);
+//            } else if (clawWheelOutake) {
+//                robot.InTakeServo2.setPosition(-1);
+//                robot.InTakeServo1.setPosition(-1);
+//            } else {
+//                robot.InTakeServo1.setPosition(0.5);
+//                robot.InTakeServo2.setPosition(0.5);
+//            }
+//
+//            //pixel dropping
+//            if(clawDropLeft) {
+//                robot.ClawDropServo.setPosition(0.115);
+//            } else if (clawDropRight) {
+//                robot.ClawDropServo.setPosition(0.785);
+//            } else if (clawDropBoth) {
+//                robot.ClawDropServo.setPosition(1);
+//            } else {
+//                robot.ClawDropServo.setPosition(0.500);
+//            }
+//
+//            //Servo for hanging
+//            if (hangArm == true) {
+//                robot.HangServo.setPosition(ServoUp);
+//            } else {
+//                robot.HangServo.setPosition(ServoDown);
+//            }
 
             //Servo for airplane
             if (airplane > 0.1) {
