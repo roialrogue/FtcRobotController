@@ -25,6 +25,25 @@ public class TestApril extends LinearOpMode {
     int DESIRED_TAG_ID = 2;
     private AprilTagDetection desiredTag = null;
 
+//    So here’s my take on your solution.  I put everything to field coordinates.
+//
+//    double fieldAngle = heading + Math.toRadians(detection.ftcPose.bearing);   // both measured CCW
+//    double distance = detection.ftcPose.range;
+//
+//    VectorF cameraToTag = new VectorF (distance * cos(fieldAngle), distance * sin(fieldAngle));
+//
+//    double xCam = cameraPerpendicularOffset;
+//    double yCam = cameraLateralOffset;  // make sure of sign!
+//    VectorF cameraOffset = new VectorF ( xCam * cos(heading) + yCam * sin(heading), -xCam * sin(heading) + yCam * cos(heading));
+//    VectorF botToTag = cameraToTag.plus(cameraOffSet);
+//
+//    Pose2d pose = new Pose2D(botToTag, heading);
+//The secret sauce is that the robot is rotated “heading” relative to the field and the tag has bearing relative to bot of “ftcPose.bearing.”  So the field bearing of tag to bot is heading + ftcPose.bearing, and the distance is ftcPose.range.  Draw a picture and use SOHCAH.
+//
+//    But the cameraOffset vector does have to get rotated, so we rotate reference frame by -heading.
+//
+//    Now we have everything in field coords and can add up.
+
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
