@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Pipelines;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.util.DashboardUtil;
  */
 @Config
 @TeleOp(group = "advanced")
-public class TestHeadingHold extends LinearOpMode {
+public class TeleOpAlignWithPoint extends LinearOpMode {
 
     public static double DRAWING_TARGET_RADIUS = 2;
 
@@ -157,7 +157,7 @@ public class TestHeadingHold extends LinearOpMode {
             // Update the heading controller with our current heading
             headingController.update(poseEstimate.getHeading());
 
-            // Update he localizer
+            // Update the localizer
             drive.getLocalizer().update();
 
             // Send telemetry packet off to dashboard

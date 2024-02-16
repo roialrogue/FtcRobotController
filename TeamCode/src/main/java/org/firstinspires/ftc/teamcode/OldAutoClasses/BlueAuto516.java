@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldAutoClasses;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,13 +9,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Pipelines.GPTCamera;
+import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Blue P.2 Auto")
-public class P2BlueAuto extends LinearOpMode {
+@Autonomous(name = "516 Blue Auto")
+public class BlueAuto516 extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -43,8 +44,8 @@ public class P2BlueAuto extends LinearOpMode {
         robot.ClawRotationServo.setPosition(.38);
         robot.ClawDropServo.setPosition(.5);
 
-        Pose2d BlueP2 = new Pose2d(-33, 61, Math.toRadians(270));
-        drive.setPoseEstimate(BlueP2);
+        Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
+        drive.setPoseEstimate(BlueP1);
 
         waitForStart();
         webCam.stopStreaming();
@@ -52,44 +53,38 @@ public class P2BlueAuto extends LinearOpMode {
         if (GPTCamera.rightSide == true) {
             //Mark right
 
-            Trajectory BlueP2MRT1 = drive.trajectoryBuilder(BlueP2)
-                    .lineToLinearHeading(new Pose2d(-34, 36, Math.toRadians(0)))
+            Trajectory BlueP1MRT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(11, 32, Math.toRadians(180)))
                     .build();
 
-            Trajectory BlueP2MRT2 = drive.trajectoryBuilder(BlueP2MRT1.end())
-                    .forward(10)
+            Trajectory BlueP1MRT2 = drive.trajectoryBuilder(BlueP1MRT1.end())
+                    .forward(3)
                     .build();
 
-            Trajectory BlueP2MRT3 = drive.trajectoryBuilder(BlueP2MRT2.end())
+            Trajectory BlueP1MRT3 = drive.trajectoryBuilder(BlueP1MRT2.end())
+                    .back(3)
+                    .build();
+
+            Trajectory BlueP1MRT4 = drive.trajectoryBuilder(BlueP1MRT3.end())
+                    .lineToLinearHeading(new Pose2d(50, 26, Math.toRadians(0)))
+                    .build();
+
+            Trajectory BlueP1MRT5 = drive.trajectoryBuilder(BlueP1MRT4.end())
                     .back(10)
                     .build();
 
-            Trajectory BlueP2MRT4 = drive.trajectoryBuilder(BlueP2MRT3.end())
-                    .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
+            Trajectory BlueP1MRT6 = drive.trajectoryBuilder(BlueP1MRT5.end())
+                    .lineToLinearHeading(new Pose2d(48, 9, Math.toRadians(180)))
                     .build();
 
-            Trajectory BlueP2MRT5 = drive.trajectoryBuilder(BlueP2MRT4.end())
-                    .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
+            Trajectory BlueP1MRT7 = drive.trajectoryBuilder(BlueP1MRT6.end())
+                    .back(5)
                     .build();
 
-            Trajectory BlueP2MRT6 = drive.trajectoryBuilder(BlueP2MRT5.end())
-                    .splineToConstantHeading(new Vector2d(52, 26), Math.toRadians(0))
-                    .build();
-
-            Trajectory BlueP2MRT7 = drive.trajectoryBuilder(BlueP2MRT6.end())
-                    .back(10)
-                    .build();
-
-            Trajectory BlueP2MRT8 = drive.trajectoryBuilder(BlueP2MRT7.end())
-                    .strafeTo(new Vector2d(50, 52))
-                    .build();
-
-            drive.followTrajectory(BlueP2MRT1);
-            drive.followTrajectory(BlueP2MRT2);
-            drive.followTrajectory(BlueP2MRT3);
-            drive.followTrajectory(BlueP2MRT4);
-            drive.followTrajectory(BlueP2MRT5);
-            drive.followTrajectory(BlueP2MRT6);
+            drive.followTrajectory(BlueP1MRT1);
+            drive.followTrajectory(BlueP1MRT2);
+            drive.followTrajectory(BlueP1MRT3);
+            drive.followTrajectory(BlueP1MRT4);
 
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(1050);
@@ -100,14 +95,15 @@ public class P2BlueAuto extends LinearOpMode {
             robot.ClawRotationServo.setPosition(0.2);
 
             robot.AMotorOutIn.setPower(0.9);
-            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setTargetPosition(-1270);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
             robot.ClawDropServo.setPosition(0.785);
+            sleep(200);
 
-            drive.followTrajectory(BlueP2MRT7);
+            drive.followTrajectory(BlueP1MRT5);
 
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-760);
@@ -115,8 +111,8 @@ public class P2BlueAuto extends LinearOpMode {
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
-            drive.followTrajectory(BlueP2MRT8);
-            drive.turn(Math.toRadians(180));
+            drive.followTrajectory(BlueP1MRT6);
+            drive.followTrajectory(BlueP1MRT7);
 
             robot.ClawRotationServo.setPosition(.38);
 
@@ -129,47 +125,41 @@ public class P2BlueAuto extends LinearOpMode {
         } else if (GPTCamera.middleSide == true) {
             //Mark middle
 
-            Trajectory BlueP2MMT1 = drive.trajectoryBuilder(BlueP2)
-                    .lineToLinearHeading(new Pose2d(-34, 34, Math.toRadians(270)))
+            Trajectory BlueP1MMT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(16, 34, Math.toRadians(270)))
                     .build();
 
-            Trajectory BlueP2MMT2 = drive.trajectoryBuilder(BlueP2MMT1.end())
-                    .forward(10)
+            Trajectory BlueP1MMT2 = drive.trajectoryBuilder(BlueP1MMT1.end())
+                    .forward(5)
                     .build();
 
-            Trajectory BlueP2MMT3 = drive.trajectoryBuilder(BlueP2MMT2.end())
-                    .back(17)
+            Trajectory BlueP1MMT3 = drive.trajectoryBuilder(BlueP1MMT2.end())
+                    .back(8)
                     .build();
 
-            Trajectory BlueP2MMT4 = drive.trajectoryBuilder(BlueP2MMT3.end())
-                    .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
+            Trajectory BlueP1MMT4 = drive.trajectoryBuilder(BlueP1MMT3.end())
+                    .lineToLinearHeading(new Pose2d(50, 33, Math.toRadians(0)))
                     .build();
 
-            Trajectory BlueP2MMT5 = drive.trajectoryBuilder(BlueP2MMT4.end())
-                    .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
-                    .build();
-
-            Trajectory BlueP2MMT6 = drive.trajectoryBuilder(BlueP2MMT5.end())
-                    .splineToConstantHeading(new Vector2d(52, 33), Math.toRadians(0))
-                    .build();
-
-            Trajectory BlueP2MMT7 = drive.trajectoryBuilder(BlueP2MMT6.end())
+            Trajectory BlueP1MMT5 = drive.trajectoryBuilder(BlueP1MMT4.end())
                     .back(10)
                     .build();
 
-            Trajectory BlueP2MMT8 = drive.trajectoryBuilder(BlueP2MMT7.end())
-                    .strafeTo(new Vector2d(50, 52))
+            Trajectory BlueP1MMT6 = drive.trajectoryBuilder(BlueP1MMT5.end())
+                    .lineToLinearHeading(new Pose2d(46, 6, Math.toRadians(180)))
                     .build();
 
-            drive.followTrajectory(BlueP2MMT1);
-            drive.followTrajectory(BlueP2MMT2);
-            drive.followTrajectory(BlueP2MMT3);
-            drive.followTrajectory(BlueP2MMT4);
-            drive.followTrajectory(BlueP2MMT5);
-            drive.followTrajectory(BlueP2MMT6);
+            Trajectory BlueP1MMT7 = drive.trajectoryBuilder(BlueP1MMT6.end())
+                    .back(10)
+                    .build();
+
+            drive.followTrajectory(BlueP1MMT1);
+            drive.followTrajectory(BlueP1MMT2);
+            drive.followTrajectory(BlueP1MMT3);
+            drive.followTrajectory(BlueP1MMT4);
 
             robot.AMotorUpDown.setPower(0.9);
-            robot.AMotorUpDown.setTargetPosition(1050);
+            robot.AMotorUpDown.setTargetPosition(1100);
             robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorUpDown.getCurrentPosition() - robot.AMotorUpDown.getTargetPosition()) > 5) { }
             robot.AMotorUpDown.setPower(0);
@@ -177,14 +167,15 @@ public class P2BlueAuto extends LinearOpMode {
             robot.ClawRotationServo.setPosition(0.2);
 
             robot.AMotorOutIn.setPower(0.9);
-            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setTargetPosition(-1420);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
             robot.ClawDropServo.setPosition(0.785);
+            sleep(200);
 
-            drive.followTrajectory(BlueP2MMT7);
+            drive.followTrajectory(BlueP1MMT5);
 
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-760);
@@ -192,8 +183,8 @@ public class P2BlueAuto extends LinearOpMode {
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
-            drive.followTrajectory(BlueP2MMT8);
-            drive.turn(Math.toRadians(180));
+            drive.followTrajectory(BlueP1MMT6);
+            drive.followTrajectory(BlueP1MMT7);
 
             robot.ClawRotationServo.setPosition(.38);
 
@@ -205,45 +196,38 @@ public class P2BlueAuto extends LinearOpMode {
 
         } else if (GPTCamera.leftSide == true) {
             //Mark left
-
-            Trajectory BlueP2MRT1 = drive.trajectoryBuilder(BlueP2)
-                    .lineToLinearHeading(new Pose2d(-34, 32, Math.toRadians(180)))
+            Trajectory BlueP1MLT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(30, 42, Math.toRadians(225)))
                     .build();
 
-            Trajectory BlueP2MRT2 = drive.trajectoryBuilder(BlueP2MRT1.end())
-                    .forward(10)
+            Trajectory BlueP1MLT2 = drive.trajectoryBuilder(BlueP1MLT1.end())
+                    .forward(5)
                     .build();
 
-            Trajectory BlueP2MRT3 = drive.trajectoryBuilder(BlueP2MRT2.end())
+            Trajectory BlueP1MLT3 = drive.trajectoryBuilder(BlueP1MLT2.end())
+                    .back(5)
+                    .build();
+
+            Trajectory BlueP1MLT4 = drive.trajectoryBuilder(BlueP1MLT3.end())
+                    .lineToLinearHeading(new Pose2d(50, 40, Math.toRadians(0)))
+                    .build();
+
+            Trajectory BlueP1MLT5 = drive.trajectoryBuilder(BlueP1MLT4.end())
                     .back(10)
                     .build();
 
-            Trajectory BlueP2MRT4 = drive.trajectoryBuilder(BlueP2MRT3.end())
-                    .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
+            Trajectory BlueP1MLT6 = drive.trajectoryBuilder(BlueP1MLT5.end())
+                    .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
                     .build();
 
-            Trajectory BlueP2MRT5 = drive.trajectoryBuilder(BlueP2MRT4.end())
-                    .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
-                    .build();
-
-            Trajectory BlueP2MRT6 = drive.trajectoryBuilder(BlueP2MRT5.end())
-                    .splineToConstantHeading(new Vector2d(52, 40), Math.toRadians(0))
-                    .build();
-
-            Trajectory BlueP2MRT7 = drive.trajectoryBuilder(BlueP2MRT6.end())
+            Trajectory BlueP1MLT7 = drive.trajectoryBuilder(BlueP1MLT6.end())
                     .back(10)
                     .build();
 
-            Trajectory BlueP2MRT8 = drive.trajectoryBuilder(BlueP2MRT7.end())
-                    .strafeTo(new Vector2d(50, 52))
-                    .build();
-
-            drive.followTrajectory(BlueP2MRT1);
-            drive.followTrajectory(BlueP2MRT2);
-            drive.followTrajectory(BlueP2MRT3);
-            drive.followTrajectory(BlueP2MRT4);
-            drive.followTrajectory(BlueP2MRT5);
-            drive.followTrajectory(BlueP2MRT6);
+            drive.followTrajectory(BlueP1MLT1);
+            drive.followTrajectory(BlueP1MLT2);
+            drive.followTrajectory(BlueP1MLT3);
+            drive.followTrajectory(BlueP1MLT4);
 
             robot.AMotorUpDown.setPower(0.9);
             robot.AMotorUpDown.setTargetPosition(1050);
@@ -254,14 +238,15 @@ public class P2BlueAuto extends LinearOpMode {
             robot.ClawRotationServo.setPosition(0.2);
 
             robot.AMotorOutIn.setPower(0.9);
-            robot.AMotorOutIn.setTargetPosition(-1250);
+            robot.AMotorOutIn.setTargetPosition(-1270);
             robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
-           robot.ClawDropServo.setPosition(0.785);
+            robot.ClawDropServo.setPosition(0.785);
+            sleep(200);
 
-            drive.followTrajectory(BlueP2MRT7);
+            drive.followTrajectory(BlueP1MLT5);
 
             robot.AMotorOutIn.setPower(0.9);
             robot.AMotorOutIn.setTargetPosition(-760);
@@ -269,8 +254,8 @@ public class P2BlueAuto extends LinearOpMode {
             while (opModeIsActive() && Math.abs(robot.AMotorOutIn.getCurrentPosition() - robot.AMotorOutIn.getTargetPosition()) > 5) { }
             robot.AMotorOutIn.setPower(0);
 
-            drive.followTrajectory(BlueP2MRT8);
-            drive.turn(Math.toRadians(180));
+            drive.followTrajectory(BlueP1MLT6);
+            drive.followTrajectory(BlueP1MLT7);
 
             robot.ClawRotationServo.setPosition(.38);
 
