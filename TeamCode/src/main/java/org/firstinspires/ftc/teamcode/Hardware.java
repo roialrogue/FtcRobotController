@@ -23,26 +23,22 @@ public class Hardware {
     //"CM2"
     public DcMotor leftRearWheel;
     //"CM0"
-    public DcMotor AMotorUpDown;
-    //"CM4"
-    public DcMotor AMotorOutIn;
-    //"CM5"
-    public DcMotor AirplaneM;
-    //"CM7"
-    public DcMotor AMotorIntake;
-    //"CM6"
-    public Servo HangServo;
-
-    public Servo InTakeServo1;
-
-    public Servo InTakeServo2;
-
-    public Servo ClawRotationServo;
-
-    public Servo ClawDropServo;
-
+    public DcMotor BeltMotor;
+    //"EM0"
+    public DcMotor AirplaneMotor;
+    //"EM2"
+    public DcMotor HangMotor;
+    //"EM3"
+    public Servo LeftInTake;
+    //"CS0"
+    public Servo RightInTake;
+    //"CS2"
+    public Servo ClawUpDown;
+    //"ES0"
+    public Servo ClawLeftRight;
+    //"ES2"
     public Servo AirplaneServo;
-
+    //"ES4"
     public static double maxSpeed = 0.8;
 
     public BNO055IMU gyro;
@@ -85,33 +81,30 @@ public class Hardware {
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
 
+            HangMotor = hwMap.get(DcMotor.class, "EM3");
+            HangMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            HangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            HangMotor.setPower(0);
 
-            AMotorUpDown = hwMap.get(DcMotor.class, "EM0");
-            AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AMotorUpDown.setPower(0);
+            AirplaneMotor = hwMap.get(DcMotor.class, "EM2");
+            AirplaneMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AirplaneMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AirplaneMotor.setPower(0);
 
-            AMotorOutIn = hwMap.get(DcMotor.class, "EM3");
-            AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AMotorOutIn.setPower(0);
+            AirplaneMotor = hwMap.get(DcMotor.class, "EM2");
+            AirplaneMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            AirplaneMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            AirplaneMotor.setPower(0);
 
-            AirplaneM = hwMap.get(DcMotor.class, "EM2");
-            AirplaneM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AirplaneM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AirplaneM.setPower(0);
+            AirplaneServo = hwMap.get(Servo.class, "CS0");
 
-            HangServo = hwMap.get(Servo.class, "CS0");
+            LeftInTake = hwMap.get(Servo.class, "CS4");
 
-            InTakeServo1 = hwMap.get(Servo.class, "CS4");
+            RightInTake = hwMap.get(Servo.class, "ES0");
 
-            InTakeServo2 = hwMap.get(Servo.class, "ES0");
+            ClawLeftRight = hwMap.get(Servo.class, "CS2");
 
-            ClawRotationServo = hwMap.get(Servo.class, "CS2");
-
-            ClawDropServo = hwMap.get(Servo.class, "ES2");
-
-            AirplaneServo = hwMap.get(Servo.class, "ES4");
+            ClawUpDown = hwMap.get(Servo.class, "ES2");
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");

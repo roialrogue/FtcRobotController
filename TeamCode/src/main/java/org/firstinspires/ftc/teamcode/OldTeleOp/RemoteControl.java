@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Hardware;
 
 @TeleOp (name = "OldTeleOp")
 public class RemoteControl extends LinearOpMode {
@@ -34,10 +36,10 @@ public class RemoteControl extends LinearOpMode {
         }
 
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double rayanisdume = 0.11;
         double PSD = 0.5;
-        robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         robot.AirplaneServo.setPosition(PSD);
@@ -129,12 +131,12 @@ public class RemoteControl extends LinearOpMode {
 
             if (beltOutIn > 0.1) {
                 //Claw motion out
-                robot.AMotorOutIn.setPower(1 * SlowDriveArm);
+                //robot.AMotorOutIn.setPower(1 * SlowDriveArm);
             } else if (beltOutIn < -0.1) {
                 //Claw motion in
-                robot.AMotorOutIn.setPower(-1 * SlowDriveArm);
+                //robot.AMotorOutIn.setPower(-1 * SlowDriveArm);
             } else {
-                robot.AMotorOutIn.setPower(0);
+               // robot.AMotorOutIn.setPower(0);
             }
 
 
@@ -184,11 +186,11 @@ public class RemoteControl extends LinearOpMode {
 //            }
 
             //Servo for airplane
-            if (airplane > 0.1) {
-                robot.AirplaneM.setPower(1);
-            } else {
-                robot.AirplaneM.setPower(0);
-            }
+//            if (airplane > 0.1) {
+//                robot.AirplaneM.setPower(1);
+//            } else {
+//                robot.AirplaneM.setPower(0);
+//            }
         }
     }
 }
