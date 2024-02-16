@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp (name = "TeleOp")
+@TeleOp (name = "1TeleOp")
 public class RemoteControlWorking extends LinearOpMode {
 
     //Config Variables

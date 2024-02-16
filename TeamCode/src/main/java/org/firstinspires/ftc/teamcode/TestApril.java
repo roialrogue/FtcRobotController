@@ -26,6 +26,22 @@ public class TestApril extends LinearOpMode {
     int DESIRED_TAG_ID = 2;
     private AprilTagDetection desiredTag = null;
 
+    public static final double APRILTAG_BACKDROP_X              = 60.25;
+    public static final double APRILTAG_AUDIENCE_WALL_X         = -70.25;
+    public static final double BACKDROP_APRILTAG_DELTA_Y        = 6.0;
+    public static final Pose2d[] APRILTAG_POSES = new Pose2d[] {
+            new Pose2d(APRILTAG_BACKDROP_X, 41.41, 90.0),        // TagId 1
+            new Pose2d(APRILTAG_BACKDROP_X, 35.41, 90.0),        // TagId 2
+            new Pose2d(APRILTAG_BACKDROP_X, 29.41, 90.0),        // TagId 3
+            new Pose2d(APRILTAG_BACKDROP_X, -29.41, 90.0),       // TagId 4
+            new Pose2d(APRILTAG_BACKDROP_X, -35.41, 90.0),       // TagId 5
+            new Pose2d(APRILTAG_BACKDROP_X, -41.41, 90.0),       // TagId 6
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -40.63, -90.0), // TagId 7
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -35.13, -90.0), // TagId 8
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 35.13, -90.0),  // TagId 9
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 40.63, -90.0)   // TagId 10
+    };
+
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -37,7 +53,7 @@ public class TestApril extends LinearOpMode {
                 .setDrawCubeProjection(true)
                 .setDrawTagID(true)
                 .setDrawTagOutline(true)
-                //.setLensIntrinsics(814.353,814.353,339.689,224.275)
+                .setLensIntrinsics(814.353,814.353,339.689,224.275)
                 .build();
 
         VisionPortal visionPortal = new VisionPortal.Builder()
@@ -73,25 +89,24 @@ public class TestApril extends LinearOpMode {
             desiredTag = null;
             List<AprilTagDetection> tagDetections = tagProcessor.getDetections();
             telemetry.addData("#",tagDetections.size());
-            for (AprilTagDetection detection : tagDetections) {
-                if ((detection.metadata != null) &&
-                        ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID))  ){
-                    desiredTag = detection;
-                    break;  // don't look any further.
-                } else {
-                    telemetry.addData("Unknown Target", "Tag ID %d is not in TagLibrary\n", detection.id);
-                }
-                telemetry.update();
-            }
+            for (AprilTagDetection desiredTag : tagDetections) {
+                if ((desiredTag.metadata == null) continue;
 
-
-            if(desiredTag != null) {
-                telemetry.addLine(String.format("X Y Yaw %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.yaw));
-
+                Pose2d aprilTagPose = APRILTAG_POSES[desiredTag.id - 1];
                 double robotYPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(90 - desiredTag.ftcPose.bearing));
-                double ThoeryXPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))));
-                double robotXPosition = (ThoeryXPosition / (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))))) * (Math.sin(90 - desiredTag.ftcPose.bearing));
+                double theoryXPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))));
+                double robotXPosition = (theoryXPosition / (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))))) * (Math.sin(90 - desiredTag.ftcPose.bearing));
                 double robotHeadingDegree = desiredTag.ftcPose.yaw;
+                double fieldX = aprilTagPose.getX() - robotYPosition;
+
+
+
+
+
+                telemetry.addData("Robot Y",robotYPosition);
+                telemetry.addData("Robot X",robotXPosition);
+                telemetry.addData("TheoryXPosition",theoryXPosition);
+                telemetry.addData("Robot Heading",robotHeadingDegree);
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
@@ -100,15 +115,14 @@ public class TestApril extends LinearOpMode {
                 telemetry.addData("Y", desiredTag.ftcPose.y);
                 telemetry.addData("Bearing", desiredTag.ftcPose.bearing);
                 telemetry.addData("Yaw", desiredTag.ftcPose.yaw);
+                telemetry.addData("Range",desiredTag.ftcPose.range);
                 testy = desiredTag.ftcPose.x - tagPositionY + 7; //add right number
                 testx = 63 - desiredTag.ftcPose.y; //add right number
                 testAngle = desiredTag.ftcPose.yaw; //may be a problem
                 if(testAngle < 0) {
                     testAngle += 360;
                 }
-                telemetry.addData("testyaw", testAngle);
-                telemetry.addData("testy", testy);
-                telemetry.addData("testx", testx);
+
 
                 telemetry.update();
             } else {
