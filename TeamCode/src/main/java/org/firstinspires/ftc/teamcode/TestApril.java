@@ -16,6 +16,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -55,7 +56,7 @@ public class TestApril extends LinearOpMode {
                 .setDrawCubeProjection(true)
                 .setDrawTagID(true)
                 .setDrawTagOutline(true)
-                .setLensIntrinsics(814.353,814.353,339.689,224.275)
+                //.setLensIntrinsics(814.353,814.353,339.689,224.275)
                 .build();
 
         VisionPortal visionPortal = new VisionPortal.Builder()
@@ -72,15 +73,15 @@ public class TestApril extends LinearOpMode {
         while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
         }
 
-        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
-        exposure.setMode(ExposureControl.Mode.Manual);
-        exposure.setExposure(15, TimeUnit.MILLISECONDS);
+//        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
+//        exposure.setMode(ExposureControl.Mode.Manual);
+//        exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
-        GainControl gain = visionPortal.getCameraControl(GainControl.class);
-        //gain.setGain(255);
+//        GainControl gain = visionPortal.getCameraControl(GainControl.class);
+//        gain.setGain(255);
 
 
-        tagProcessor.setDecimation(3);
+//        tagProcessor.setDecimation(3);
         waitForStart();
 
         double testy = 0;
@@ -104,18 +105,16 @@ public class TestApril extends LinearOpMode {
 
 
             if(desiredTag != null) {
-                telemetry.addLine(String.format("XYBearing %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.bearing));
+                telemetry.addLine(String.format("X Y Yaw %6.2f %6.2f %6.2f", desiredTag.ftcPose.x, desiredTag.ftcPose.y, desiredTag.ftcPose.yaw));
+
+                double robotYPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(90 - desiredTag.ftcPose.bearing));
+                double ThoeryXPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))));
+                double robotXPosition = (ThoeryXPosition / (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))))) * (Math.sin(90 - desiredTag.ftcPose.bearing));
+                double robotHeadingDegree = desiredTag.ftcPose.yaw;
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
 
-                desiredTag.metadata.fieldPosition.get(0); // 0 = x, 1 = y, 2 = z
-                telemetry.addData("tag position x", tagPositionX );
-                telemetry.addData("tag position y", tagPositionY );
-
-                telemetry.addData("exposure", exposure.isExposureSupported());
-                telemetry.addData("gain Max", gain.getMaxGain());
-                telemetry.addData("gain Min", gain.getMinGain());
                 telemetry.addData("X", desiredTag.ftcPose.x);
                 telemetry.addData("Y", desiredTag.ftcPose.y);
                 telemetry.addData("Bearing", desiredTag.ftcPose.bearing);
@@ -130,7 +129,8 @@ public class TestApril extends LinearOpMode {
                 telemetry.addData("testy", testy);
                 telemetry.addData("testx", testx);
 
-
+                telemetry.update();
+            } else {
                 telemetry.update();
             }
         }

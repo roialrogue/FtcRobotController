@@ -61,26 +61,11 @@ public class Hardware {
 
     public void init(HardwareMap hwMap) {
 
-
-
-            rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
-            rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
-            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rightForwardWheel.setPower(0);
-
-
             leftForwardWheel = hwMap.get(DcMotor.class, "CM0");
             leftForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             leftForwardWheel.setDirection(DcMotorSimple.Direction.REVERSE);
             leftForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftForwardWheel.setPower(0);
-
-            rightRearWheel = hwMap.get(DcMotor.class, "CM3");
-            rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
-            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rightRearWheel.setPower(0);
 
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -88,17 +73,30 @@ public class Hardware {
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
 
-            AMotorUpDown = hwMap.get(DcMotor.class, "EH0");
+            rightForwardWheel = hwMap.get(DcMotor.class, "CM2");
+            rightForwardWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightForwardWheel.setDirection(DcMotor.Direction.FORWARD);
+            rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightForwardWheel.setPower(0);
+
+            rightRearWheel = hwMap.get(DcMotor.class, "CM3");
+            rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
+            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightRearWheel.setPower(0);
+
+
+            AMotorUpDown = hwMap.get(DcMotor.class, "EM0");
             AMotorUpDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorUpDown.setPower(0);
 
-            AMotorOutIn = hwMap.get(DcMotor.class, "EH3");
+            AMotorOutIn = hwMap.get(DcMotor.class, "EM3");
             AMotorOutIn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AMotorOutIn.setPower(0);
 
-            AirplaneM = hwMap.get(DcMotor.class, "EH2");
+            AirplaneM = hwMap.get(DcMotor.class, "EM2");
             AirplaneM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AirplaneM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AirplaneM.setPower(0);
@@ -114,18 +112,6 @@ public class Hardware {
             ClawDropServo = hwMap.get(Servo.class, "ES2");
 
             AirplaneServo = hwMap.get(Servo.class, "ES4");
-
-//            gyro = hwMap.get(BNO055IMU.class, "gyro");
-//            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-//            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-//            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-//            parameters.loggingEnabled = true;
-//            parameters.loggingTag = "gyro";
-//            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-//            gyro.initialize(parameters);
-
-//['            color = hwMap.get(RevColorSensorV3.class, "Color");']
-
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
