@@ -90,13 +90,32 @@ public class TestApril extends LinearOpMode {
             List<AprilTagDetection> tagDetections = tagProcessor.getDetections();
             telemetry.addData("#",tagDetections.size());
             for (AprilTagDetection desiredTag : tagDetections) {
-                if ((desiredTag.metadata == null) continue;
+                if (desiredTag.metadata == null)continue;
 
                 Pose2d aprilTagPose = APRILTAG_POSES[desiredTag.id - 1];
-                double robotYPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(90 - desiredTag.ftcPose.bearing));
-                double theoryXPosition = (desiredTag.ftcPose.range / Math.sin(90 - desiredTag.ftcPose.yaw)) * (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))));
-                double robotXPosition = (theoryXPosition / (Math.sin(180 - ((90 - desiredTag.ftcPose.bearing)+(90 - desiredTag.ftcPose.yaw))))) * (Math.sin(90 - desiredTag.ftcPose.bearing));
+                double angleA = desiredTag.ftcPose.yaw + 90;
+                double angleB = 90 - desiredTag.ftcPose.bearing;
+                double sideA = desiredTag.ftcPose.range;
+
+                double angleC = 180 - angleA - angleB;
+
+                double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA));
+
+                double sideC = (sideA * Math.sin(Math.toRadians(angleC)))/ Math.sin(Math.toRadians(angleA));
+
+                double t2AngleA = angleA - 180;
+
+                double t2AngleB = 90;
+
+                double t2AngleC = 180 - t2AngleA - t2AngleB;
+
+                double t2SideB = (sideC * Math.sin(Math.toRadians(t2AngleB))) / Math.sin(Math.toRadians(t2AngleC));
+
+                double robotYPosition = angleC;
+                double robotXPosition = sideB;
                 double robotHeadingDegree = desiredTag.ftcPose.yaw;
+
+
                 double fieldX = aprilTagPose.getX() - robotYPosition;
 
 
@@ -105,7 +124,6 @@ public class TestApril extends LinearOpMode {
 
                 telemetry.addData("Robot Y",robotYPosition);
                 telemetry.addData("Robot X",robotXPosition);
-                telemetry.addData("TheoryXPosition",theoryXPosition);
                 telemetry.addData("Robot Heading",robotHeadingDegree);
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
@@ -124,10 +142,7 @@ public class TestApril extends LinearOpMode {
                 }
 
 
-                telemetry.update();
-            } else {
-                telemetry.update();
-            }
+           telemetry.update();
         }
 
         Pose2d RedP1 = new Pose2d(testx, testy, Math.toRadians(0));
@@ -139,5 +154,6 @@ public class TestApril extends LinearOpMode {
 
 
 
+    }
     }
 }

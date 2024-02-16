@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp (name = "TeleOp")
+@TeleOp (name = "OldTeleOp")
 public class RemoteControl extends LinearOpMode {
     // 3 tickes = Drop
     // 2 tickes = Bottom roller
@@ -35,9 +35,7 @@ public class RemoteControl extends LinearOpMode {
 
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        double ServoUp = 0.25;
-        double ServoDown = 0;
-        double PSU = 0.11;
+        double = 0.11;
         double PSD = 0.5;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -52,7 +50,7 @@ public class RemoteControl extends LinearOpMode {
 
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
-            double yaw = gamepad1.right_stick_x;
+            double yaw = gamepad1.right_stick_x; //May need to invert
             boolean slowDrive = gamepad1.left_bumper;
 
             double beltOutIn = gamepad2.right_stick_y;
@@ -120,6 +118,7 @@ public class RemoteControl extends LinearOpMode {
             robot.rightRearWheel.setPower(rbm * speed);
             robot.leftForwardWheel.setPower(lfm * speed);
             robot.leftRearWheel.setPower(lbm * speed);
+
 
             //In and out arm
             //Slow Drive

@@ -69,7 +69,7 @@ public class Hardware {
 
             leftRearWheel = hwMap.get(DcMotor.class, "CM1");
             leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftRearWheel.setDirection(DcMotorSimple.Direction.FORWARD);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             leftRearWheel.setPower(0);
 
@@ -81,7 +81,7 @@ public class Hardware {
 
             rightRearWheel = hwMap.get(DcMotor.class, "CM3");
             rightRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
+            rightRearWheel.setDirection(DcMotor.Direction.REVERSE);
             rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightRearWheel.setPower(0);
 
