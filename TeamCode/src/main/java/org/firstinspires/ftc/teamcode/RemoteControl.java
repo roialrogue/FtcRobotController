@@ -35,7 +35,7 @@ public class RemoteControl extends LinearOpMode {
 
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.AMotorOutIn.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        double = 0.11;
+        double rayanisdume = 0.11;
         double PSD = 0.5;
         robot.AMotorOutIn.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.AMotorUpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
