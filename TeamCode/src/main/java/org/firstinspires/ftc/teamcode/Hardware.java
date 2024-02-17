@@ -86,25 +86,25 @@ public class Hardware {
             HangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             HangMotor.setPower(0);
 
-            AirplaneMotor = hwMap.get(DcMotor.class, "EM2");
-            AirplaneMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            AirplaneMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            AirplaneMotor.setPower(0);
+            BeltMotor = hwMap.get(DcMotor.class, "EM0");
+            BeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            BeltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BeltMotor.setPower(0);
 
             AirplaneMotor = hwMap.get(DcMotor.class, "EM2");
             AirplaneMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             AirplaneMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             AirplaneMotor.setPower(0);
 
-            AirplaneServo = hwMap.get(Servo.class, "CS0");
+            AirplaneServo = hwMap.get(Servo.class, "ES4");
 
-            LeftInTake = hwMap.get(Servo.class, "CS4");
+            LeftInTake = hwMap.get(Servo.class, "CS0");
 
-            RightInTake = hwMap.get(Servo.class, "ES0");
+            RightInTake = hwMap.get(Servo.class, "CS2");
 
-            ClawLeftRight = hwMap.get(Servo.class, "CS2");
+            ClawLeftRight = hwMap.get(Servo.class, "ES2");
 
-            ClawUpDown = hwMap.get(Servo.class, "ES2");
+            ClawUpDown = hwMap.get(Servo.class, "ES0");
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");

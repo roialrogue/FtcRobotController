@@ -60,31 +60,31 @@ public class ZP1BlueAuto extends LinearOpMode {
             switch( editingMode ) {
                 case None: break;
                 case WaitTime:
-                    if (myGamepad.rightBumperPressed) {
+                    if (myGamepad.isRightBumperPressed()) {
                         waitTime = waitTime + 500;
-                    } else if (myGamepad.leftBumperPressed && !(waitTime == 0)) {
+                    } else if (myGamepad.isLeftBumperPressed() && !(waitTime == 0)) {
                         waitTime = waitTime - 500;
                     }
                     break;
 
                 case Cycling:
-                    if (myGamepad.rightBumperPressed) {
+                    if (myGamepad.isRightBumperPressed()) {
                         cycling = true;
-                    } else if (myGamepad.leftBumperPressed) {
+                    } else if (myGamepad.isLeftBumperPressed()) {
                         cycling = false;
                     }
 
                 case CyclingNum2:
-                    if (myGamepad.rightBumperPressed) {
+                    if (myGamepad.isRightBumperPressed()) {
                         cyclingNum2 = true;
-                    } else if (myGamepad.leftBumperPressed) {
+                    } else if (myGamepad.isLeftBumperPressed()) {
                         cyclingNum2 = false;
                     }
             }
             if (myGamepad.isAPressed()) {
-                if (myGamepad.rightBumperPressed) {
+                if (myGamepad.isRightBumperPressed()) {
                     parkingInside = true;
-                } else if (myGamepad.leftBumperPressed) {
+                } else if (myGamepad.isLeftBumperPressed()) {
                     parkingInside = false;
                 }
             }
@@ -95,7 +95,7 @@ public class ZP1BlueAuto extends LinearOpMode {
             telemetry.addData("Parking on the inside", parkingInside);
             telemetry.update();
 
-            if (myGamepad.leftStickButtonPressed) {
+            if (myGamepad.isleftstickbuttonPressed()) {
                 editingConfig = false;
             }
         }
