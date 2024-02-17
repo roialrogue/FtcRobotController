@@ -19,7 +19,6 @@ public class myGamePad {
     boolean leftStickButtonPressed = false;
     boolean rightstickbuttonPressed = false;
 
-
     /* Constructor */
     public myGamePad(Gamepad gamepad ) {
 

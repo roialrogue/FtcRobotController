@@ -49,7 +49,7 @@ public class TestApril extends LinearOpMode {
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .setCameraResolution(new Size(640, 480)) //bigger the resolution the further it can see but impact performance
+                .setCameraResolution(new Size(640, 480))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG) //?
                 .build();
 
@@ -63,8 +63,8 @@ public class TestApril extends LinearOpMode {
         GainControl gain = visionPortal.getCameraControl(GainControl.class); //?
         gain.setGain(255);
 
-
         tagProcessor.setDecimation(3); //?
+
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
@@ -88,12 +88,12 @@ public class TestApril extends LinearOpMode {
                 double t2AngleC = 180 - t2AngleA - t2AngleB;
                 double t2SideB = (sideC * Math.sin(Math.toRadians(t2AngleB))) / Math.sin(Math.toRadians(t2AngleC));
 
-                double robotYPosition = angleC;
-                double robotXPosition = t2SideB;
+                double robotXPosition = angleC;
+                double robotYPosition = t2SideB;
+
+                double fieldX = aprilTagPose.getX() - robotXPosition;
+                double fieldY = aprilTagPose.getY() - robotYPosition;
                 double robotHeadingDegree = desiredTag.ftcPose.yaw;
-
-
-                //double fieldX = aprilTagPose.getX() - robotYPosition;
 
                 telemetry.addData("Robot Y", robotYPosition);
                 telemetry.addData("Robot X", robotXPosition);
@@ -101,7 +101,8 @@ public class TestApril extends LinearOpMode {
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
-                telemetry.addData("Position X",)
+                telemetry.addData("Position X",tagPositionX);
+                telemetry.addData("Position Y",tagPositionY);
                 telemetry.update();
             }
         }
