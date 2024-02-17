@@ -10,6 +10,8 @@ public class BestRC extends LinearOpMode {
     Hardware robot = Hardware.getInstance();
     public void runOpMode() {
 
+        robot.init(hardwareMap);
+
         if (robot.rightForwardWheel != null) {
             robot.rightForwardWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
@@ -25,6 +27,8 @@ public class BestRC extends LinearOpMode {
 
         waitForStart();
 
+        robot.RightInTake.setPosition(0.5);
+        robot.LeftInTake.setPosition(0.9);
 
         while (opModeIsActive()) {
 
@@ -33,9 +37,9 @@ public class BestRC extends LinearOpMode {
             double yaw = gamepad1.right_stick_x;
             boolean slowDrive = gamepad1.left_bumper;
 
-            double belts = -gamepad2.left_stick_y;
-            boolean leftIntake = gamepad2.left_bumper;
-            boolean rightIntake = gamepad2.right_bumper;
+            double belts = gamepad2.left_stick_y;
+            double leftIntake = gamepad2.left_trigger;
+            double rightIntake = gamepad2.right_trigger;
             boolean doubleIntake = gamepad2.x;
             boolean airplane = gamepad2.y;
             double hangArm = -gamepad2.right_stick_y;
@@ -45,10 +49,55 @@ public class BestRC extends LinearOpMode {
             double airplaneEngaged = 0.12;
 
 
+            double speed;
+            if (slowDrive) {
+                speed = 0.33;
+            } else {
+                speed = .9;
+            }
+            double rfm = axial - lateral - yaw;
+            double rbm = axial + lateral - yaw;
+            double lfm = axial + lateral + yaw;
+            double lbm = axial - lateral + yaw;
+
+            double max;
+            max = Math.max(Math.abs(lfm), Math.abs(rfm));
+            max = Math.max(max, Math.abs(lbm));
+            max = Math.max(max, Math.abs(rbm));
+
+            if (max > 1.0) {
+                lfm /= max;
+                rfm /= max;
+                lbm /= max;
+                rbm /= max;
+            }
+
+            robot.rightForwardWheel.setPower(rfm * speed);
+            robot.rightRearWheel.setPower(rbm * speed);
+            robot.leftForwardWheel.setPower(lfm * speed);
+            robot.leftRearWheel.setPower(lbm * speed);
+
+
+            int Ticks = robot.BeltMotor.getCurrentPosition();
+            double minOrMax = 1;
+
+            if (robot.BeltMotor.isBusy()) {
+                if (Ticks < 500) {
+                    minOrMax = 0.66;
+                } else if (Ticks < 250){
+                    minOrMax = 0.33;
+                } else if (Ticks < 100) {
+                    minOrMax = 0.1;
+                }
+            }
+
+            telemetry.addData("Belt Ticks", Ticks);
+            telemetry.update();
+
             if (belts > 0.1) {
-                robot.BeltMotor.setPower(1);
+                robot.BeltMotor.setPower(1 * minOrMax);
             } else if (belts < -0.1) {
-                robot.BeltMotor.setPower(-1);
+                robot.BeltMotor.setPower(-1 * minOrMax);
             } else {
                 robot.BeltMotor.setPower(0);
             }
@@ -82,18 +131,18 @@ public class BestRC extends LinearOpMode {
             }
             */
 
-            if (rightIntake && !rightPressed && !rightPressing) {
+            if (rightIntake > 0.1 && !rightPressed && !rightPressing) {
                 robot.RightInTake.setPosition(0.5);
                 rightPressed = true;
                 rightPressing = true;
-            } else if (rightIntake && rightPressed && !rightPressing) {
+            } else if (rightIntake > 0.1 && rightPressed && !rightPressing) {
                 robot.RightInTake.setPosition(0.775);
                 rightPressed = false;
                 rightPressing = true;
-            } else if (!rightIntake && rightPressing) {
+            } else if (rightIntake < 0.1 && rightPressing) {
                 rightPressing = false;
-
             }
+
 
             if (airplane) {
                 robot.AirplaneMotor.setPower(1);
@@ -111,12 +160,6 @@ public class BestRC extends LinearOpMode {
                 robot.AirplaneServo.setPosition(airplaneDisengaged);
                 robot.AirplaneMotor.setPower(0);
             }
-
-
         }
-
-
     }
-
-
 }

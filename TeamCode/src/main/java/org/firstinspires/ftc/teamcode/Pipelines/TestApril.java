@@ -101,7 +101,7 @@ public class TestApril extends LinearOpMode {
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
-                telemetry.addData("Position X",)
+                telemetry.addData("Position X", tagPositionX);
                 telemetry.update();
             }
         }
