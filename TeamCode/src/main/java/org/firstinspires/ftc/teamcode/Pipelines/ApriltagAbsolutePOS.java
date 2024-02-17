@@ -165,19 +165,37 @@ public class ApriltagAbsolutePOS extends LinearOpMode {
 
                 //WORKS
                 // Hardcoded values for angle A, angle B,of side a
-                double angleA = detection.ftcPose.yaw + 90; // Angle A in degrees
-                double angleB = 90 - detection.ftcPose.bearing; // Angle B in degrees
-                double sideA = detection.ftcPose.range;   // Length of side a
+//                double angleA = detection.ftcPose.yaw + 90; // Angle A in degrees
+//                double angleB = 90 - detection.ftcPose.bearing; // Angle B in degrees
+//                double sideA = detection.ftcPose.range;   // Length of side a
+//
+//                // Calculating the measure of angle C
+//                double angleC = 180 - angleA - angleB;
+//
+//                // Calculate the length of side b
+//                double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA));
+//
+//                // Calculate the length of side c
+//                double sideC = (sideA * Math.sin(Math.toRadians(angleC))) / Math.sin(Math.toRadians(angleA));
+                //WORKS
 
-                // Calculating the measure of angle C
+                double angleA = detection.ftcPose.yaw + 90;
+                double angleB = 90 - detection.ftcPose.bearing;
+                double sideA = detection.ftcPose.range;
+
                 double angleC = 180 - angleA - angleB;
 
-                // Calculate the length of side b
                 double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA));
 
-                // Calculate the length of side c
-                double sideC = (sideA * Math.sin(Math.toRadians(angleC))) / Math.sin(Math.toRadians(angleA));
-                //WORKS
+                double sideC = (sideA * Math.sin(Math.toRadians(angleC)))/ Math.sin(Math.toRadians(angleA));
+
+                double t2AngleA = 180 - angleA;
+
+                double t2AngleB = 90;
+
+                double t2AngleC = 180 - t2AngleA - t2AngleB;
+
+                double t2SideB = (sideC * Math.sin(Math.toRadians(t2AngleB))) / Math.sin(Math.toRadians(t2AngleC));
 
 
                 telemetry.addLine(String.valueOf(sideC)); //X in relation to apriltag
