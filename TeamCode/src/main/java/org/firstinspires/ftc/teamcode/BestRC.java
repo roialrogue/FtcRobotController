@@ -45,13 +45,13 @@ public class BestRC extends LinearOpMode {
             double airplaneEngaged = 0.12;
 
 
-            if (belts > 0.1) {
+/*            if (belts > 0.1) {
                 robot.BeltMotor.setPower(1);
             } else if (belts < -0.1) {
                 robot.BeltMotor.setPower(-1);
             } else {
                 robot.BeltMotor.setPower(0);
-            }
+            }*/
 
 
             if (hangArm > 0.1) {
