@@ -22,23 +22,21 @@ public class TestApril extends LinearOpMode {
     public static final double APRILTAG_BACKDROP_X = 60.25;
     public static final double APRILTAG_AUDIENCE_WALL_X = -70.25;
     public static final Pose2d[] APRILTAG_POSES = new Pose2d[] {
-            new Pose2d(APRILTAG_BACKDROP_X, 41.41, 90.0),        // TagId 1
-            new Pose2d(APRILTAG_BACKDROP_X, 35.41, 90.0),        // TagId 2
-            new Pose2d(APRILTAG_BACKDROP_X, 29.41, 90.0),        // TagId 3
-            new Pose2d(APRILTAG_BACKDROP_X, -29.41, 90.0),       // TagId 4
-            new Pose2d(APRILTAG_BACKDROP_X, -35.41, 90.0),       // TagId 5
-            new Pose2d(APRILTAG_BACKDROP_X, -41.41, 90.0),       // TagId 6
-            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -40.63, -90.0), // TagId 7
-            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -35.13, -90.0), // TagId 8
-            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 35.13, -90.0),  // TagId 9
-            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 40.63, -90.0)   // TagId 10
+            new Pose2d(APRILTAG_BACKDROP_X, 41.41, 0.0),        // TagId 1
+            new Pose2d(APRILTAG_BACKDROP_X, 35.41, 0.0),        // TagId 2
+            new Pose2d(APRILTAG_BACKDROP_X, 29.41, 0.0),        // TagId 3
+            new Pose2d(APRILTAG_BACKDROP_X, -29.41, 0.0),       // TagId 4
+            new Pose2d(APRILTAG_BACKDROP_X, -35.41, 0.0),       // TagId 5
+            new Pose2d(APRILTAG_BACKDROP_X, -41.41, 0.0),       // TagId 6
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -40.63, 180.0),// TagId 7
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, -35.13, 180.0),// TagId 8
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 35.13, 180.0), // TagId 9
+            new Pose2d(APRILTAG_AUDIENCE_WALL_X, 40.63, 180.0)  // TagId 10
     };
 
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        //int[] portalsList = VisionPortal.makeMultiPortalView(2,VisionPortal.MultiPortalLayout.HORIZONTAL);
 
         AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
@@ -52,37 +50,29 @@ public class TestApril extends LinearOpMode {
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480)) //bigger the resolution the further it can see but impact performance
-//                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-//                .enableCameraMonitoring(Ture)
-//                .setCameraMonitorViewId(portalsList[1]) // 2 for second Camera
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG) //?
                 .build();
-
-        //visionPortal.getCameraState();
 
         while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
         }
 
-//        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
-//        exposure.setMode(ExposureControl.Mode.Manual);
-//        exposure.setExposure(15, TimeUnit.MILLISECONDS);
+        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class)); //?
+        exposure.setMode(ExposureControl.Mode.Manual);
+        exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
-//        GainControl gain = visionPortal.getCameraControl(GainControl.class);
-//        gain.setGain(255);
+        GainControl gain = visionPortal.getCameraControl(GainControl.class); //?
+        gain.setGain(255);
 
 
-//        tagProcessor.setDecimation(3);
+        tagProcessor.setDecimation(3); //?
         waitForStart();
-
-        double testy = 0;
-        double testx = 0;
-        double testAngle = 0;
 
         while (!isStopRequested() && opModeIsActive()) {
             desiredTag = null;
             List<AprilTagDetection> tagDetections = tagProcessor.getDetections();
-            telemetry.addData("#",tagDetections.size());
+            telemetry.addData("#", tagDetections.size());
             for (AprilTagDetection desiredTag : tagDetections) {
-                if (desiredTag.metadata == null)continue;
+                if (desiredTag.metadata == null) continue;
                 Pose2d aprilTagPose = APRILTAG_POSES[desiredTag.id - 1];
 
                 double angleA = desiredTag.ftcPose.yaw + 90;
@@ -91,7 +81,7 @@ public class TestApril extends LinearOpMode {
 
                 double angleC = 180 - angleA - angleB;
                 double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA));
-                double sideC = (sideA * Math.sin(Math.toRadians(angleC)))/ Math.sin(Math.toRadians(angleA));
+                double sideC = (sideA * Math.sin(Math.toRadians(angleC))) / Math.sin(Math.toRadians(angleA));
 
                 double t2AngleA = 180 - angleA;
                 double t2AngleB = 90;
@@ -105,25 +95,15 @@ public class TestApril extends LinearOpMode {
 
                 //double fieldX = aprilTagPose.getX() - robotYPosition;
 
-                telemetry.addData("Robot Y",robotYPosition);
-                telemetry.addData("Robot X",robotXPosition);
-                telemetry.addData("Robot Heading",robotHeadingDegree);
+                telemetry.addData("Robot Y", robotYPosition);
+                telemetry.addData("Robot X", robotXPosition);
+                telemetry.addData("Robot Heading", robotHeadingDegree);
 
                 double tagPositionX = desiredTag.metadata.fieldPosition.get(0);
                 double tagPositionY = desiredTag.metadata.fieldPosition.get(1);
-
-           telemetry.update();
+                telemetry.addData("Position X",)
+                telemetry.update();
+            }
         }
-
-        Pose2d RedP1 = new Pose2d(testx, testy, Math.toRadians(0));
-        drive.setPoseEstimate(RedP1);
-
-        Trajectory TestAuto = drive.trajectoryBuilder(RedP1)
-        .lineToLinearHeading(new Pose2d(38, 38, Math.toRadians(0)))
-                .build();
-
-
-
-    }
     }
 }
