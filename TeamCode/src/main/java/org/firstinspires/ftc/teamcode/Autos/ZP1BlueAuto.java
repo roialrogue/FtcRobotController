@@ -30,7 +30,7 @@ public class ZP1BlueAuto extends LinearOpMode {
     boolean cycling = true;
     int waitTime = 0;
 
-    enum EditingMode { None, WaitTime, Cycling, CyclingNum2, };
+    enum EditingMode { None, WaitTime, Cycling, CyclingNum2, ParkingInside};
 
     public void runOpMode() {
         robot.init(hardwareMap);
@@ -53,11 +53,12 @@ public class ZP1BlueAuto extends LinearOpMode {
                     case None: editingMode = EditingMode.WaitTime; break;
                     case WaitTime: editingMode = EditingMode.Cycling; break;
                     case Cycling: editingMode = EditingMode.CyclingNum2; break;
-                    case CyclingNum2: editingMode = EditingMode.None; break;
+                    case CyclingNum2: editingMode = EditingMode.ParkingInside; break;
+                    case ParkingInside: editingMode = EditingMode.None; break;
                 }
             }
 
-            switch( editingMode ) {
+            switch(editingMode) {
                 case None: break;
                 case WaitTime:
                     if (myGamepad.isRightBumperPressed()) {
@@ -73,6 +74,7 @@ public class ZP1BlueAuto extends LinearOpMode {
                     } else if (myGamepad.isLeftBumperPressed()) {
                         cycling = false;
                     }
+                    break;
 
                 case CyclingNum2:
                     if (myGamepad.isRightBumperPressed()) {
@@ -80,25 +82,26 @@ public class ZP1BlueAuto extends LinearOpMode {
                     } else if (myGamepad.isLeftBumperPressed()) {
                         cyclingNum2 = false;
                     }
-            }
-            if (myGamepad.isAPressed()) {
-                if (myGamepad.isRightBumperPressed()) {
-                    parkingInside = true;
-                } else if (myGamepad.isLeftBumperPressed()) {
-                    parkingInside = false;
-                }
-            }
+                    break;
 
-            telemetry.addData("Time the robot is waiting", waitTime);
-            telemetry.addData("Cycling", cycling);
-            telemetry.addData("We are cycling twice", cyclingNum2);
-            telemetry.addData("Parking on the inside", parkingInside);
-            telemetry.update();
+                case ParkingInside:
+                    if (myGamepad.isRightBumperPressed()) {
+                        parkingInside = true;
+                    } else if (myGamepad.isLeftBumperPressed()) {
+                        parkingInside = false;
+                    }
+                    break;
 
-            if (myGamepad.isleftstickbuttonPressed()) {
-                editingConfig = false;
+                    telemetry.addData("Time the robot is waiting", waitTime);
+                    telemetry.addData("Cycling", cycling);
+                    telemetry.addData("We are cycling twice", cyclingNum2);
+                    telemetry.addData("Parking on the inside", parkingInside);
+                    telemetry.update();
+
+                    if (myGamepad.isleftstickbuttonPressed()) {
+                        editingConfig = false;
+                    }
             }
-        }
 
         telemetry.addData("Ready","Editing auto is done");
         telemetry.update();
