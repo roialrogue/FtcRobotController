@@ -59,7 +59,8 @@ public class ZP1BlueAuto extends LinearOpMode {
             }
 
             switch(editingMode) {
-                case None: break;
+                case None:
+                    break;
                 case WaitTime:
                     if (myGamepad.isRightBumperPressed()) {
                         waitTime = waitTime + 500;
@@ -91,16 +92,16 @@ public class ZP1BlueAuto extends LinearOpMode {
                         parkingInside = false;
                     }
                     break;
+            }
+                telemetry.addData("Time the robot is waiting", waitTime);
+                telemetry.addData("Cycling", cycling);
+                telemetry.addData("We are cycling twice", cyclingNum2);
+                telemetry.addData("Parking on the inside", parkingInside);
+                telemetry.update();
 
-                    telemetry.addData("Time the robot is waiting", waitTime);
-                    telemetry.addData("Cycling", cycling);
-                    telemetry.addData("We are cycling twice", cyclingNum2);
-                    telemetry.addData("Parking on the inside", parkingInside);
-                    telemetry.update();
-
-                    if (myGamepad.isleftstickbuttonPressed()) {
-                        editingConfig = false;
-                    }
+                if (myGamepad.isleftstickbuttonPressed()) {
+                    editingConfig = false;
+                }
             }
 
         telemetry.addData("Ready","Editing auto is done");
@@ -112,14 +113,12 @@ public class ZP1BlueAuto extends LinearOpMode {
         Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
         drive.setPoseEstimate(BlueP1);
 
-        Pose2d poseEstimate = drive.getLocalizer().getPoseEstimate();
-
         waitForStart();
         webCam.stopStreaming();
         sleep(waitTime);
 
         if (GPTCamera.rightSide) {
-
+            //on the right side
             if (cycling) {
                 if(cyclingNum2) {
 
@@ -130,7 +129,7 @@ public class ZP1BlueAuto extends LinearOpMode {
 
             }
         } else if(GPTCamera.middleSide) {
-
+            //on the middle side
             if (cycling) {
                 if(cyclingNum2) {
 
@@ -141,8 +140,7 @@ public class ZP1BlueAuto extends LinearOpMode {
 
             }
         } else if(GPTCamera.leftSide) {
-
-
+            //on the left side
             if (cycling) {
                 if(cyclingNum2) {
 
