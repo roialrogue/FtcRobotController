@@ -16,8 +16,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Test Auto Camera")
-public class TestApril extends LinearOpMode {
+@Autonomous(name = "April Tag Test Auto")
+public class aprilTagAuto extends LinearOpMode {
     private AprilTagDetection desiredTag = null;
     public static final double APRILTAG_BACKDROP_X = 60.25;
     public static final double APRILTAG_AUDIENCE_WALL_X = -70.25;
@@ -39,10 +39,6 @@ public class TestApril extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
-                .setDrawAxes(true)
-                .setDrawCubeProjection(true)
-                .setDrawTagID(true)
-                .setDrawTagOutline(true)
                 .setLensIntrinsics(814.353,814.353,339.689,224.275)
                 .build();
 
@@ -50,19 +46,20 @@ public class TestApril extends LinearOpMode {
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .build();
 
         while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
         }
 
-        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class)); //?
+        ExposureControl exposure = visionPortal.getCameraControl((ExposureControl.class));
         exposure.setMode(ExposureControl.Mode.Manual);
         exposure.setExposure(15, TimeUnit.MILLISECONDS);
 
-        GainControl gain = visionPortal.getCameraControl(GainControl.class); //?
+        GainControl gain = visionPortal.getCameraControl(GainControl.class);
         gain.setGain(255);
 
-        tagProcessor.setDecimation(3); //?
+        tagProcessor.setDecimation(3);
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
@@ -78,29 +75,23 @@ public class TestApril extends LinearOpMode {
                 double sideA = desiredTag.ftcPose.range;
 
                 double angleC = 180 - angleA - angleB;
-                double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA)); //April tag y RR x
+                double sideB = (sideA * Math.sin(Math.toRadians(angleB))) / Math.sin(Math.toRadians(angleA));
                 double sideC = (sideA * Math.sin(Math.toRadians(angleC))) / Math.sin(Math.toRadians(angleA));
 
                 double t2AngleA = 180 - angleA;
                 double t2AngleB = 90;
                 double t2AngleC = 180 - t2AngleA - t2AngleB;
-                double t2SideB = (sideC * Math.sin(Math.toRadians(t2AngleB))) / Math.sin(Math.toRadians(t2AngleC)); //April tag x RR y
+                double t2SideB = (sideC * Math.sin(Math.toRadians(t2AngleB))) / Math.sin(Math.toRadians(t2AngleC));
 
-                double robotXPosition = sideB;
-                double robotYPosition = t2SideB;
+                double fieldX = aprilTagPose.getX() - angleC;
+                double fieldY = aprilTagPose.getY() - t2SideB;
+                double robotHeadingDegree = desiredTag.ftcPose.yaw;
 
-                double fieldX = aprilTagPose.getX() - robotXPosition;
-                double fieldY = aprilTagPose.getY() - robotYPosition;
-                double robotHeadingDegree = aprilTagPose.getHeading() + desiredTag.ftcPose.yaw;
-
-                telemetry.addData("Robot Y", robotYPosition);
-                telemetry.addData("Robot X", robotXPosition);
+                telemetry.addData("Robot Y", fieldX);
+                telemetry.addData("Robot X", fieldY);
                 telemetry.addData("Robot Heading", robotHeadingDegree);
 
-                telemetry.addData("robot x", sideB);
-                telemetry.addData("robot y", t2SideB);
-                telemetry.addData("robot Heading", robotHeadingDegree);
-                telemetry.update();
+                new Pose2d(fieldX,fieldY,Math.toRadians(robotHeadingDegree));
             }
         }
     }

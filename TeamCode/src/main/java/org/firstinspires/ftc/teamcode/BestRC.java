@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class BestRC extends LinearOpMode {
 
     Hardware robot = Hardware.getInstance();
+
     public void runOpMode() {
 
         robot.init(hardwareMap);
@@ -24,19 +25,21 @@ public class BestRC extends LinearOpMode {
         if (robot.leftRearWheel != null) {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+        double airplaneDisengaged = 0.3;
+        double airplaneEngaged = 0.20;
 
         robot.RightInTake.setPosition(0.5);
         robot.LeftInTake.setPosition(0.9);
+        robot.AirplaneServo.setPosition(airplaneDisengaged);
 
         waitForStart();
-
+        boolean slowDrive = gamepad1.left_bumper;
 
         while (opModeIsActive()) {
 
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
-            boolean slowDrive = gamepad1.left_bumper;
 
             double belts = gamepad2.left_stick_y;
             boolean beltSlowDrive = gamepad2.left_bumper;
@@ -46,10 +49,6 @@ public class BestRC extends LinearOpMode {
             boolean airplane = gamepad2.y;
             double hangArm = -gamepad2.right_stick_y;
             boolean flip = gamepad2.a;
-
-            double airplaneDisengaged = 0.3;
-            double airplaneEngaged = 0.12;
-
 
             double speed;
             if (slowDrive) {
@@ -103,7 +102,7 @@ public class BestRC extends LinearOpMode {
             if (robot.BeltMotor.isBusy()) {
                 if (Ticks <= 500) {
                     minOrMax = 0.66;
-                } else if (Ticks <= 250){
+                } else if (Ticks <= 250) {
                     minOrMax = 0.33;
                 } else if (Ticks <= 100) {
                     minOrMax = 0.1;
@@ -151,23 +150,15 @@ public class BestRC extends LinearOpMode {
                 rightPressing = false;
             }
 
-
             if (airplane) {
-                robot.AirplaneMotor.setPower(1);
+                robot.AirplaneMotor.setPower(-1);
                 resetRuntime();
-                    while (getRuntime() < 1) {
-                     robot.AirplaneServo.setPosition(airplaneDisengaged);
-                    }
-                resetRuntime();
+                while(getRuntime() < .5) { }
                 robot.AirplaneServo.setPosition(airplaneEngaged);
-                while (getRuntime() < 1) {
-                    robot.AirplaneServo.setPosition(airplaneEngaged);
-                }
-                robot.AirplaneMotor.setPower(0);
-            } else {
-                robot.AirplaneServo.setPosition(airplaneDisengaged);
+                while(getRuntime() < 1) { }
                 robot.AirplaneMotor.setPower(0);
             }
+
         }
     }
 }
