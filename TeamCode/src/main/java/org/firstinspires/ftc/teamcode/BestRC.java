@@ -25,10 +25,11 @@ public class BestRC extends LinearOpMode {
             robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        waitForStart();
-
         robot.RightInTake.setPosition(0.5);
         robot.LeftInTake.setPosition(0.9);
+
+        waitForStart();
+
 
         while (opModeIsActive()) {
 
@@ -38,6 +39,7 @@ public class BestRC extends LinearOpMode {
             boolean slowDrive = gamepad1.left_bumper;
 
             double belts = gamepad2.left_stick_y;
+            boolean beltSlowDrive = gamepad2.left_bumper;
             double leftIntake = gamepad2.left_trigger;
             double rightIntake = gamepad2.right_trigger;
             boolean doubleIntake = gamepad2.x;
@@ -80,26 +82,32 @@ public class BestRC extends LinearOpMode {
 
             int Ticks = robot.BeltMotor.getCurrentPosition();
             double minOrMax = 1;
+            double beltSlowDriveSpeed = 1;
 
-            if (robot.BeltMotor.isBusy()) {
-                if (Ticks < 500) {
-                    minOrMax = 0.66;
-                } else if (Ticks < 250){
-                    minOrMax = 0.33;
-                } else if (Ticks < 100) {
-                    minOrMax = 0.1;
-                }
+            if (beltSlowDrive) {
+                beltSlowDriveSpeed = 0.6;
             }
 
             telemetry.addData("Belt Ticks", Ticks);
             telemetry.update();
 
-            if (belts > 0.1) {
-                robot.BeltMotor.setPower(1 * minOrMax);
-            } else if (belts < -0.1) {
-                robot.BeltMotor.setPower(-1 * minOrMax);
+
+            if (belts > 0.1 && Ticks <= 3000) {
+                robot.BeltMotor.setPower(1 * minOrMax * beltSlowDriveSpeed);
+            } else if (belts < -0.1 && Ticks >= 200) {
+                robot.BeltMotor.setPower(-1 * minOrMax * beltSlowDriveSpeed);
             } else {
                 robot.BeltMotor.setPower(0);
+            }
+
+            if (robot.BeltMotor.isBusy()) {
+                if (Ticks <= 500) {
+                    minOrMax = 0.66;
+                } else if (Ticks <= 250){
+                    minOrMax = 0.33;
+                } else if (Ticks <= 100) {
+                    minOrMax = 0.1;
+                }
             }
 
 
