@@ -28,8 +28,22 @@ public class BestRC extends LinearOpMode {
         double airplaneDisengaged = 0.3;
         double airplaneEngaged = 0.20;
 
-        robot.RightInTake.setPosition(0.5);
-        robot.LeftInTake.setPosition(0.9);
+        double rightOpen = 0.18;
+        double rightClosed = 0.48;
+
+        double leftOpen = 0.95;
+        double leftClosed = 0.65;
+
+        double grounded = 0.505;
+        double board = 0.715;
+
+        double flat = 0.72;
+        double invert = 0.118;
+
+        robot.RightInTake.setPosition(rightOpen);
+        robot.LeftInTake.setPosition(leftOpen);
+        robot.ClawLeftRight.setPosition(invert);
+        robot.ClawUpDown.setPosition(grounded);
         robot.AirplaneServo.setPosition(airplaneDisengaged);
 
         waitForStart();
@@ -93,20 +107,26 @@ public class BestRC extends LinearOpMode {
 
             if (belts > 0.1 && Ticks <= 3000) {
                 robot.BeltMotor.setPower(1 * minOrMax * beltSlowDriveSpeed);
-            } else if (belts < -0.1 && Ticks >= 200) {
+            } else if (belts < -0.1) {
                 robot.BeltMotor.setPower(-1 * minOrMax * beltSlowDriveSpeed);
             } else {
                 robot.BeltMotor.setPower(0);
             }
 
             if (robot.BeltMotor.isBusy()) {
-                if (Ticks <= 500) {
-                    minOrMax = 0.66;
-                } else if (Ticks <= 250) {
-                    minOrMax = 0.33;
-                } else if (Ticks <= 100) {
-                    minOrMax = 0.1;
+                if (Ticks <= 100) {
+                    minOrMax = 0.25;
+                } else if (Ticks <= 200) {
+                    minOrMax = 0.5;
+                } else if (Ticks <= 400) {
+                    minOrMax = 0.75;
                 }
+            }
+
+            if (Ticks > 800) {
+                robot.ClawUpDown.setPosition(board);
+            } else {
+                robot.ClawUpDown.setPosition(grounded);
             }
 
 
@@ -126,11 +146,11 @@ public class BestRC extends LinearOpMode {
 
             /*
             if (leftIntake && !leftPressed && !leftPressing) {
-               robot.LeftInTake.setPosition(0.94);
+               robot.LeftInTake.setPosition(leftClosed);
                leftPressed = true;
                leftPressing = true;
             } else if (leftIntake && leftPressed && !leftPressing) {
-                robot.LeftInTake.setPosition(0.7);
+                robot.LeftInTake.setPosition(leftOpen);
                 leftPressed = false;
                 leftPressing = true;
             } else if (!leftIntake && leftPressing) {
@@ -139,11 +159,11 @@ public class BestRC extends LinearOpMode {
             */
 
             if (rightIntake > 0.1 && !rightPressed && !rightPressing) {
-                robot.RightInTake.setPosition(0.5);
+                robot.RightInTake.setPosition(rightClosed);
                 rightPressed = true;
                 rightPressing = true;
             } else if (rightIntake > 0.1 && rightPressed && !rightPressing) {
-                robot.RightInTake.setPosition(0.775);
+                robot.RightInTake.setPosition(rightOpen);
                 rightPressed = false;
                 rightPressing = true;
             } else if (rightIntake < 0.1 && rightPressing) {
