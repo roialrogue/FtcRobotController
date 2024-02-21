@@ -35,14 +35,15 @@ public class BestRC extends LinearOpMode {
         double leftClosed = 0.65;
 
         double grounded = 0.505;
-        double board = 0.715;
+        double board = 0.7;
+        double boardInvert = 0.12;
 
         double flat = 0.72;
-        double invert = 0.118;
+        double invert = 0.1;
 
         robot.RightInTake.setPosition(rightOpen);
         robot.LeftInTake.setPosition(leftOpen);
-        robot.ClawLeftRight.setPosition(invert);
+        robot.ClawLeftRight.setPosition(flat);
         robot.ClawUpDown.setPosition(grounded);
         robot.AirplaneServo.setPosition(airplaneDisengaged);
 
