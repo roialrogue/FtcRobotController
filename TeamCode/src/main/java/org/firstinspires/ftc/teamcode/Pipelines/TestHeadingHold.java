@@ -91,7 +91,7 @@ public class TestHeadingHold extends LinearOpMode {
                     }
 
                     // Standard teleop control
-                    // Convert gamepad input into desired pose velocity
+                    // Convert gamepad2 input into desired pose velocity
                     driveDirection = new Pose2d(
                             -gamepad1.left_stick_y,
                             -gamepad1.left_stick_x,
@@ -104,7 +104,7 @@ public class TestHeadingHold extends LinearOpMode {
                         currentMode = Mode.NORMAL_CONTROL;
                     }
 
-                    // Create a vector from the gamepad x/y inputs which is the field relative movement
+                    // Create a vector from the gamepad2 x/y inputs which is the field relative movement
                     // Then, rotate that vector by the inverse of that heading for field centric control
                     Vector2d fieldFrameInput = new Vector2d(
                             -gamepad1.left_stick_y,

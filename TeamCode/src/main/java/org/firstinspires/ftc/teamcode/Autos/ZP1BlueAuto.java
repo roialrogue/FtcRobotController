@@ -35,7 +35,7 @@ public class ZP1BlueAuto extends LinearOpMode {
     public void runOpMode() {
         robot.init(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        myGamePad myGamepad = new myGamePad( gamepad1) ;
+        myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         GPTCamera detector = new GPTCamera(false, telemetry);
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);

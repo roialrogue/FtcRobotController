@@ -39,8 +39,7 @@ public class Hardware {
     //"ES2"
     public Servo AirplaneServo;
     //"ES4"
-    public static double maxSpeed = 0.8;
-
+    public static double maxSpeed = 1;
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
