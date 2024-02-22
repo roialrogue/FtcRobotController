@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.teamcode.Pipelines.myGamePad;
 
 @TeleOp(name = "BestTeleOp")
@@ -14,6 +13,8 @@ public class BestRC extends LinearOpMode {
 
     boolean rightIsClosed = false;
     boolean pressingRB = false;
+
+    boolean leftBumperPressed = false;
 
     boolean leftIsClosed = false;
     boolean pressingLB = false;
@@ -156,22 +157,46 @@ public class BestRC extends LinearOpMode {
                 robot.HangMotor.setPower(0);
             }
 
-
-            if (gamepad2.left_bumper && !pressingLB) {
-                if(!leftIsClosed) {
+            if (gamepad2.left_bumper) {
+                if (!leftBumperPressed) {
                     robot.LeftInTake.setPosition(leftClosed);
-                    leftIsClosed = true;
                 }
-                 else {
+                leftBumperPressed = true;
                     robot.LeftInTake.setPosition(leftOpen);
-                    leftIsClosed = false;
-                }
-                pressingLB = true;
+            } else {
+                leftBumperPressed = false;
+                    robot.LeftInTake.setPosition(leftOpen);
             }
 
-            else {
-                pressingLB = false;
-            }
+//            if (gamepad2.left_bumper && !leftBumperPressed) {
+//                leftBumperPressed = true;
+//                robot.LeftInTake.setPosition(leftClosed);
+//            } else {
+//                if (!gamepad2.left_bumper) {
+//                    leftBumperPressed = false;
+//                    robot.LeftInTake.setPosition(leftOpen);
+//                }
+//            }
+
+
+//            } else if (!myGamepad.isLeftBumperPressed()) {
+//                robot.LeftInTake.setPosition(leftOpen);
+//            }
+//            if (gamepad2.left_bumper && !pressingLB) {
+//                if(!leftIsClosed) {
+//                    robot.LeftInTake.setPosition(leftClosed);
+//                    leftIsClosed = true;
+//                }
+//                 else {
+//                    robot.LeftInTake.setPosition(leftOpen);
+//                    leftIsClosed = false;
+//                }
+//                pressingLB = true;
+//            }
+//
+//            else {
+//                pressingLB = false;
+//            }
 
             if(gamepad2.right_bumper && !pressingRB) {
                 if (!rightIsClosed)
