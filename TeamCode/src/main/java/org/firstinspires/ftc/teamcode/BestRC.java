@@ -33,14 +33,14 @@ public class BestRC extends LinearOpMode {
         double rightClosed = 0.48;
 
         double leftOpen = 0.95;
-        double leftClosed = 0.65;
+        double leftClosed = 0.68;
 
-        double grounded = 0.505;
+        double grounded = 0.52;
         double board = 0.7;
         double boardInvert = 0.12;
 
-        double flat = 0.72;
-        double invert = 0.0;
+        double flat = 0.725 ;
+        double invert = 0.05;
 
         robot.RightInTake.setPosition(rightOpen);
         robot.LeftInTake.setPosition(leftOpen);
@@ -100,36 +100,33 @@ public class BestRC extends LinearOpMode {
 
 
             double Ticks = -robot.BeltMotor.getCurrentPosition();
-            double minOrMax = 1;
             double beltSlowDriveSpeed = 1;
-            double maxTicks = 537.6 * 5; //2850
+            double maxTicks = 537.6 * 5.2; //2850
 
 
             telemetry.addData("Belt Ticks", Ticks);
             telemetry.update();
 
-            if (robot.BeltMotor.isBusy()) {
-                if (Ticks < 100) {
-                    minOrMax = 0.1;
-                } else if (Ticks < 200) {
-                    minOrMax = 0.33;
-                } else if (Ticks < 400) {
-                    minOrMax = 0.67;
-                } else if (2400 < Ticks && Ticks < 2600) {
-                    minOrMax = 0.33;
-                } else if (2600 < Ticks && Ticks < maxTicks) {
-                    minOrMax = 0.1;
-                } else if (Ticks > maxTicks) {
-                    minOrMax = 0.01;
-                }
-            }
-
-
-
             if (gamepad2.left_stick_y > 0.1) {
-                robot.BeltMotor.setPower(1 * minOrMax);
-            } else if (gamepad2.left_stick_y < -0.1) {
-                robot.BeltMotor.setPower(-1 * minOrMax);
+                if (400 < Ticks && Ticks < 2400){
+                    robot.BeltMotor.setPower(1);
+                } else if (2400 < Ticks && Ticks < 2600) {
+                    robot.BeltMotor.setPower(0.4);
+                } else if (2600 < Ticks && Ticks < maxTicks) {
+                    robot.BeltMotor.setPower(0.1);
+                } else if (Ticks > maxTicks) {
+                    robot.BeltMotor.setPower(0.01);
+                }
+            } else if (gamepad2.left_stick_y < -0.1){
+                if (Ticks < 150) {
+                    robot.BeltMotor.setPower(-0.15);
+                } else if (Ticks < 250) {
+                    robot.BeltMotor.setPower(-0.4);
+                } else if (Ticks < 400) {
+                    robot.BeltMotor.setPower(-0.7);
+                } else if (400 < Ticks && Ticks < 2400){
+                    robot.BeltMotor.setPower(-1);
+                }
             } else {
                 robot.BeltMotor.setPower(0);
             }
@@ -137,12 +134,12 @@ public class BestRC extends LinearOpMode {
             if (Ticks <= 1200) {
                 robot.ClawUpDown.setPosition(grounded);
                 robot.ClawLeftRight.setPosition(flat);
-            } else if (Ticks > 1600) {
+            } else if (Ticks > 1800 && pressedX) {
                 robot.ClawLeftRight.setPosition(invert);
                 robot.ClawUpDown.setPosition(boardInvert);
             }
 
-            if(gamepad2.x){
+            if(flip){
                 if(pressedX){
                     robot.ClawUpDown.setPosition((Math.round(robot.ClawUpDown.getPosition() * 1000) / 1000.0 == Math.round(grounded * 1000) / 1000.0) ? boardInvert : grounded);
                     robot.ClawLeftRight.setPosition((Math.round(robot.ClawLeftRight.getPosition() * 1000) / 1000.0 == Math.round(flat * 1000) / 1000.0) ? invert : flat);
