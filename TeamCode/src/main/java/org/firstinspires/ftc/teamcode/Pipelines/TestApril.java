@@ -50,7 +50,7 @@ public class TestApril extends LinearOpMode {
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG) //?
+//                .setStreamFormat(VisionPortal.StreamFormat.MJPEG) //?
                 .build();
 
         while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
