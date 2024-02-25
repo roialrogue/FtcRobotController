@@ -68,8 +68,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
     }
 
-    public static double X_MULTIPLIER = .99469; // Multiplier in the X direction
-    public static double Y_MULTIPLIER = 1.0154; // Multiplier in the Y direction
+    public static double X_MULTIPLIER = .99740173; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = .97150788; // Multiplier in the Y direction
     @NonNull
     @Override
     public List<Double> getWheelPositions() {

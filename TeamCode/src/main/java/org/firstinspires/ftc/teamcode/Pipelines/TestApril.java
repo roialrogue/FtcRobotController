@@ -101,6 +101,9 @@ public class TestApril extends LinearOpMode {
                 telemetry.addData("robot y", t2SideB);
                 telemetry.addData("robot Heading", robotHeadingDegree);
                 telemetry.update();
+
+                Pose2d RedP2 = new Pose2d(fieldX, fieldY, Math.toRadians(robotHeadingDegree));
+                drive.setPoseEstimate(RedP2);
             }
         }
     }
