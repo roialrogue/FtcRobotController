@@ -40,11 +40,11 @@ public class GPTCamera extends OpenCvPipeline {
 
         Scalar lowVal, highVal;
         if(isBlue){
-            lowVal = new Scalar(90, 150, 0);
-            highVal = new Scalar(140, 255, 255);
+            lowVal = new Scalar(160, 100, 100);
+            highVal = new Scalar(180, 255, 255);
         }else{
-            lowVal = new Scalar(0, 100, 100);
-            highVal = new Scalar(20, 255, 255);
+            lowVal = new Scalar(110, 150, 0);
+            highVal = new Scalar(130, 255, 255);
         }
         Core.inRange(workingMatrix, lowVal, highVal, workingMatrix);
 

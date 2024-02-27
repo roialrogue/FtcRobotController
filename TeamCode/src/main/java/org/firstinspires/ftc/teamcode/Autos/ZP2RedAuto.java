@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,13 +12,12 @@ import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.Pipelines.PoseStorage;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Pipelines.myGamePad;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Position 1 Blue Auto")
-public class ZP1BlueAuto extends LinearOpMode {
+@Autonomous(name = "Position 2 Red Auto")
+public class ZP2RedAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -30,14 +28,14 @@ public class ZP1BlueAuto extends LinearOpMode {
     boolean cycling = true;
     int waitTime = 0;
 
-    enum EditingMode { None, WaitTime, Cycling, ParkingInside}
+    enum EditingMode {None, WaitTime, Cycling, ParkingInside}
 
     public void runOpMode() {
         robot.init(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        GPTCamera detector = new GPTCamera(false, telemetry);
+        GPTCamera detector = new GPTCamera(true, telemetry);
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webCam.openCameraDevice();
         FtcDashboard.getInstance().startCameraStream(webCam, 0);
@@ -57,7 +55,7 @@ public class ZP1BlueAuto extends LinearOpMode {
                 }
             }
 
-            switch(editingMode) {
+            switch (editingMode) {
                 case None:
                     break;
                 case WaitTime:
@@ -84,24 +82,24 @@ public class ZP1BlueAuto extends LinearOpMode {
                     }
                     break;
             }
-                telemetry.addData("Time the robot is waiting", waitTime);
-                telemetry.addData("Cycling", cycling);
-                telemetry.addData("Parking on the inside", parkingInside);
-                telemetry.update();
+            telemetry.addData("Time the robot is waiting", waitTime);
+            telemetry.addData("Cycling", cycling);
+            telemetry.addData("Parking on the inside", parkingInside);
+            telemetry.update();
 
-                if (myGamepad.isleftstickbuttonPressed()) {
-                    editingConfig = false;
-                }
+            if (myGamepad.isleftstickbuttonPressed()) {
+                editingConfig = false;
             }
+        }
 
-        telemetry.addData("Ready","Editing auto is done");
+        telemetry.addData("Ready", "Editing auto is done");
         telemetry.update();
 
         robot.closeRight();
         robot.closeLeft();
         robot.wristDown();
         robot.rotateDown();
-
+        //far left side
         Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
         drive.setPoseEstimate(BlueP1);
 
@@ -111,29 +109,20 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         if (GPTCamera.rightSide) {
             //on the right side
-
-
             if (cycling) {
 
             }
-
-            TrajectorySequence BlueP1MLT1 = drive.trajectorySequenceBuilder(BlueP1)
-                    .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
-                    .build();
-
-        } else if(GPTCamera.middleSide) {
+        } else if (GPTCamera.middleSide) {
             //on the middle side
             if (cycling) {
 
             }
-
-        } else if(GPTCamera.leftSide) {
+        } else if (GPTCamera.leftSide) {
             //on the left side
             if (cycling) {
 
             }
-
-        } else if(GPTCamera.nonSide) {
+        } else if (GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");
         }
 
@@ -141,8 +130,8 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         } else {
 
-            }
+        }
 
         PoseStorage.currentPose = drive.getPoseEstimate();
-        }
     }
+}

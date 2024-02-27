@@ -39,7 +39,6 @@ public class Hardware {
     //"ES2"
     public Servo AirplaneServo;
     //"ES4"
-    public static double maxSpeed = 1;
     public BNO055IMU gyro;
 
     public RevColorSensorV3 color;
@@ -110,23 +109,27 @@ public class Hardware {
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
 
 
-    }
-
-    public void setPower(double fr, double br, double fl, double bl) {
-        if (rightForwardWheel != null) {
-            rightForwardWheel.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
-        }
-        if (rightRearWheel != null) {
-            rightRearWheel.setPower(Range.clip(br, -maxSpeed, maxSpeed));
-        }
-        if (leftForwardWheel != null) {
-            leftForwardWheel.setPower(Range.clip(fl, -maxSpeed, maxSpeed));
-        }
-        if (leftRearWheel != null) {
-            leftRearWheel.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
-        }
-
 
     }
+
+    public void closeRight() {RightInTake.setPosition(.50);}
+    public void closeLeft() {LeftInTake.setPosition(.70);}
+    public void openRight() {RightInTake.setPosition(.18);}
+    public void openLeft() {LeftInTake.setPosition(.95);}
+    public void wristUp() {ClawUpDown.setPosition(.7);}
+    public void wristDown() {ClawUpDown.setPosition(.52);}
+    public void rotateUp() {ClawLeftRight.setPosition(.05);}
+    public void rotateDown() {ClawLeftRight.setPosition(.725);}
+
+    public  void slidesTo(int slidePos, double power){
+        BeltMotor.setTargetPosition(slidePos);
+        BeltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BeltMotor.setPower(power);
+    }
+    public void slidesTo(int slidePos) {
+        slidesTo(slidePos,1.0);
+    }
+
+
 }
 

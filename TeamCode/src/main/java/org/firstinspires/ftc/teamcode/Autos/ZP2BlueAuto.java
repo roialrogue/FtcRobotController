@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,13 +12,12 @@ import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.Pipelines.PoseStorage;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Pipelines.myGamePad;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Position 1 Blue Auto")
-public class ZP1BlueAuto extends LinearOpMode {
+@Autonomous(name = "Position 2 Blue Auto")
+public class ZP2BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -84,15 +82,15 @@ public class ZP1BlueAuto extends LinearOpMode {
                     }
                     break;
             }
-                telemetry.addData("Time the robot is waiting", waitTime);
-                telemetry.addData("Cycling", cycling);
-                telemetry.addData("Parking on the inside", parkingInside);
-                telemetry.update();
+            telemetry.addData("Time the robot is waiting", waitTime);
+            telemetry.addData("Cycling", cycling);
+            telemetry.addData("Parking on the inside", parkingInside);
+            telemetry.update();
 
-                if (myGamepad.isleftstickbuttonPressed()) {
-                    editingConfig = false;
-                }
+            if (myGamepad.isleftstickbuttonPressed()) {
+                editingConfig = false;
             }
+        }
 
         telemetry.addData("Ready","Editing auto is done");
         telemetry.update();
@@ -111,28 +109,19 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         if (GPTCamera.rightSide) {
             //on the right side
-
-
             if (cycling) {
 
             }
-
-            TrajectorySequence BlueP1MLT1 = drive.trajectorySequenceBuilder(BlueP1)
-                    .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
-                    .build();
-
         } else if(GPTCamera.middleSide) {
             //on the middle side
             if (cycling) {
 
             }
-
         } else if(GPTCamera.leftSide) {
             //on the left side
             if (cycling) {
 
             }
-
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");
         }
@@ -141,8 +130,8 @@ public class ZP1BlueAuto extends LinearOpMode {
 
         } else {
 
-            }
+        }
 
         PoseStorage.currentPose = drive.getPoseEstimate();
-        }
     }
+}
