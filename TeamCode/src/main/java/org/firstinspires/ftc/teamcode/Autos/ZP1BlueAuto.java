@@ -112,36 +112,132 @@ public class ZP1BlueAuto extends LinearOpMode {
         if (GPTCamera.rightSide) {
             //on the right side
 
+            Trajectory BlueP1MRT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(11, 32, Math.toRadians(180)))
+                    .build();
+
+            Trajectory BlueP1MRT2 = drive.trajectoryBuilder(BlueP1MRT1.end())
+                    .lineToLinearHeading(new Pose2d(52, 26, Math.toRadians(0)))
+                    .build();
+
+            Trajectory BlueP1MRT3 = drive.trajectoryBuilder(BlueP1MRT2.end())
+                    .back(10)
+                    .build();
+
+            drive.followTrajectory(BlueP1MRT1);
+            robot.openLeft();
+            robot.closeLeft();
+            drive.followTrajectory(BlueP1MRT2);
+            robot.openRight();
+            robot.closeRight();
+            drive.followTrajectory(BlueP1MRT3);
 
             if (cycling) {
 
             }
 
-            TrajectorySequence BlueP1MLT1 = drive.trajectorySequenceBuilder(BlueP1)
-                    .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
-                    .build();
+            if (parkingInside) {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MRT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
+                        .back(10)
+                        .build();
+
+                drive.followTrajectorySequence(BlueParking);
+            } else {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MRT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
+                        .back(10)
+                        .build();
+                drive.followTrajectorySequence(BlueParking);
+            }
 
         } else if(GPTCamera.middleSide) {
             //on the middle side
+
+            Trajectory BlueP1MMT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(16, 34, Math.toRadians(270)))
+                    .build();
+
+            Trajectory BlueP1MMT2 = drive.trajectoryBuilder(BlueP1MMT1.end())
+                    .lineToLinearHeading(new Pose2d(52, 33, Math.toRadians(0) + 1e-6))
+                    .build();
+
+            Trajectory BlueP1MMT3 = drive.trajectoryBuilder(BlueP1MMT2.end())
+                    .back(10)
+                    .build();
+
+            drive.followTrajectory(BlueP1MMT1);
+            robot.openLeft();
+            robot.closeLeft();
+            drive.followTrajectory(BlueP1MMT2);
+            robot.openRight();
+            robot.closeRight();
+            drive.followTrajectory(BlueP1MMT3);
+
             if (cycling) {
 
+            }
+
+            if (parkingInside) {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MMT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
+                        .back(10)
+                        .build();
+
+                drive.followTrajectorySequence(BlueParking);
+            } else {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MMT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
+                        .back(10)
+                        .build();
+                drive.followTrajectorySequence(BlueParking);
             }
 
         } else if(GPTCamera.leftSide) {
             //on the left side
+
+            Trajectory BlueP1MLT1 = drive.trajectoryBuilder(BlueP1)
+                    .lineToLinearHeading(new Pose2d(30, 42, Math.toRadians(225)))
+                    .build();
+
+            Trajectory BlueP1MLT2 = drive.trajectoryBuilder(BlueP1MLT1.end())
+                    .lineToLinearHeading(new Pose2d(52, 40, Math.toRadians(0)+ 1e-6))
+                    .build();
+
+            Trajectory BlueP1MLT3 = drive.trajectoryBuilder(BlueP1MLT2.end())
+                    .back(10)
+                    .build();
+
+            drive.followTrajectory(BlueP1MLT1);
+            robot.openLeft();
+            robot.closeLeft();
+            drive.followTrajectory(BlueP1MLT2);
+            robot.openRight();
+            robot.closeRight();
+            drive.followTrajectory(BlueP1MLT3);
+
             if (cycling) {
 
             }
+            if (parkingInside) {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MLT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
+                        .back(10)
+                        .build();
 
+                drive.followTrajectorySequence(BlueParking);
+            } else {
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MLT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
+                        .back(10)
+                        .build();
+
+                drive.followTrajectorySequence(BlueParking);
+            }
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");
         }
 
-        if (parkingInside) {
-
-        } else {
-
-            }
 
         PoseStorage.currentPose = drive.getPoseEstimate();
         }
