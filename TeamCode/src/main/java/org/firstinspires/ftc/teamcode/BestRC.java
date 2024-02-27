@@ -68,6 +68,7 @@ public class BestRC extends LinearOpMode {
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
             boolean mode = gamepad2.b;
+            boolean flip = gamepad2.x;
 
             double speed = 1;
             if (gamepad1.left_bumper) {
@@ -122,25 +123,19 @@ public class BestRC extends LinearOpMode {
                 robot.BeltMotor.setPower(0);
             }
 
-            if (mode) {
-                if (Ticks <= 1200) {
+            telemetry.addData("?",flip);
+            telemetry.update();
+
+            if (Ticks <= 1200) {
                     robot.ClawUpDown.setPosition(grounded);
                     robot.ClawLeftRight.setPosition(flat);
-                } else if (Ticks > 1800 && pressedX) {
+                } else if (Ticks > 1800 && !flip) {
                     robot.ClawLeftRight.setPosition(invert);
                     robot.ClawUpDown.setPosition(boardInvert);
-                }
-            } else {
-                if (Ticks <= 1200) {
-                    robot.ClawUpDown.setPosition(grounded);
-                    robot.ClawLeftRight.setPosition(flat);
-                } else if (Ticks > 1800 && pressedX) {
-                    robot.ClawLeftRight.setPosition(invert);
-                    robot.ClawUpDown.setPosition(board);
-                }
             }
 
-                if (gamepad2.x) {
+
+                if (flip) {
                     if (pressedX) {
                         robot.ClawUpDown.setPosition((Math.round(robot.ClawUpDown.getPosition() * 1000) / 1000.0 == Math.round(board * 1000) / 1000.0) ? boardInvert : board);
                         robot.ClawLeftRight.setPosition((Math.round(robot.ClawLeftRight.getPosition() * 1000) / 1000.0 == Math.round(flat * 1000) / 1000.0) ? invert : flat);
