@@ -20,7 +20,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "Position 1 Blue Auto")
-public class ZP1BlueAuto extends LinearOpMode {
+public class P1BlueAuto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
