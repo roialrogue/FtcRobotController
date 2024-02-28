@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Pipelines;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -44,7 +45,7 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 
-
+@Disabled
 @TeleOp(name = "ApriltagAbsolutePOS", group = "Concept")
 //@Disabled
 public class ApriltagAbsolutePOS extends LinearOpMode {

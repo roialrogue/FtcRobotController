@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -98,10 +99,13 @@ public class ZP2BlueAuto extends LinearOpMode {
         telemetry.addData("Ready","Editing auto is done");
         telemetry.update();
 
+        robot.BeltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.BeltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
         robot.closeRight();
         robot.closeLeft();
         robot.wristDown();
         robot.rotateDown();
+        robot.slidesTo(50,.3);
 
         Pose2d BlueP2 = new Pose2d(-38, 61, Math.toRadians(270));
         drive.setPoseEstimate(BlueP2);
@@ -120,10 +124,15 @@ public class ZP2BlueAuto extends LinearOpMode {
             TrajectorySequence BlueP2MRT2 = drive.trajectorySequenceBuilder(BlueP2MRT1.end())
                     .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
                     .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
-                    .splineToConstantHeading(new Vector2d(52, 26), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MRT3 = drive.trajectoryBuilder(BlueP2MRT2.end())
+                    .splineToConstantHeading(new Vector2d(52, 26), Math.toRadians(0))
+                    .build();
+
+
+
+            Trajectory BlueP2MRT4 = drive.trajectoryBuilder(BlueP2MRT2.end())
                     .back(10)
                     .build();
 
@@ -140,14 +149,14 @@ public class ZP2BlueAuto extends LinearOpMode {
             }
 
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MRT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MRT4.end())
                         .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(BlueParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MRT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MRT4.end())
                         .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
                         .back(10)
                         .build();

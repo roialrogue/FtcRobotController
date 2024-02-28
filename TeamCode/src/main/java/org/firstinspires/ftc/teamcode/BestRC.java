@@ -97,9 +97,9 @@ public class BestRC extends LinearOpMode {
             robot.leftForwardWheel.setPower(lfm * speed);
             robot.leftRearWheel.setPower(lbm * speed);
 
-            double Ticks = -robot.BeltMotor.getCurrentPosition();
+            double Ticks = robot.BeltMotor.getCurrentPosition();
 
-            if (gamepad2.left_stick_y > 0.1) {
+            if (gamepad2.left_stick_y < -0.1) {
                 if (400 < Ticks && Ticks < 2400) {
                     robot.BeltMotor.setPower(1);
                 } else if (2400 < Ticks && Ticks < 2600) {
@@ -109,7 +109,7 @@ public class BestRC extends LinearOpMode {
                 } else if (Ticks > 2800) {
                     robot.BeltMotor.setPower(0.01);
                 }
-            } else if (gamepad2.left_stick_y < -0.1) {
+            } else if (gamepad2.left_stick_y > 0.1) {
                 if (Ticks < 150) {
                     robot.BeltMotor.setPower(-0.15);
                 } else if (Ticks < 250) {

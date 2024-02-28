@@ -86,6 +86,7 @@ public class Hardware {
 
             BeltMotor = hwMap.get(DcMotor.class, "EM0");
             BeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            BeltMotor.setDirection(DcMotor.Direction.REVERSE);
             BeltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BeltMotor.setPower(0);
 
@@ -112,8 +113,8 @@ public class Hardware {
 
     }
 
-    public void closeRight() {RightInTake.setPosition(.50);}
-    public void closeLeft() {LeftInTake.setPosition(.70);}
+    public void closeRight() {RightInTake.setPosition(.52);}
+    public void closeLeft() {LeftInTake.setPosition(.65);}
     public void openRight() {RightInTake.setPosition(.18);}
     public void openLeft() {LeftInTake.setPosition(.95);}
     public void wristUp() {ClawUpDown.setPosition(.7);}

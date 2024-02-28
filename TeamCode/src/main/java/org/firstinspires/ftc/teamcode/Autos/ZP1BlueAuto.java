@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -97,10 +98,13 @@ public class ZP1BlueAuto extends LinearOpMode {
         telemetry.addData("Ready","Editing auto is done");
         telemetry.update();
 
+        robot.BeltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.BeltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
         robot.closeRight();
         robot.closeLeft();
         robot.wristDown();
         robot.rotateDown();
+        robot.slidesTo(50,.3);
 
         Pose2d BlueP1 = new Pose2d(15, 61, Math.toRadians(270));
         drive.setPoseEstimate(BlueP1);
@@ -117,7 +121,7 @@ public class ZP1BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP1MRT2 = drive.trajectoryBuilder(BlueP1MRT1.end())
-                    .lineToLinearHeading(new Pose2d(52, 26, Math.toRadians(0)))
+                    .lineToLinearHeading(new Pose2d(52, 37, Math.toRadians(0)))
                     .build();
 
             Trajectory BlueP1MRT3 = drive.trajectoryBuilder(BlueP1MRT2.end())
@@ -126,31 +130,39 @@ public class ZP1BlueAuto extends LinearOpMode {
 
             drive.followTrajectory(BlueP1MRT1);
             robot.openLeft();
-            robot.closeLeft();
+            robot.slidesTo(1100);
+            robot.wristUp();
             drive.followTrajectory(BlueP1MRT2);
+            robot.closeLeft();
             robot.openRight();
-            robot.closeRight();
             drive.followTrajectory(BlueP1MRT3);
+            robot.closeRight();
 
             if (cycling) {
 
             }
 
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MRT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MRT1.end())
+                        .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
+                        .back(13)
                         .build();
 
-                drive.followTrajectorySequence(BlueParking);
+                drive.followTrajectorySequence(RedParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MRT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MRT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 57, Math.toRadians(180)))
+                        .back(15)
                         .build();
-                drive.followTrajectorySequence(BlueParking);
+
+                drive.followTrajectorySequence(RedParking);
             }
 
+            robot.closeRight();
+            robot.closeLeft();
+            robot.wristDown();
+            robot.rotateDown();
+            robot.slidesTo(10);
         } else if(GPTCamera.middleSide) {
             //on the middle side
 
@@ -159,7 +171,7 @@ public class ZP1BlueAuto extends LinearOpMode {
                     .build();
 
             Trajectory BlueP1MMT2 = drive.trajectoryBuilder(BlueP1MMT1.end())
-                    .lineToLinearHeading(new Pose2d(52, 33, Math.toRadians(0) + 1e-6))
+                    .lineToLinearHeading(new Pose2d(52, 31, Math.toRadians(0) + 1e-6))
                     .build();
 
             Trajectory BlueP1MMT3 = drive.trajectoryBuilder(BlueP1MMT2.end())
@@ -168,31 +180,39 @@ public class ZP1BlueAuto extends LinearOpMode {
 
             drive.followTrajectory(BlueP1MMT1);
             robot.openLeft();
-            robot.closeLeft();
+            robot.slidesTo(1100);
+            robot.wristUp();
             drive.followTrajectory(BlueP1MMT2);
+            robot.closeLeft();
             robot.openRight();
-            robot.closeRight();
             drive.followTrajectory(BlueP1MMT3);
+            robot.closeRight();
 
             if (cycling) {
 
             }
 
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MMT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MMT1.end())
+                        .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
+                        .back(13)
                         .build();
 
-                drive.followTrajectorySequence(BlueParking);
+                drive.followTrajectorySequence(RedParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MMT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MMT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 57, Math.toRadians(180)))
+                        .back(15)
                         .build();
-                drive.followTrajectorySequence(BlueParking);
+
+                drive.followTrajectorySequence(RedParking);
             }
 
+            robot.closeRight();
+            robot.closeLeft();
+            robot.wristDown();
+            robot.rotateDown();
+            robot.slidesTo(10);
         } else if(GPTCamera.leftSide) {
             //on the left side
 
@@ -210,30 +230,40 @@ public class ZP1BlueAuto extends LinearOpMode {
 
             drive.followTrajectory(BlueP1MLT1);
             robot.openLeft();
-            robot.closeLeft();
+            robot.slidesTo(1100);
+            robot.wristUp();
             drive.followTrajectory(BlueP1MLT2);
+            robot.closeLeft();
             robot.openRight();
-            robot.closeRight();
             drive.followTrajectory(BlueP1MLT3);
+            robot.closeRight();
 
             if (cycling) {
 
             }
+
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MLT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MLT1.end())
+                        .lineToLinearHeading(new Pose2d(48, 10, Math.toRadians(180)))
+                        .back(13)
                         .build();
 
-                drive.followTrajectorySequence(BlueParking);
+                drive.followTrajectorySequence(RedParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP1MLT3.end())
-                        .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
-                        .back(10)
+                TrajectorySequence RedParking = drive.trajectorySequenceBuilder(BlueP1MLT3.end())
+                        .lineToLinearHeading(new Pose2d(48, 57, Math.toRadians(180)))
+                        .back(15)
                         .build();
 
-                drive.followTrajectorySequence(BlueParking);
+                drive.followTrajectorySequence(RedParking);
             }
+
+            robot.closeRight();
+            robot.closeLeft();
+            robot.wristDown();
+            robot.rotateDown();
+            robot.slidesTo(10);
+            while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");
         }
