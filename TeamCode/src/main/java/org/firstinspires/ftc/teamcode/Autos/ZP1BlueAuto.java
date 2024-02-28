@@ -162,7 +162,7 @@ public class ZP1BlueAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
         } else if(GPTCamera.middleSide) {
             //on the middle side
 
@@ -212,7 +212,7 @@ public class ZP1BlueAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
         } else if(GPTCamera.leftSide) {
             //on the left side
 
@@ -262,7 +262,7 @@ public class ZP1BlueAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
             while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");

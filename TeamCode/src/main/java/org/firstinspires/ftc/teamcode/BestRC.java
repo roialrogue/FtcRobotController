@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Autos.ZP1BlueAuto;
 import org.firstinspires.ftc.teamcode.Autos.ZP1RedAuto;
 import org.firstinspires.ftc.teamcode.Pipelines.myGamePad;
-
+@Disabled
 @TeleOp(name = "BestTeleOp")
 public class BestRC extends LinearOpMode {
 
@@ -39,7 +40,7 @@ public class BestRC extends LinearOpMode {
         double leftOpen = 0.95;
         double leftClosed = 0.65;
 
-        double grounded = 0.52;
+        double grounded = 0.50;
         double board = 0.7;
         double boardInvert = 0.08;
 

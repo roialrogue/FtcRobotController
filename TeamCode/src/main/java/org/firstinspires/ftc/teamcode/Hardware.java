@@ -120,7 +120,7 @@ public class Hardware {
     public void wristUp() {ClawUpDown.setPosition(.7);}
     public void wristDown() {ClawUpDown.setPosition(.52);}
     public void rotateUp() {ClawLeftRight.setPosition(.05);}
-    public void rotateDown() {ClawLeftRight.setPosition(.725);}
+    public void rotateDown() {ClawLeftRight.setPosition(.73);}
 
     public  void slidesTo(int slidePos, double power){
         BeltMotor.setTargetPosition(slidePos);

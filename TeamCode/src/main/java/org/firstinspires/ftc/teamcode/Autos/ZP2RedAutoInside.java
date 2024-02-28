@@ -20,8 +20,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Position 2 Red Auto")
-public class ZP2RedAuto extends LinearOpMode {
+@Autonomous(name = "Position 2 Red Auto Inside")
+public class ZP2RedAutoInside extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -169,7 +169,7 @@ public class ZP2RedAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
             while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
         } else if(GPTCamera.middleSide) {
             //on the middle side
@@ -226,7 +226,7 @@ public class ZP2RedAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
             while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
         } else if(GPTCamera.leftSide) {
             //on the left side
@@ -282,7 +282,7 @@ public class ZP2RedAuto extends LinearOpMode {
             robot.closeLeft();
             robot.wristDown();
             robot.rotateDown();
-            robot.slidesTo(10);
+            robot.slidesTo(0);
             while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");

@@ -20,8 +20,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "Position 2 Blue Auto")
-public class ZP2BlueAuto extends LinearOpMode {
+@Autonomous(name = "Position 2 Blue Auto Inside")
+public class ZP2BlueAutoInside extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
@@ -138,11 +138,14 @@ public class ZP2BlueAuto extends LinearOpMode {
 
             drive.followTrajectory(BlueP2MRT1);
             robot.openLeft();
-            robot.closeLeft();
+            robot.wristUp();
             drive.followTrajectorySequence(BlueP2MRT2);
-            robot.openRight();
-            robot.closeRight();
+            robot.closeLeft();
+            robot.slidesTo(1200);
             drive.followTrajectory(BlueP2MRT3);
+            robot.openRight();
+            drive.followTrajectory(BlueP2MRT4);
+            robot.closeRight();
 
             if (cycling) {
 
@@ -170,39 +173,44 @@ public class ZP2BlueAuto extends LinearOpMode {
                     .lineToLinearHeading(new Pose2d(-36, 30, Math.toRadians(270)))
                     .build();
 
-            Trajectory BlueP2MMT2 = drive.trajectoryBuilder(BlueP2MMT1.end())
+            TrajectorySequence BlueP2MMT2 = drive.trajectorySequenceBuilder(BlueP2MMT1.end())
                     .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
                     .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
-                    .splineToConstantHeading(new Vector2d(52, 33), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MMT3 = drive.trajectoryBuilder(BlueP2MMT2.end())
+                    .splineToConstantHeading(new Vector2d(52, 33), Math.toRadians(0))
+                    .build();
+
+            Trajectory BlueP2MMT4 = drive.trajectoryBuilder(BlueP2MMT3.end())
                     .back(10)
                     .build();
 
 
-
             drive.followTrajectory(BlueP2MMT1);
             robot.openLeft();
+            robot.wristUp();
+            drive.followTrajectorySequence(BlueP2MMT2);
             robot.closeLeft();
-            drive.followTrajectory(BlueP2MMT2);
-            robot.openRight();
-            robot.closeRight();
+            robot.slidesTo(1200);
             drive.followTrajectory(BlueP2MMT3);
+            robot.openRight();
+            drive.followTrajectory(BlueP2MMT4);
+            robot.closeRight();
 
             if (cycling) {
 
             }
 
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MMT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MMT4.end())
                         .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(BlueParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MMT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MMT4.end())
                         .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
                         .back(10)
                         .build();
@@ -216,36 +224,42 @@ public class ZP2BlueAuto extends LinearOpMode {
                     .lineToLinearHeading(new Pose2d(-32, 36, Math.toRadians(0)))
                     .build();
 
-            Trajectory BlueP2MLT2 = drive.trajectoryBuilder(BlueP2MLT1.end())
+            TrajectorySequence BlueP2MLT2 = drive.trajectorySequenceBuilder(BlueP2MLT1.end())
                     .lineToLinearHeading(new Pose2d(-33, 58, Math.toRadians(0)))
                     .lineToLinearHeading(new Pose2d(5, 58, Math.toRadians(0)))
-                    .splineToConstantHeading(new Vector2d(52, 40), Math.toRadians(0))
                     .build();
 
             Trajectory BlueP2MLT3 = drive.trajectoryBuilder(BlueP2MLT2.end())
+                    .splineToConstantHeading(new Vector2d(52, 40), Math.toRadians(0))
+                    .build();
+
+            Trajectory BlueP2MLT4 = drive.trajectoryBuilder(BlueP2MLT3.end())
                     .back(10)
                     .build();
 
             drive.followTrajectory(BlueP2MLT1);
             robot.openLeft();
-            robot.closeLeft();
-            drive.followTrajectory(BlueP2MLT2);
-            robot.openRight();
-            robot.closeRight();
+            robot.wristUp();
+            drive.followTrajectorySequence(BlueP2MLT2);
+            robot.slidesTo(1200);
             drive.followTrajectory(BlueP2MLT3);
+            robot.closeLeft();
+            robot.openRight();
+            drive.followTrajectory(BlueP2MLT4);
+            robot.closeRight();
 
             if (cycling) {
 
             }
             if (parkingInside) {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MLT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MLT4.end())
                         .lineToLinearHeading(new Pose2d(48, 12, Math.toRadians(180)))
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(BlueParking);
             } else {
-                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MLT3.end())
+                TrajectorySequence BlueParking = drive.trajectorySequenceBuilder(BlueP2MLT4.end())
                         .lineToLinearHeading(new Pose2d(48, 60, Math.toRadians(180)))
                         .back(10)
                         .build();
@@ -255,7 +269,12 @@ public class ZP2BlueAuto extends LinearOpMode {
         } else if(GPTCamera.nonSide) {
             telemetry.addData("You need to wait for the Camera to Initialize", "");
         }
-
+        robot.closeRight();
+        robot.closeLeft();
+        robot.wristDown();
+        robot.rotateDown();
+        robot.slidesTo(0);
+        while(opModeIsActive() && robot.BeltMotor.isBusy()){ }
 
         PoseStorage.currentPose = drive.getPoseEstimate();
     }
